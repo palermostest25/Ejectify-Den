@@ -44,10 +44,23 @@ struct GlobalShortcutTests {
         #expect(shortcut.modifierFlags == flags)
     }
 
-    @Test func menuKeyEquivalentIsLowercasedForPrintableKeys() {
+    @Test func menuKeyEquivalentUsesCharactersAppKitUnderstands() {
         #expect(GlobalShortcut(keyCode: UInt32(kVK_ANSI_E), carbonModifiers: UInt32(cmdKey)).menuKeyEquivalent == "e")
-        // Arrow keys have no single-character equivalent, so the menu shows no key.
-        #expect(GlobalShortcut(keyCode: UInt32(kVK_LeftArrow), carbonModifiers: UInt32(cmdKey)).menuKeyEquivalent == "")
+        #expect(GlobalShortcut(keyCode: UInt32(kVK_ANSI_7), carbonModifiers: UInt32(cmdKey)).menuKeyEquivalent == "7")
+
+        // The display glyph and the key equivalent are different things: "␣" draws, " " triggers.
+        #expect(GlobalShortcut(keyCode: UInt32(kVK_Space), carbonModifiers: UInt32(cmdKey)).displayString == "⌘␣")
+        #expect(GlobalShortcut(keyCode: UInt32(kVK_Space), carbonModifiers: UInt32(cmdKey)).menuKeyEquivalent == " ")
+
+        let leftArrow = GlobalShortcut(keyCode: UInt32(kVK_LeftArrow), carbonModifiers: UInt32(cmdKey))
+        #expect(leftArrow.displayString == "⌘←")
+        #expect(leftArrow.menuKeyEquivalent == String(UnicodeScalar(UInt16(NSLeftArrowFunctionKey))!))
+
+        let functionKey = GlobalShortcut(keyCode: UInt32(kVK_F5), carbonModifiers: UInt32(cmdKey))
+        #expect(functionKey.menuKeyEquivalent == String(UnicodeScalar(UInt16(NSF5FunctionKey))!))
+
+        // An unmapped key contributes no menu key equivalent at all.
+        #expect(GlobalShortcut(keyCode: 999, carbonModifiers: UInt32(cmdKey)).menuKeyEquivalent == "")
     }
 
     @Test func functionKeysAreNamed() {

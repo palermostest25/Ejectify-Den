@@ -16,9 +16,6 @@ final class ActivityController {
     /// Volumes still pending wake-time reconciliation after an automatic unmount attempt.
     private var remountCandidates: [Volume] = []
 
-    /// Candidates created by a user-initiated unmount, which only a user-initiated mount may bring back.
-    private var manualOnlyRemountCandidateIDs: Set<String> = []
-
     /// Volume identifiers currently processing an unmount request.
     private var inFlightUnmounts: Set<String> = []
 
@@ -152,11 +149,11 @@ final class ActivityController {
 
     /// Handles all currently enabled volumes when a notification-based trigger fires.
     @objc func unmountVolumes(notification: Notification) {
-        performDiskOperation(triggerDescription: notification.name.rawValue, isManual: false)
+        performDiskOperation(triggerDescription: notification.name.rawValue)
     }
 
     /// Runs the configured disk operation for all enabled volumes.
-    private func performDiskOperation(triggerDescription: String, isManual: Bool) {
+    private func performDiskOperation(triggerDescription: String) {
         Log.powerEvents.log("Disk operation trigger received; trigger=\(triggerDescription)")
         let enabledVolumes = Volume.mountedVolumes().filter(\.enabled)
 
@@ -172,7 +169,7 @@ final class ActivityController {
             return
         }
 
-        mergeRemountCandidates(with: enabledVolumes, reason: "Unmount trigger received", isManual: isManual)
+        mergeRemountCandidates(with: enabledVolumes, reason: "Unmount trigger received")
 
         DiskOperationHUDController.shared.begin(kind: .unmounting, volumes: Self.hudVolumes(for: enabledVolumes))
         for volume in enabledVolumes {
@@ -203,7 +200,6 @@ final class ActivityController {
         let candidateCount = remountCandidates.count
         cancelAllPendingMountTasks(reason: "Eject mode enabled")
         remountCandidates.removeAll()
-        manualOnlyRemountCandidateIDs.removeAll()
 
         guard candidateCount > 0 else {
             return
@@ -312,7 +308,7 @@ final class ActivityController {
         switch decision {
         case .unmount(let reason):
             Log.powerEvents.log("Dock disconnect trigger fired; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
-            performDiskOperation(triggerDescription: Preference.UnmountWhen.dockDisconnected.rawValue, isManual: false)
+            performDiskOperation(triggerDescription: Preference.UnmountWhen.dockDisconnected.rawValue)
         case .ignore(let reason):
             Log.powerEvents.info("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
         }
@@ -341,7 +337,7 @@ final class ActivityController {
             return
         }
 
-        performDiskOperation(triggerDescription: Preference.UnmountWhen.externalDisplayDisconnected.rawValue, isManual: false)
+        performDiskOperation(triggerDescription: Preference.UnmountWhen.externalDisplayDisconnected.rawValue)
     }
 
     /// Schedules a mount pass when an external display returns after all of them were disconnected.
@@ -489,23 +485,20 @@ final class ActivityController {
             return
         }
 
-        // Volumes the user unmounted by hand stay unmounted until the user mounts them again.
-        let automaticCandidates = remountCandidates.filter { !manualOnlyRemountCandidateIDs.contains($0.id) }
-
-        guard !automaticCandidates.isEmpty else {
+        guard !self.remountCandidates.isEmpty else {
             Log.volumeOperations.info("Mount pass skipped: no remount candidates")
             return
         }
 
-        Log.volumeOperations.log("Mount pass triggered: \(automaticCandidates.count) candidate(s)")
-        for volume in automaticCandidates {
+        Log.volumeOperations.log("Mount pass triggered: \(self.remountCandidates.count) candidate(s)")
+        for volume in self.remountCandidates {
             scheduleMountTask(for: volume)
         }
     }
 
     /// Runs the configured all-volumes action for a user-initiated request such as the menu or a hotkey.
     func performManualAllVolumesAction() {
-        performDiskOperation(triggerDescription: "manual", isManual: true)
+        performDiskOperation(triggerDescription: "manual")
     }
 
     /// Mounts every pending remount candidate on user request, ignoring the battery preference.
@@ -523,7 +516,6 @@ final class ActivityController {
 
         cancelDelayedMountPass()
         Log.volumeOperations.log("Manual mount pass triggered: \(self.remountCandidates.count) candidate(s)")
-        manualOnlyRemountCandidateIDs.removeAll()
         DiskOperationHUDController.shared.begin(kind: .mounting, volumes: Self.hudVolumes(for: self.remountCandidates))
         for volume in self.remountCandidates {
             scheduleMountTask(for: volume)
@@ -531,17 +523,8 @@ final class ActivityController {
     }
 
     /// Merges new automatic unmounts into the pending remount set while preserving older pending entries.
-    private func mergeRemountCandidates(with volumes: [Volume], reason: String, isManual: Bool = false) {
+    private func mergeRemountCandidates(with volumes: [Volume], reason: String) {
         let existingCount = remountCandidates.count
-
-        // An automatic unmount promotes a manual-only candidate, because a wake should now restore it.
-        for volume in volumes {
-            if isManual, !remountCandidates.contains(where: { $0.id == volume.id }) {
-                manualOnlyRemountCandidateIDs.insert(volume.id)
-            } else if !isManual {
-                manualOnlyRemountCandidateIDs.remove(volume.id)
-            }
-        }
 
         guard !volumes.isEmpty else {
             if existingCount > 0 {
@@ -581,7 +564,6 @@ final class ActivityController {
     /// Removes a volume from the pending remount set.
     private func removeRemountCandidate(withID volumeID: String) {
         remountCandidates.removeAll { $0.id == volumeID }
-        manualOnlyRemountCandidateIDs.remove(volumeID)
     }
 
     /// Applies the shared candidate-retention policy after an automatic remount workflow event.

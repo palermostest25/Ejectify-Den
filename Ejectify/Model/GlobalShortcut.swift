@@ -79,13 +79,9 @@ struct GlobalShortcut: Codable, Hashable, Sendable {
         return flags
     }
 
-    /// Lowercased key equivalent shown next to a menu item, empty when the key has no printable form.
+    /// Key equivalent for a menu item, empty when AppKit has no character for the key.
     var menuKeyEquivalent: String {
-        guard let keyName = Self.keyNames[keyCode], keyName.count == 1 else {
-            return ""
-        }
-
-        return keyName.lowercased()
+        Self.menuKeyEquivalents[keyCode] ?? ""
     }
 
     /// Converts AppKit modifier flags into a Carbon modifier mask.
@@ -97,6 +93,37 @@ struct GlobalShortcut: Codable, Hashable, Sendable {
         if modifierFlags.contains(.command) { carbonModifiers |= UInt32(cmdKey) }
         return carbonModifiers
     }
+
+    /// Characters AppKit expects in `NSMenuItem.keyEquivalent`, which are not the glyphs used for display.
+    private static let menuKeyEquivalents: [UInt32: String] = {
+        var equivalents: [UInt32: String] = [
+            UInt32(kVK_Space): " ",
+            UInt32(kVK_Return): "\r",
+            UInt32(kVK_Tab): "\t",
+            UInt32(kVK_Escape): "\u{1B}",
+            UInt32(kVK_Delete): "\u{8}",
+            UInt32(kVK_ForwardDelete): "\u{7F}",
+            UInt32(kVK_LeftArrow): String(UnicodeScalar(UInt16(NSLeftArrowFunctionKey))!),
+            UInt32(kVK_RightArrow): String(UnicodeScalar(UInt16(NSRightArrowFunctionKey))!),
+            UInt32(kVK_UpArrow): String(UnicodeScalar(UInt16(NSUpArrowFunctionKey))!),
+            UInt32(kVK_DownArrow): String(UnicodeScalar(UInt16(NSDownArrowFunctionKey))!)
+        ]
+
+        // Letters and digits are their own key equivalents, lowercased as AppKit expects.
+        for (keyCode, keyName) in keyNames where keyName.count == 1 && keyName.rangeOfCharacter(from: .alphanumerics) != nil {
+            equivalents[keyCode] = keyName.lowercased()
+        }
+
+        let functionKeyCodes = [
+            kVK_F1, kVK_F2, kVK_F3, kVK_F4, kVK_F5, kVK_F6,
+            kVK_F7, kVK_F8, kVK_F9, kVK_F10, kVK_F11, kVK_F12
+        ]
+        for (index, keyCode) in functionKeyCodes.enumerated() {
+            equivalents[UInt32(keyCode)] = String(UnicodeScalar(UInt16(NSF1FunctionKey + index))!)
+        }
+
+        return equivalents
+    }()
 
     /// Display names for the key codes a shortcut is likely to use.
     private static let keyNames: [UInt32: String] = {
