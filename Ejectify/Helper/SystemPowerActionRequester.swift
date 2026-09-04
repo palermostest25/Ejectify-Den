@@ -33,10 +33,50 @@ enum SystemPowerActionRequester {
         }
     }
 
+    /// Queue that keeps `pmset` execution off the main actor.
+    private static let queue = DispatchQueue(
+        label: "com.palermostest25.Ejectify.SystemPowerActionRequester",
+        qos: .userInitiated
+    )
+
     /// Requests that macOS put the Mac to sleep.
-    @discardableResult
-    static func requestSleep() -> Bool {
-        request(.sleep)
+    ///
+    /// Uses `pmset`, which any user may run, because sending the sleep Apple Event needs Automation
+    /// authorization that a menu bar app cannot rely on having.
+    static func requestSleep() {
+        queue.async {
+            guard !runPowerManagementSleep() else {
+                return
+            }
+
+            Log.powerEvents.warning("Falling back to the sleep Apple Event after pmset failed")
+            request(.sleep)
+        }
+    }
+
+    /// Runs `pmset sleepnow` and reports whether it succeeded.
+    private static func runPowerManagementSleep() -> Bool {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
+        process.arguments = ["sleepnow"]
+        process.standardOutput = FileHandle.nullDevice
+        process.standardError = FileHandle.nullDevice
+
+        do {
+            try process.run()
+            process.waitUntilExit()
+        } catch {
+            Log.powerEvents.error("Could not run pmset to request system sleep")
+            return false
+        }
+
+        guard process.terminationStatus == 0 else {
+            Log.powerEvents.error("pmset sleepnow failed; status=\(process.terminationStatus)")
+            return false
+        }
+
+        Log.powerEvents.log("System sleep requested through pmset")
+        return true
     }
 
     /// Requests that macOS restart the Mac.
@@ -99,7 +139,8 @@ enum SystemPowerActionRequester {
             return false
         }
 
-        Log.powerEvents.log("System \(action.logDescription) Apple Event sent")
+        // kAENoReply means this only confirms the event was queued, not that macOS acted on it.
+        Log.powerEvents.log("System \(action.logDescription) Apple Event queued")
         return true
     }
 }
