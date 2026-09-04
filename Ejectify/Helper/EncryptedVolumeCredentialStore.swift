@@ -32,7 +32,7 @@ final class EncryptedVolumeCredentialStore: @unchecked Sendable {
     static let shared = EncryptedVolumeCredentialStore()
 
     /// Keychain service namespace for encrypted volume passphrases.
-    private static let serviceName = "nl.nielsmouthaan.Ejectify.encrypted-volume"
+    private static let serviceName = "com.palermostest25.Ejectify.encrypted-volume"
 
     /// Creates a Keychain query scoped to one persisted volume identifier.
     private func query(for volumeID: String) -> [String: Any] {

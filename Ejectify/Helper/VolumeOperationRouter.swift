@@ -105,7 +105,7 @@ final class VolumeOperationRouter: @unchecked Sendable {
 
     /// Queue used for local disk operations.
     private let localOperationQueue = DispatchQueue(
-        label: "nl.nielsmouthaan.Ejectify.LocalDiskOperation",
+        label: "com.palermostest25.Ejectify.LocalDiskOperation",
         qos: .userInitiated,
         attributes: .concurrent
     )
