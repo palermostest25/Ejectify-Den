@@ -93,6 +93,35 @@ final class DiskOperationProgress {
         }
     }
 
+    /// Number of volumes in the batch that have finished.
+    var completedCount: Int {
+        rows.filter { $0.state != .running }.count
+    }
+
+    /// Number of volumes in the batch.
+    var totalCount: Int {
+        rows.count
+    }
+
+    /// Volumes that could not be handled, with the reason where one is known.
+    var failedRows: [Row] {
+        rows.filter { row in
+            if case .failed = row.state {
+                return true
+            }
+            return false
+        }
+    }
+
+    /// Secondary line naming the volumes being handled, mirroring an alert's informative text.
+    var subtitle: String {
+        guard isFinished, hasFailure else {
+            return rows.map(\.name).joined(separator: ", ")
+        }
+
+        return failedRows.map(\.name).joined(separator: ", ")
+    }
+
     /// Title matching the batch's current state.
     var title: String {
         guard isFinished else {
