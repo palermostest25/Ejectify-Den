@@ -175,8 +175,23 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
     /// Current launch-at-login preference.
     let launchAtLogin: Bool
 
-    /// Current automatic unmount trigger.
+    /// Current automatic unmount triggers.
     let unmountWhen: String
+
+    /// Power source providing power at snapshot time.
+    let powerSource: String
+
+    /// Privacy-safe description of the currently attached power adapter.
+    let currentPowerAdapter: String
+
+    /// Privacy-safe descriptions of the adapters remembered as docks.
+    let rememberedDocks: [String]
+
+    /// Whether automatic remount passes are skipped while on battery.
+    let keepUnmountedOnBattery: Bool
+
+    /// Number of online displays that are not built into the Mac.
+    let externalDisplayCount: Int
 
     /// Current force-unmount preference.
     let forceUnmount: Bool
@@ -213,9 +228,15 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
     static func make() -> Self {
         let volumes = Volume.mountedVolumes().map(EjectifyVolumeDiagnosticsSnapshot.init(volume:))
         let mountedVolumeDiscovery = MountedVolumeDiscoverySnapshot.makeAll()
+        let currentPowerAdapter = PowerAdapterObserver.snapshotCurrentAdapter()
         return Self(
             launchAtLogin: Preference.launchAtLogin,
-            unmountWhen: Preference.unmountWhen.rawValue,
+            unmountWhen: UnmountTriggersPreference.sortedRawValues(of: Preference.unmountWhen).joined(separator: ", "),
+            powerSource: PowerAdapterObserver.snapshotIsOnBattery() ? "Battery Power" : "AC Power",
+            currentPowerAdapter: currentPowerAdapter?.logDescription ?? "-",
+            rememberedDocks: Preference.rememberedDocks.map(\.logDescription),
+            keepUnmountedOnBattery: Preference.keepUnmountedOnBattery,
+            externalDisplayCount: ExternalDisplayObserver.currentExternalDisplayCount(),
             forceUnmount: Preference.forceUnmount,
             ejectInsteadOfUnmount: Preference.ejectInsteadOfUnmount,
             unlockVolumesWhenNeeded: Preference.unlockVolumesWhenNeeded,
@@ -521,6 +542,11 @@ private struct EjectifyStateReporter: DiagnosticsReporting {
         let rows: [(String, String)] = [
             ("Launch at login", snapshot.launchAtLogin.diagnosticsDescription),
             ("Unmount when", snapshot.unmountWhen),
+            ("Power source", snapshot.powerSource),
+            ("Power adapter", snapshot.currentPowerAdapter),
+            ("Remembered docks", snapshot.rememberedDocks.isEmpty ? "-" : snapshot.rememberedDocks.joined(separator: " | ")),
+            ("Keep volumes unmounted on battery", snapshot.keepUnmountedOnBattery.diagnosticsDescription),
+            ("External displays", String(snapshot.externalDisplayCount)),
             ("Force unmount", snapshot.forceUnmount.diagnosticsDescription),
             ("Eject instead of unmount", snapshot.ejectInsteadOfUnmount.diagnosticsDescription),
             ("Unlock volumes when needed", snapshot.unlockVolumesWhenNeeded.diagnosticsDescription),

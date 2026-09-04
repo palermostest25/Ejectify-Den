@@ -22,6 +22,7 @@ final class StatusBarMenu: NSMenu {
     required init(coder: NSCoder) {
         volumes = Volume.mountedVolumes()
         super.init(coder: coder)
+        configureMenuBehavior()
         listenForOperationRouterNotifications()
         updateMenu()
         listenForVolumeNotifications()
@@ -31,9 +32,16 @@ final class StatusBarMenu: NSMenu {
     init() {
         volumes = Volume.mountedVolumes()
         super.init(title: "Ejectify")
+        configureMenuBehavior()
         listenForOperationRouterNotifications()
         updateMenu()
         listenForVolumeNotifications()
+    }
+
+    /// Takes over item enabling and refreshes the menu each time it opens so live state is shown.
+    private func configureMenuBehavior() {
+        autoenablesItems = false
+        delegate = self
     }
 
     /// Removes registered workspace observers before deallocation.
@@ -201,6 +209,9 @@ final class StatusBarMenu: NSMenu {
         let isHotKeyRegistered = MainActor.assumeIsolated {
             AppDelegate.shared.isUnmountAllHotKeyRegistered
         }
+        let hasPendingRemountCandidates = MainActor.assumeIsolated {
+            AppDelegate.shared.activityController?.hasPendingRemountCandidates ?? false
+        }
         let allVolumesActionTitle = Preference.ejectInsteadOfUnmount
             ? String(localized: "Eject all")
             : String(localized: "Unmount all")
@@ -213,6 +224,16 @@ final class StatusBarMenu: NSMenu {
         unmountAllItem.keyEquivalentModifierMask = isHotKeyRegistered ? [.control, .command] : []
         unmountAllItem.isEnabled = !volumes.isEmpty
         addItem(unmountAllItem)
+
+        // Ejected disks are never remounted automatically, so a manual mount action would have nothing to act on.
+        guard !Preference.ejectInsteadOfUnmount else {
+            return
+        }
+
+        let mountAllItem = NSMenuItem(title: String(localized: "Mount all"), action: #selector(mountAllClicked(menuItem:)), keyEquivalent: "")
+        mountAllItem.target = self
+        mountAllItem.isEnabled = hasPendingRemountCandidates
+        addItem(mountAllItem)
     }
 
     /// Builds the "Volumes" section with one toggle row per mounted volume.
@@ -258,6 +279,10 @@ final class StatusBarMenu: NSMenu {
         let unmountWhenItem = NSMenuItem(title: unmountWhenTitle, action: nil, keyEquivalent: "")
         unmountWhenItem.submenu = buildUnmountWhenMenu()
         addItem(unmountWhenItem)
+
+        let dockItem = NSMenuItem(title: String(localized: "Dock"), action: nil, keyEquivalent: "")
+        dockItem.submenu = buildDockMenu()
+        addItem(dockItem)
 
         let ejectInsteadOfUnmountItem = NSMenuItem(
             title: String(localized: "Eject instead of unmount"),
@@ -327,27 +352,153 @@ final class StatusBarMenu: NSMenu {
         return false
     }
 
-    /// Builds the submenu for selecting the unmount trigger condition.
+    /// Builds the submenu for selecting which events trigger automatic unmounting.
     private func buildUnmountWhenMenu() -> NSMenu {
         let title = Preference.ejectInsteadOfUnmount
             ? String(localized: "Eject when")
             : String(localized: "Unmount when")
         let unmountWhenMenu = NSMenu(title: title)
-        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "System starts sleeping"), unmountWhen: .systemStartsSleeping))
-        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "Display turned off"), unmountWhen: .screensStartedSleeping))
-        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "Screen is locked"), unmountWhen: .screenIsLocked))
-        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "Screensaver started"), unmountWhen: .screensaverStarted))
+        unmountWhenMenu.autoenablesItems = false
+
+        let selectedTriggers = Preference.unmountWhen
+        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "System starts sleeping"), unmountWhen: .systemStartsSleeping, selectedTriggers: selectedTriggers))
+        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "Display turned off"), unmountWhen: .screensStartedSleeping, selectedTriggers: selectedTriggers))
+        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "Screen is locked"), unmountWhen: .screenIsLocked, selectedTriggers: selectedTriggers))
+        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "Screensaver started"), unmountWhen: .screensaverStarted, selectedTriggers: selectedTriggers))
+        unmountWhenMenu.addItem(NSMenuItem.separator())
+        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "Dock disconnected"), unmountWhen: .dockDisconnected, selectedTriggers: selectedTriggers))
+        unmountWhenMenu.addItem(makeUnmountWhenMenuItem(title: String(localized: "External display disconnected"), unmountWhen: .externalDisplayDisconnected, selectedTriggers: selectedTriggers))
 
         return unmountWhenMenu
     }
 
-    /// Creates an "Unmount when" menu entry bound to a specific preference value.
-    private func makeUnmountWhenMenuItem(title: String, unmountWhen: Preference.UnmountWhen) -> NSMenuItem {
+    /// Creates an "Unmount when" menu entry that toggles one trigger in the selection.
+    private func makeUnmountWhenMenuItem(
+        title: String,
+        unmountWhen: Preference.UnmountWhen,
+        selectedTriggers: Set<Preference.UnmountWhen>
+    ) -> NSMenuItem {
         let item = NSMenuItem(title: title, action: #selector(unmountWhenChanged(menuItem:)), keyEquivalent: "")
         item.target = self
-        item.state = Preference.unmountWhen == unmountWhen ? .on : .off
+        item.state = selectedTriggers.contains(unmountWhen) ? .on : .off
         item.representedObject = unmountWhen
+
+        // The dock trigger can only fire once the user has remembered the dock it should watch for.
+        if unmountWhen == .dockDisconnected, selectedTriggers.contains(unmountWhen), Preference.rememberedDocks.isEmpty {
+            item.attributedTitle = makeWarningTitle(title: title, warning: String(localized: "No dock remembered"))
+        }
+
         return item
+    }
+
+    /// Builds the submenu for dock detection and battery behavior.
+    private func buildDockMenu() -> NSMenu {
+        let dockMenu = NSMenu(title: String(localized: "Dock"))
+        dockMenu.autoenablesItems = false
+
+        let currentAdapter = PowerAdapterObserver.snapshotCurrentAdapter()
+        let rememberedDocks = Preference.rememberedDocks
+
+        let connectedItem = NSMenuItem(title: connectedAdapterDescription(for: currentAdapter), action: nil, keyEquivalent: "")
+        connectedItem.isEnabled = false
+        dockMenu.addItem(connectedItem)
+
+        let rememberItem = NSMenuItem(
+            title: String(localized: "Remember current adapter as dock"),
+            action: #selector(rememberCurrentAdapterClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        rememberItem.target = self
+        if let currentAdapter {
+            rememberItem.representedObject = currentAdapter
+            rememberItem.isEnabled = !currentAdapter.isRemembered(in: rememberedDocks)
+        } else {
+            rememberItem.isEnabled = false
+        }
+        dockMenu.addItem(rememberItem)
+
+        addRememberedDocksSection(to: dockMenu, rememberedDocks: rememberedDocks)
+
+        dockMenu.addItem(NSMenuItem.separator())
+
+        let keepUnmountedOnBatteryItem = NSMenuItem(
+            title: String(localized: "Keep volumes unmounted on battery"),
+            action: #selector(keepUnmountedOnBatteryClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        keepUnmountedOnBatteryItem.target = self
+        keepUnmountedOnBatteryItem.state = Preference.keepUnmountedOnBattery ? .on : .off
+        dockMenu.addItem(keepUnmountedOnBatteryItem)
+
+        return dockMenu
+    }
+
+    /// Adds one row per remembered dock, each with its own submenu for forgetting it.
+    private func addRememberedDocksSection(to dockMenu: NSMenu, rememberedDocks: [PowerAdapterIdentity]) {
+        dockMenu.addItem(NSMenuItem.separator())
+        dockMenu.addItem(NSMenuItem.sectionHeader(title: String(localized: "Remembered docks")))
+
+        guard !rememberedDocks.isEmpty else {
+            let emptyItem = NSMenuItem(title: String(localized: "No dock remembered"), action: nil, keyEquivalent: "")
+            emptyItem.isEnabled = false
+            dockMenu.addItem(emptyItem)
+            return
+        }
+
+        for rememberedDock in rememberedDocks {
+            let dockItem = NSMenuItem(title: rememberedDock.displayName, action: nil, keyEquivalent: "")
+            dockItem.state = .on
+
+            let dockActionsMenu = NSMenu(title: rememberedDock.displayName)
+            dockActionsMenu.autoenablesItems = false
+            let forgetItem = NSMenuItem(title: String(localized: "Forget"), action: #selector(forgetDockClicked(menuItem:)), keyEquivalent: "")
+            forgetItem.target = self
+            forgetItem.representedObject = rememberedDock
+            dockActionsMenu.addItem(forgetItem)
+            dockItem.submenu = dockActionsMenu
+
+            dockMenu.addItem(dockItem)
+        }
+
+        let forgetAllItem = NSMenuItem(
+            title: String(localized: "Forget all remembered docks"),
+            action: #selector(forgetAllDocksClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        forgetAllItem.target = self
+        dockMenu.addItem(forgetAllItem)
+    }
+
+    /// Returns the menu line describing the adapter the Mac is drawing power from right now.
+    private func connectedAdapterDescription(for adapter: PowerAdapterIdentity?) -> String {
+        guard let adapter else {
+            return String(localized: "Not connected to power")
+        }
+
+        let connectedNow = "\(String(localized: "Connected now:")) \(adapter.displayName)"
+        guard adapter.isLikelyAppleCharger else {
+            return connectedNow
+        }
+
+        return "\(connectedNow) (\(String(localized: "Apple charger")))"
+    }
+
+    /// Builds a menu title with a smaller trailing warning hint.
+    private func makeWarningTitle(title: String, warning: String) -> NSAttributedString {
+        let attributedTitle = NSMutableAttributedString(
+            string: title,
+            attributes: [.font: NSFont.menuFont(ofSize: 0)]
+        )
+        attributedTitle.append(
+            NSAttributedString(
+                string: "  \u{26A0}\u{FE0E} \(warning)",
+                attributes: [
+                    .font: NSFont.menuFont(ofSize: NSFont.smallSystemFontSize),
+                    .foregroundColor: NSColor.secondaryLabelColor
+                ]
+            )
+        )
+        return attributedTitle
     }
 
     /// Builds app-level actions such as Help and Quit.
@@ -375,6 +526,13 @@ final class StatusBarMenu: NSMenu {
     @objc private func unmountAllClicked(menuItem _: NSMenuItem) {
         MainActor.assumeIsolated {
             AppDelegate.shared.performManualUnmountAll()
+        }
+    }
+
+    /// Mounts every volume waiting to be remounted, regardless of the battery preference.
+    @objc private func mountAllClicked(menuItem _: NSMenuItem) {
+        MainActor.assumeIsolated {
+            AppDelegate.shared.activityController?.performManualMountPass()
         }
     }
 
@@ -430,12 +588,89 @@ final class StatusBarMenu: NSMenu {
         updateMenu()
     }
 
-    /// Updates the selected unmount trigger preference.
+    /// Toggles one trigger in the unmount trigger selection, keeping at least one trigger enabled.
     @objc private func unmountWhenChanged(menuItem: NSMenuItem) {
         guard let unmountWhen = menuItem.representedObject as? Preference.UnmountWhen else {
             return
         }
-        Preference.unmountWhen = unmountWhen
+
+        var selectedTriggers = Preference.unmountWhen
+        selectedTriggers.formSymmetricDifference([unmountWhen])
+
+        guard !selectedTriggers.isEmpty else {
+            Log.preferences.info("Unmount trigger change ignored; reason=at least one trigger must stay enabled")
+            NSSound.beep()
+            updateMenu()
+            return
+        }
+
+        Preference.unmountWhen = selectedTriggers
+        updateMenu()
+    }
+
+    /// Remembers the currently connected power adapter as a dock, confirming first for Apple chargers.
+    @MainActor
+    @objc private func rememberCurrentAdapterClicked(menuItem: NSMenuItem) {
+        guard let adapter = menuItem.representedObject as? PowerAdapterIdentity else {
+            return
+        }
+
+        var rememberedDocks = Preference.rememberedDocks
+        guard !adapter.isRemembered(in: rememberedDocks) else {
+            return
+        }
+
+        guard !adapter.isLikelyAppleCharger || confirmRememberingAppleCharger() else {
+            Log.preferences.info("Remembering adapter cancelled; reason=apple charger confirmation declined")
+            return
+        }
+
+        rememberedDocks.append(adapter)
+        Preference.rememberedDocks = rememberedDocks
+        Log.preferences.log("Remembered dock added; adapter=\(adapter.logDescription)")
+        updateMenu()
+    }
+
+    /// Asks for confirmation before treating an Apple charger as a dock.
+    @MainActor
+    private func confirmRememberingAppleCharger() -> Bool {
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = String(localized: "This looks like an Apple charger.")
+        alert.informativeText = String(localized: "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?")
+        // Cancel is added first so it stays the default button.
+        alert.addButton(withTitle: String(localized: "Cancel"))
+        alert.addButton(withTitle: String(localized: "Remember anyway"))
+        return alert.runModal() == .alertSecondButtonReturn
+    }
+
+    /// Forgets one remembered dock.
+    @objc private func forgetDockClicked(menuItem: NSMenuItem) {
+        guard let rememberedDock = menuItem.representedObject as? PowerAdapterIdentity else {
+            return
+        }
+
+        var rememberedDocks = Preference.rememberedDocks
+        rememberedDocks.removeAll { $0 == rememberedDock }
+        Preference.rememberedDocks = rememberedDocks
+        Log.preferences.log("Remembered dock forgotten; adapter=\(rememberedDock.logDescription)")
+        updateMenu()
+    }
+
+    /// Forgets every remembered dock.
+    @objc private func forgetAllDocksClicked(menuItem _: NSMenuItem) {
+        guard !Preference.rememberedDocks.isEmpty else {
+            return
+        }
+
+        Preference.rememberedDocks = []
+        Log.preferences.log("All remembered docks forgotten")
+        updateMenu()
+    }
+
+    /// Toggles whether automatic remount passes are skipped while running on battery.
+    @objc private func keepUnmountedOnBatteryClicked(menuItem: NSMenuItem) {
+        Preference.keepUnmountedOnBattery = toggledValue(for: menuItem.state)
         updateMenu()
     }
 
@@ -588,5 +823,18 @@ final class StatusBarMenu: NSMenu {
         }
 
         Log.app.log("System restart Apple Event sent")
+    }
+}
+
+extension StatusBarMenu: NSMenuDelegate {
+
+    /// Rebuilds the menu before it is shown so volume and power adapter state is always current.
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        guard menu === self else {
+            return
+        }
+
+        volumes = Volume.mountedVolumes()
+        updateMenu()
     }
 }

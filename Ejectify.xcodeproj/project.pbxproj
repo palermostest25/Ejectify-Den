@@ -75,6 +75,22 @@
 		EB8200010000000000000001 /* UnlockVolumesWhenNeededPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8200040000000000000004 /* UnlockVolumesWhenNeededPreference.swift */; };
 		EB8200020000000000000002 /* UnlockVolumesWhenNeededPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8200040000000000000004 /* UnlockVolumesWhenNeededPreference.swift */; };
 		EB8200030000000000000003 /* UnlockVolumesWhenNeededPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8200050000000000000005 /* UnlockVolumesWhenNeededPreferenceTests.swift */; };
+		F1D000000000000000000101 /* UnmountTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000001 /* UnmountTrigger.swift */; };
+		F1D000000000000000000102 /* UnmountTriggersPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000002 /* UnmountTriggersPreference.swift */; };
+		F1D000000000000000000103 /* RememberedDocksPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000003 /* RememberedDocksPreference.swift */; };
+		F1D000000000000000000104 /* PowerAdapterIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000004 /* PowerAdapterIdentity.swift */; };
+		F1D000000000000000000105 /* DockDisconnectPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000005 /* DockDisconnectPolicy.swift */; };
+		F1D000000000000000000106 /* PowerAdapterObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000006 /* PowerAdapterObserver.swift */; };
+		F1D000000000000000000107 /* ExternalDisplayObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000007 /* ExternalDisplayObserver.swift */; };
+		F1D000000000000000000201 /* UnmountTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000001 /* UnmountTrigger.swift */; };
+		F1D000000000000000000202 /* UnmountTriggersPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000002 /* UnmountTriggersPreference.swift */; };
+		F1D000000000000000000203 /* RememberedDocksPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000003 /* RememberedDocksPreference.swift */; };
+		F1D000000000000000000204 /* PowerAdapterIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000004 /* PowerAdapterIdentity.swift */; };
+		F1D000000000000000000205 /* DockDisconnectPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000005 /* DockDisconnectPolicy.swift */; };
+		F1D000000000000000000206 /* PowerAdapterIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000008 /* PowerAdapterIdentityTests.swift */; };
+		F1D000000000000000000207 /* DockDisconnectPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */; };
+		F1D000000000000000000208 /* UnmountTriggersPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */; };
+		F1D000000000000000000209 /* RememberedDocksPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +210,17 @@
 		F01400020000000000000002 /* PowerManagementLogPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerManagementLogPolicy.swift; sourceTree = "<group>"; };
 		F01400050000000000000005 /* PowerManagementLogPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerManagementLogPolicyTests.swift; sourceTree = "<group>"; };
 		F0CE00020000000000000002 /* DiskArbitrationVolumeOperatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskArbitrationVolumeOperatorTests.swift; sourceTree = "<group>"; };
+		F1D000000000000000000001 /* UnmountTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmountTrigger.swift; sourceTree = "<group>"; };
+		F1D000000000000000000002 /* UnmountTriggersPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmountTriggersPreference.swift; sourceTree = "<group>"; };
+		F1D000000000000000000003 /* RememberedDocksPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberedDocksPreference.swift; sourceTree = "<group>"; };
+		F1D000000000000000000004 /* PowerAdapterIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerAdapterIdentity.swift; sourceTree = "<group>"; };
+		F1D000000000000000000005 /* DockDisconnectPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockDisconnectPolicy.swift; sourceTree = "<group>"; };
+		F1D000000000000000000006 /* PowerAdapterObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerAdapterObserver.swift; sourceTree = "<group>"; };
+		F1D000000000000000000007 /* ExternalDisplayObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplayObserver.swift; sourceTree = "<group>"; };
+		F1D000000000000000000008 /* PowerAdapterIdentityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerAdapterIdentityTests.swift; sourceTree = "<group>"; };
+		F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockDisconnectPolicyTests.swift; sourceTree = "<group>"; };
+		F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmountTriggersPreferenceTests.swift; sourceTree = "<group>"; };
+		F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberedDocksPreferenceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +309,8 @@
 				D1E700A62F8A000100C0D001 /* OnboardingWindowController.swift */,
 				D1E700A22F8A000100C0D001 /* SystemSleepPowerObserver.swift */,
 				D2A100A22F9B100100A0C001 /* UpdateController.swift */,
+				F1D000000000000000000007 /* ExternalDisplayObserver.swift */,
+				F1D000000000000000000006 /* PowerAdapterObserver.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -292,6 +321,10 @@
 				B8DFADB2256CF511009E9296 /* Volume.swift */,
 				B82E12D22570FF0F004547C7 /* Preference.swift */,
 				EB8200040000000000000004 /* UnlockVolumesWhenNeededPreference.swift */,
+				F1D000000000000000000004 /* PowerAdapterIdentity.swift */,
+				F1D000000000000000000003 /* RememberedDocksPreference.swift */,
+				F1D000000000000000000001 /* UnmountTrigger.swift */,
+				F1D000000000000000000002 /* UnmountTriggersPreference.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -325,6 +358,7 @@
 				C0A100000000000000000053 /* DiskArbitrationVolumeOperator.swift */,
 				C0A100000000000000000063 /* VolumeLogLabelFormatter.swift */,
 				C0A100000000000000000013 /* nl.nielsmouthaan.Ejectify.PrivilegedHelper.plist */,
+				F1D000000000000000000005 /* DockDisconnectPolicy.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -357,6 +391,7 @@
 				F01400050000000000000005 /* PowerManagementLogPolicyTests.swift */,
 				E7C710040000000000000004 /* VolumeOperationOutcomePolicyTests.swift */,
 				E7C700070000000000000007 /* VolumeLogLabelFormatterTests.swift */,
+				F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -366,6 +401,9 @@
 			children = (
 				EB8200050000000000000005 /* UnlockVolumesWhenNeededPreferenceTests.swift */,
 				E8A1000D000000000000000D /* VolumeTests.swift */,
+				F1D000000000000000000008 /* PowerAdapterIdentityTests.swift */,
+				F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */,
+				F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -590,6 +628,13 @@
 				D1E700A92F8A000100C0D001 /* OnboardingView.swift in Sources */,
 				D2A100A12F9B100100A0C001 /* UpdateController.swift in Sources */,
 				B8DFADB5256CF511009E9296 /* StatusBar.swift in Sources */,
+				F1D000000000000000000101 /* UnmountTrigger.swift in Sources */,
+				F1D000000000000000000102 /* UnmountTriggersPreference.swift in Sources */,
+				F1D000000000000000000103 /* RememberedDocksPreference.swift in Sources */,
+				F1D000000000000000000104 /* PowerAdapterIdentity.swift in Sources */,
+				F1D000000000000000000105 /* DockDisconnectPolicy.swift in Sources */,
+				F1D000000000000000000106 /* PowerAdapterObserver.swift in Sources */,
+				F1D000000000000000000107 /* ExternalDisplayObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,6 +677,15 @@
 				E7C700010000000000000001 /* LogTests.swift in Sources */,
 				E7C710030000000000000003 /* VolumeOperationOutcomePolicyTests.swift in Sources */,
 				E7C700020000000000000002 /* VolumeLogLabelFormatterTests.swift in Sources */,
+				F1D000000000000000000201 /* UnmountTrigger.swift in Sources */,
+				F1D000000000000000000202 /* UnmountTriggersPreference.swift in Sources */,
+				F1D000000000000000000203 /* RememberedDocksPreference.swift in Sources */,
+				F1D000000000000000000204 /* PowerAdapterIdentity.swift in Sources */,
+				F1D000000000000000000205 /* DockDisconnectPolicy.swift in Sources */,
+				F1D000000000000000000206 /* PowerAdapterIdentityTests.swift in Sources */,
+				F1D000000000000000000207 /* DockDisconnectPolicyTests.swift in Sources */,
+				F1D000000000000000000208 /* UnmountTriggersPreferenceTests.swift in Sources */,
+				F1D000000000000000000209 /* RememberedDocksPreferenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,7 +889,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = nl.nielsmouthaan.Ejectify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -860,7 +914,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = nl.nielsmouthaan.Ejectify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
