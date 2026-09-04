@@ -53,6 +53,25 @@ enum Preference {
         }
     }
 
+    /// Power adapters Ejectify has seen, most recently connected first, so the menu can list unplugged ones.
+    static var knownPowerAdapters: [PowerAdapterIdentity] {
+        get {
+            KnownPowerAdaptersPreference.value(in: .standard)
+        }
+        set {
+            KnownPowerAdaptersPreference.set(newValue, in: .standard)
+        }
+    }
+
+    /// Records one connected adapter so it can be marked as a dock later, while unplugged.
+    static func recordKnownPowerAdapter(_ adapter: PowerAdapterIdentity) {
+        guard KnownPowerAdaptersPreference.record(adapter, in: .standard) else {
+            return
+        }
+
+        Log.preferences.info("Power adapter seen; adapter=\(adapter.logDescription)")
+    }
+
     /// Controls whether automatic remount passes are skipped while the Mac runs on battery power.
     static var keepUnmountedOnBattery: Bool {
         get {
@@ -104,6 +123,25 @@ enum Preference {
                 AppDelegate.shared.activityController?.clearRemountStateForEjectMode()
             }
         }
+    }
+
+    /// Returns the global shortcut bound to an action.
+    static func shortcut(for action: GlobalShortcut.Action) -> GlobalShortcut {
+        GlobalShortcutPreference.value(for: action, in: .standard)
+    }
+
+    /// Binds a global shortcut to an action, or restores its default when `shortcut` is `nil`.
+    static func setShortcut(_ shortcut: GlobalShortcut?, for action: GlobalShortcut.Action) {
+        GlobalShortcutPreference.set(shortcut, for: action, in: .standard)
+        Log.preferences.log("Preference changed: shortcut.\(action.rawValue)=\(Self.shortcut(for: action).displayString)")
+        Task { @MainActor in
+            AppDelegate.shared.reloadGlobalShortcuts()
+        }
+    }
+
+    /// Returns the action already bound to `shortcut`, so a duplicate binding can be refused.
+    static func actionConflicting(with shortcut: GlobalShortcut, excluding action: GlobalShortcut.Action) -> GlobalShortcut.Action? {
+        GlobalShortcutPreference.conflictingAction(with: shortcut, excluding: action, in: .standard)
     }
 
     /// Re-registers activity observers so preference changes take effect immediately.

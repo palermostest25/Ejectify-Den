@@ -8,14 +8,11 @@
 import Carbon
 import Foundation
 
-/// Registers and handles the app-wide keyboard shortcut for the configured all-volumes action.
+/// Registers and handles the app-wide keyboard shortcuts for the all-volumes actions.
 final class GlobalHotKeyController {
 
     /// Carbon signature used to identify Ejectify's hotkey events.
     private static let hotKeySignature: OSType = 0x456A484B // ASCII for "EjHK" (Ejectify hotkey)
-
-    /// Carbon identifier used to distinguish the all-volumes action hotkey from other hotkeys.
-    private static let hotKeyID: UInt32 = 1
 
     /// Event specification describing the hotkey-pressed callback this controller listens for.
     private static let hotKeyPressedEvent = EventTypeSpec(
@@ -35,29 +32,45 @@ final class GlobalHotKeyController {
     }
 
 
-    /// Action invoked when the registered global hotkey is pressed.
-    private let onAllVolumesAction: @MainActor () -> Void
+    /// Action invoked when one of the registered global hotkeys is pressed.
+    private let onAction: @MainActor (GlobalShortcut.Action) -> Void
 
     /// Registered Carbon event handler reference for hotkey press callbacks.
     private var eventHandlerRef: EventHandlerRef?
 
-    /// Registered Carbon hotkey reference while the shortcut is active.
-    private var eventHotKeyRef: EventHotKeyRef?
+    /// Registered Carbon hotkey references, keyed by the action they trigger.
+    private var hotKeyRefs: [GlobalShortcut.Action: EventHotKeyRef] = [:]
 
-    /// Returns whether the global hotkey registration is currently active.
-    private(set) var isRegistered = false
-
-    /// Creates the controller, installs its event handler, and attempts hotkey registration.
-    init(onAllVolumesAction: @escaping @MainActor () -> Void) {
-        self.onAllVolumesAction = onAllVolumesAction
-        installHotKeyHandlerIfNeeded()
-        registerHotKey()
+    /// Returns whether any global hotkey is currently registered.
+    var isRegistered: Bool {
+        !hotKeyRefs.isEmpty
     }
 
-    /// Unregisters the hotkey and removes the Carbon event handler.
+    /// Creates the controller, installs its event handler, and registers the configured shortcuts.
+    init(onAction: @escaping @MainActor (GlobalShortcut.Action) -> Void) {
+        self.onAction = onAction
+        installHotKeyHandlerIfNeeded()
+        reloadShortcuts()
+    }
+
+    /// Unregisters every hotkey and removes the Carbon event handler.
     deinit {
-        unregisterHotKey()
+        unregisterAllHotKeys()
         removeHotKeyHandler()
+    }
+
+    /// Returns whether one action's shortcut is currently registered.
+    func isRegistered(_ action: GlobalShortcut.Action) -> Bool {
+        hotKeyRefs[action] != nil
+    }
+
+    /// Re-registers every action against the currently configured shortcuts.
+    func reloadShortcuts() {
+        unregisterAllHotKeys()
+
+        for action in GlobalShortcut.Action.allCases {
+            register(action, shortcut: Preference.shortcut(for: action))
+        }
     }
 
     /// Installs the Carbon event handler used to receive global hotkey press events.
@@ -85,17 +98,13 @@ final class GlobalHotKeyController {
         self.eventHandlerRef = eventHandlerRef
     }
 
-    /// Attempts to register the fixed global `Control` + `Command` + `U` hotkey.
-    private func registerHotKey() {
-        guard eventHotKeyRef == nil else {
-            return
-        }
-
+    /// Registers one action's shortcut with Carbon.
+    private func register(_ action: GlobalShortcut.Action, shortcut: GlobalShortcut) {
         var hotKeyRef: EventHotKeyRef?
-        let hotKeyID = EventHotKeyID(signature: Self.hotKeySignature, id: Self.hotKeyID)
+        let hotKeyID = EventHotKeyID(signature: Self.hotKeySignature, id: action.hotKeyID)
         let status = RegisterEventHotKey(
-            UInt32(kVK_ANSI_U),
-            UInt32(controlKey | cmdKey),
+            shortcut.keyCode,
+            shortcut.carbonModifiers,
             hotKeyID,
             GetApplicationEventTarget(),
             0,
@@ -103,32 +112,25 @@ final class GlobalHotKeyController {
         )
 
         guard status == noErr, let hotKeyRef else {
-            isRegistered = false
-            Log.hotKey.error("Failed to register global all-volumes action hotkey (Control-Command-U): status=\(status)")
+            // A shortcut already owned by another app is the usual cause, and the menu still offers the action.
+            Log.hotKey.warning("Failed to register global hotkey; action=\(action.rawValue); status=\(status)")
             return
         }
 
-        eventHotKeyRef = hotKeyRef
-        isRegistered = true
-        Log.hotKey.log("Registered global all-volumes action hotkey: Control-Command-U")
+        hotKeyRefs[action] = hotKeyRef
+        Log.hotKey.log("Registered global hotkey; action=\(action.rawValue); shortcut=\(shortcut.displayString)")
     }
 
-    /// Unregisters the Carbon hotkey if it is currently active.
-    private func unregisterHotKey() {
-        guard let eventHotKeyRef else {
-            isRegistered = false
-            return
+    /// Unregisters every currently registered hotkey.
+    private func unregisterAllHotKeys() {
+        for (action, hotKeyRef) in hotKeyRefs {
+            let status = UnregisterEventHotKey(hotKeyRef)
+            if status != noErr {
+                Log.hotKey.error("Failed to unregister global hotkey; action=\(action.rawValue); status=\(status)")
+            }
         }
 
-        let status = UnregisterEventHotKey(eventHotKeyRef)
-        if status == noErr {
-            Log.hotKey.log("Unregistered global all-volumes action hotkey")
-        } else {
-            Log.hotKey.error("Failed to unregister global all-volumes action hotkey: status=\(status)")
-        }
-
-        self.eventHotKeyRef = nil
-        isRegistered = false
+        hotKeyRefs.removeAll()
     }
 
     /// Removes the Carbon event handler when the controller is torn down.
@@ -145,7 +147,7 @@ final class GlobalHotKeyController {
         self.eventHandlerRef = nil
     }
 
-    /// Handles an incoming Carbon hotkey event and dispatches the configured all-volumes action.
+    /// Handles an incoming Carbon hotkey event and dispatches the matching action.
     private func handleHotKeyPressed(_ eventRef: EventRef) {
         var hotKeyID = EventHotKeyID()
         let status = GetEventParameter(
@@ -163,13 +165,14 @@ final class GlobalHotKeyController {
             return
         }
 
-        guard hotKeyID.signature == Self.hotKeySignature, hotKeyID.id == Self.hotKeyID else {
+        guard hotKeyID.signature == Self.hotKeySignature,
+              let action = GlobalShortcut.Action.allCases.first(where: { $0.hotKeyID == hotKeyID.id }) else {
             return
         }
 
-        Log.hotKey.log("Global all-volumes action hotkey pressed")
-        Task { @MainActor [onAllVolumesAction] in
-            onAllVolumesAction()
+        Log.hotKey.log("Global hotkey pressed; action=\(action.rawValue)")
+        Task { @MainActor [onAction] in
+            onAction(action)
         }
     }
 }

@@ -14,6 +14,11 @@ final class StatusBar {
     /// Backing status item shown in the macOS menu bar.
     private let statusItem: NSStatusItem
 
+    /// Status item button, used to anchor the disk operation panel under the menu bar icon.
+    var button: NSStatusBarButton? {
+        statusItem.button
+    }
+
     /// Builds the status item with icon and menu.
     init() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)

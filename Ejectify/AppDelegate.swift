@@ -34,9 +34,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Owns the onboarding window lifecycle while guidance is presented.
     private var onboardingWindowController: OnboardingWindowController?
 
-    /// Returns whether the global all-volumes action hotkey is currently registered.
+    /// Returns whether the global unmount-all hotkey is currently registered.
     var isUnmountAllHotKeyRegistered: Bool {
-        globalHotKeyController?.isRegistered ?? false
+        globalHotKeyController?.isRegistered(.unmountAll) ?? false
+    }
+
+    /// Returns whether the global mount-all hotkey is currently registered.
+    var isMountAllHotKeyRegistered: Bool {
+        globalHotKeyController?.isRegistered(.mountAll) ?? false
+    }
+
+    /// Owns the window used to change global keyboard shortcuts.
+    private var shortcutSettingsWindowController: ShortcutSettingsWindowController?
+
+    /// Re-registers global hotkeys after the user changes a shortcut.
+    func reloadGlobalShortcuts() {
+        globalHotKeyController?.reloadShortcuts()
+    }
+
+    /// Presents the window for changing global keyboard shortcuts.
+    func showShortcutSettings() {
+        if shortcutSettingsWindowController == nil {
+            shortcutSettingsWindowController = ShortcutSettingsWindowController { [weak self] in
+                self?.shortcutSettingsWindowController = nil
+            }
+        }
+
+        shortcutSettingsWindowController?.showCentered()
     }
 
     /// Bootstraps routing mode, applies one-time first-run setup, and initializes primary app controllers.
@@ -51,8 +75,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             VolumeOperationRouter.shared.requestPrivilegedExecutionMode()
         }
 
-        globalHotKeyController = GlobalHotKeyController { [weak self] in
-            self?.performManualUnmountAll()
+        globalHotKeyController = GlobalHotKeyController { [weak self] action in
+            switch action {
+            case .unmountAll:
+                self?.performManualUnmountAll()
+            case .mountAll:
+                self?.activityController?.performManualMountPass()
+            }
         }
         statusBar = StatusBar()
         activityController = ActivityController()
@@ -77,35 +106,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Handles all enabled volumes using the configured user-initiated action.
     func performManualUnmountAll() {
-        let enabledVolumes = Volume.mountedVolumes().filter(\.enabled)
-
-        guard !Preference.ejectInsteadOfUnmount else {
-            activityController?.clearRemountStateForEjectMode()
-            let representatives = Volume.uniqueWholeDiskRepresentatives(from: enabledVolumes)
-            Log.app.log("Manual eject-all triggered: \(representatives.count) whole disk(s) for \(enabledVolumes.count) enabled volume(s)")
-
-            for volume in representatives {
-                VolumeOperationRouter.shared.eject(
-                    volumeUUID: volume.diskUUID.map { $0 as NSUUID },
-                    volumeName: volume.name,
-                    bsdName: volume.bsdName,
-                    forceUnmount: Preference.forceUnmount
-                ) { _, _, _ in }
-            }
-
+        // Routing the manual action through the activity controller keeps remount tracking, progress
+        // reporting and unmount verification identical to the automatic triggers.
+        guard let activityController else {
+            Log.app.error("Manual unmount-all skipped; reason=activity controller unavailable")
             return
         }
 
-        Log.app.log("Manual unmount-all triggered: \(enabledVolumes.count) enabled volumes")
-
-        for volume in enabledVolumes {
-            VolumeOperationRouter.shared.unmount(
-                volumeUUID: volume.diskUUID.map { $0 as NSUUID },
-                volumeName: volume.name,
-                bsdName: volume.bsdName,
-                force: Preference.forceUnmount
-            ) { _, _, _ in }
-        }
+        activityController.performManualAllVolumesAction()
     }
 
     /// Sends a best-effort helper shutdown request when the app is quitting.

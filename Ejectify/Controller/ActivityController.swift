@@ -149,11 +149,11 @@ final class ActivityController {
 
     /// Handles all currently enabled volumes when a notification-based trigger fires.
     @objc func unmountVolumes(notification: Notification) {
-        performAutomaticDiskOperation(triggerDescription: notification.name.rawValue)
+        performDiskOperation(triggerDescription: notification.name.rawValue)
     }
 
-    /// Runs the configured automatic disk operation for all enabled volumes.
-    private func performAutomaticDiskOperation(triggerDescription: String) {
+    /// Runs the configured disk operation for all enabled volumes.
+    private func performDiskOperation(triggerDescription: String) {
         Log.powerEvents.log("Disk operation trigger received; trigger=\(triggerDescription)")
         let enabledVolumes = Volume.mountedVolumes().filter(\.enabled)
 
@@ -162,6 +162,7 @@ final class ActivityController {
             let representatives = Volume.uniqueWholeDiskRepresentatives(from: enabledVolumes)
             Log.volumeOperations.log("Automatic eject batch started: \(representatives.count) whole disk(s) for \(enabledVolumes.count) enabled volume(s)")
 
+            DiskOperationHUDController.shared.begin(kind: .ejecting, volumes: Self.hudVolumes(for: representatives))
             for volume in representatives {
                 requestEject(for: volume) { _ in }
             }
@@ -170,9 +171,28 @@ final class ActivityController {
 
         mergeRemountCandidates(with: enabledVolumes, reason: "Unmount trigger received")
 
+        DiskOperationHUDController.shared.begin(kind: .unmounting, volumes: Self.hudVolumes(for: enabledVolumes))
         for volume in enabledVolumes {
             requestUnmount(for: volume) { _ in }
         }
+    }
+
+    /// Maps volumes onto the identifier and name pairs the progress HUD displays.
+    static func hudVolumes(for volumes: [Volume]) -> [(id: String, name: String)] {
+        volumes.map { (id: $0.id, name: $0.name) }
+    }
+
+    /// Returns a short, user-facing reason for a failed unmount.
+    static func unmountFailureReason(success: Bool, status: DAReturn?) -> String {
+        guard !success else {
+            return String(localized: "The disk is still mounted.")
+        }
+
+        guard let status, status == DAReturn(kDAReturnBusy) else {
+            return String(localized: "The disk could not be unmounted.")
+        }
+
+        return String(localized: "The disk is in use. Quit apps using it, or turn on Force Unmount.")
     }
 
     /// Cancels pending mounts and clears remount candidates because ejected disks cannot be remounted automatically.
@@ -234,7 +254,12 @@ final class ActivityController {
             )
         }
 
-        return powerAdapterObserver?.start() ?? false
+        let didStart = powerAdapterObserver?.start() ?? false
+        if let currentAdapter = powerAdapterObserver?.currentAdapter {
+            Preference.recordKnownPowerAdapter(currentAdapter)
+        }
+
+        return didStart
     }
 
     /// Stops IOKit power-source monitoring and releases the observer.
@@ -283,7 +308,7 @@ final class ActivityController {
         switch decision {
         case .unmount(let reason):
             Log.powerEvents.log("Dock disconnect trigger fired; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
-            performAutomaticDiskOperation(triggerDescription: Preference.UnmountWhen.dockDisconnected.rawValue)
+            performDiskOperation(triggerDescription: Preference.UnmountWhen.dockDisconnected.rawValue)
         case .ignore(let reason):
             Log.powerEvents.info("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
         }
@@ -291,6 +316,10 @@ final class ActivityController {
 
     /// Schedules a mount pass when external power returns, because the Mac never slept and no wake event will arrive.
     private func handleAdapterGained(_ adapter: PowerAdapterIdentity?) {
+        if let adapter {
+            Preference.recordKnownPowerAdapter(adapter)
+        }
+
         guard !remountCandidates.isEmpty else {
             return
         }
@@ -308,7 +337,7 @@ final class ActivityController {
             return
         }
 
-        performAutomaticDiskOperation(triggerDescription: Preference.UnmountWhen.externalDisplayDisconnected.rawValue)
+        performDiskOperation(triggerDescription: Preference.UnmountWhen.externalDisplayDisconnected.rawValue)
     }
 
     /// Schedules a mount pass when an external display returns after all of them were disconnected.
@@ -467,6 +496,11 @@ final class ActivityController {
         }
     }
 
+    /// Runs the configured all-volumes action for a user-initiated request such as the menu or a hotkey.
+    func performManualAllVolumesAction() {
+        performDiskOperation(triggerDescription: "manual")
+    }
+
     /// Mounts every pending remount candidate on user request, ignoring the battery preference.
     func performManualMountPass() {
         guard !Preference.ejectInsteadOfUnmount else {
@@ -482,6 +516,7 @@ final class ActivityController {
 
         cancelDelayedMountPass()
         Log.volumeOperations.log("Manual mount pass triggered: \(self.remountCandidates.count) candidate(s)")
+        DiskOperationHUDController.shared.begin(kind: .mounting, volumes: Self.hudVolumes(for: self.remountCandidates))
         for volume in self.remountCandidates {
             scheduleMountTask(for: volume)
         }
@@ -542,7 +577,27 @@ final class ActivityController {
             removeRemountCandidate(withID: volumeID)
         }
 
+        reportRemountOutcomeToHUD(after: event, volumeID: volumeID)
         return disposition
+    }
+
+    /// Reports mount outcomes to the progress HUD. Unmount outcomes are reported where they complete.
+    private func reportRemountOutcomeToHUD(
+        after event: VolumeOperationOutcomePolicy.AutomaticRemountCandidateEvent,
+        volumeID: String
+    ) {
+        switch event {
+        case .remountSucceeded:
+            DiskOperationHUDController.shared.finish(volumeID: volumeID, state: .succeeded)
+        case .terminalRemountFailure, .retryExhausted:
+            DiskOperationHUDController.shared.finish(
+                volumeID: volumeID,
+                state: .failed(reason: String(localized: "The disk could not be remounted."))
+            )
+        case .unmountCompleted, .ejectModeEnabled, .retryCancelled:
+            // Unmounts report themselves, and the other events are not batch outcomes.
+            break
+        }
     }
 
     /// Applies readiness-state updates from workspace and distributed notifications.
@@ -1187,6 +1242,10 @@ final class ActivityController {
                 }
 
                 self.inFlightEjects.remove(wholeDiskBSDName)
+                DiskOperationHUDController.shared.finish(
+                    volumeID: volume.id,
+                    state: success ? .succeeded : .failed(reason: String(localized: "The disk could not be ejected."))
+                )
                 let completions = self.pendingEjectCompletions.removeValue(forKey: wholeDiskBSDName) ?? []
                 completions.forEach { $0(success) }
             }
@@ -1218,9 +1277,23 @@ final class ActivityController {
                     after: .unmountCompleted(success: success, status: status),
                     volumeID: volumeID
                 )
-                if !success {
+
+                // Disk Arbitration reporting success is not proof the volume left, so confirm it did.
+                let didUnmount = success && !self.isVolumeMounted(withID: volumeID)
+                if didUnmount {
+                    DiskOperationHUDController.shared.finish(volumeID: volumeID, state: .succeeded)
+                } else {
                     let statusDescription = status?.statusDescription ?? "none"
-                    Log.volumeOperations.info("Automatic unmount failed; preserving candidate for wake reconciliation; status=\(statusDescription); \(volume.logLabel)")
+                    if success {
+                        Log.volumeOperations.warning("Unmount reported success but the volume is still mounted; \(volume.logLabel)")
+                    } else {
+                        Log.volumeOperations.warning("Unmount failed; preserving candidate for wake reconciliation; status=\(statusDescription); \(volume.logLabel)")
+                    }
+
+                    DiskOperationHUDController.shared.finish(
+                        volumeID: volumeID,
+                        state: .failed(reason: Self.unmountFailureReason(success: success, status: status))
+                    )
                 }
                 let completions = self.pendingUnmountCompletions.removeValue(forKey: volumeID) ?? []
                 completions.forEach { $0(success) }
