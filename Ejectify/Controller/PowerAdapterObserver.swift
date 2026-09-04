@@ -10,6 +10,8 @@ import IOKit.ps
 import IOKit.pwr_mgt
 
 /// Bridges IOKit power-source callbacks to main-actor handlers that report adapter losses and reconnections.
+///
+/// Call `stop()` before releasing the observer: cleanup cannot run from `deinit` because the observer is main-actor isolated.
 @MainActor
 final class PowerAdapterObserver {
 

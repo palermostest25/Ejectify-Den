@@ -9,6 +9,8 @@ import CoreGraphics
 import Foundation
 
 /// Bridges CoreGraphics display reconfiguration callbacks to main-actor handlers for external display changes.
+///
+/// Call `stop()` before releasing the observer: cleanup cannot run from `deinit` because the observer is main-actor isolated.
 @MainActor
 final class ExternalDisplayObserver {
 

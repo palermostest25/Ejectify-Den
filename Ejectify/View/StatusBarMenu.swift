@@ -598,7 +598,7 @@ final class StatusBarMenu: NSMenu {
         selectedTriggers.formSymmetricDifference([unmountWhen])
 
         guard !selectedTriggers.isEmpty else {
-            Log.preferences.info("Unmount trigger change ignored; reason=at least one trigger must stay enabled")
+            Log.preferences.warning("Unmount trigger change rejected; reason=at least one trigger must stay enabled")
             NSSound.beep()
             updateMenu()
             return
