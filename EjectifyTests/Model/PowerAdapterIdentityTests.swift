@@ -141,6 +141,17 @@ struct PowerAdapterIdentityTests {
         #expect(decodedDock == dock)
     }
 
+    @Test func identifiableRequiresASerialOrTwoComparableFields() {
+        #expect(PowerAdapterIdentity(serial: "SERIAL-1").isIdentifiable)
+        #expect(PowerAdapterIdentity(adapterID: 4, familyCode: 12).isIdentifiable)
+        #expect(PowerAdapterIdentity(manufacturer: "CalDigit", model: "TS4").isIdentifiable)
+        #expect(PowerAdapterIdentity(adapterID: 4).isIdentifiable == false)
+        #expect(PowerAdapterIdentity(watts: 96).isIdentifiable == false)
+        #expect(PowerAdapterIdentity().isIdentifiable == false)
+        // Blank strings carry no information, so they do not count as a comparable field.
+        #expect(PowerAdapterIdentity(adapterID: 4, manufacturer: "  ").isIdentifiable == false)
+    }
+
     @Test func remembersDocksByMatchingRatherThanEquality() {
         let rememberedDock = PowerAdapterIdentity(adapterID: 4, familyCode: 12, manufacturer: "CalDigit", model: "TS4")
         let partialReading = PowerAdapterIdentity(adapterID: 4, familyCode: 12)

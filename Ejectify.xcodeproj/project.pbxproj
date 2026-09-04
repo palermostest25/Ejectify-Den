@@ -91,6 +91,9 @@
 		F1D000000000000000000207 /* DockDisconnectPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */; };
 		F1D000000000000000000208 /* UnmountTriggersPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */; };
 		F1D000000000000000000209 /* RememberedDocksPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */; };
+		F1D000000000000000000108 /* KnownPowerAdaptersPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */; };
+		F1D00000000000000000020A /* KnownPowerAdaptersPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */; };
+		F1D00000000000000000020B /* KnownPowerAdaptersPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000D /* KnownPowerAdaptersPreferenceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -221,6 +224,8 @@
 		F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockDisconnectPolicyTests.swift; sourceTree = "<group>"; };
 		F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmountTriggersPreferenceTests.swift; sourceTree = "<group>"; };
 		F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberedDocksPreferenceTests.swift; sourceTree = "<group>"; };
+		F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPowerAdaptersPreference.swift; sourceTree = "<group>"; };
+		F1D00000000000000000000D /* KnownPowerAdaptersPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPowerAdaptersPreferenceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +330,7 @@
 				F1D000000000000000000003 /* RememberedDocksPreference.swift */,
 				F1D000000000000000000001 /* UnmountTrigger.swift */,
 				F1D000000000000000000002 /* UnmountTriggersPreference.swift */,
+				F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				F1D000000000000000000008 /* PowerAdapterIdentityTests.swift */,
 				F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */,
 				F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */,
+				F1D00000000000000000000D /* KnownPowerAdaptersPreferenceTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -635,6 +642,7 @@
 				F1D000000000000000000105 /* DockDisconnectPolicy.swift in Sources */,
 				F1D000000000000000000106 /* PowerAdapterObserver.swift in Sources */,
 				F1D000000000000000000107 /* ExternalDisplayObserver.swift in Sources */,
+				F1D000000000000000000108 /* KnownPowerAdaptersPreference.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +694,8 @@
 				F1D000000000000000000207 /* DockDisconnectPolicyTests.swift in Sources */,
 				F1D000000000000000000208 /* UnmountTriggersPreferenceTests.swift in Sources */,
 				F1D000000000000000000209 /* RememberedDocksPreferenceTests.swift in Sources */,
+				F1D00000000000000000020A /* KnownPowerAdaptersPreference.swift in Sources */,
+				F1D00000000000000000020B /* KnownPowerAdaptersPreferenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

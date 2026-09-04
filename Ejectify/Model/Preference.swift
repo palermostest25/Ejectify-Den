@@ -53,6 +53,25 @@ enum Preference {
         }
     }
 
+    /// Power adapters Ejectify has seen, most recently connected first, so the menu can list unplugged ones.
+    static var knownPowerAdapters: [PowerAdapterIdentity] {
+        get {
+            KnownPowerAdaptersPreference.value(in: .standard)
+        }
+        set {
+            KnownPowerAdaptersPreference.set(newValue, in: .standard)
+        }
+    }
+
+    /// Records one connected adapter so it can be marked as a dock later, while unplugged.
+    static func recordKnownPowerAdapter(_ adapter: PowerAdapterIdentity) {
+        guard KnownPowerAdaptersPreference.record(adapter, in: .standard) else {
+            return
+        }
+
+        Log.preferences.info("Power adapter seen; adapter=\(adapter.logDescription)")
+    }
+
     /// Controls whether automatic remount passes are skipped while the Mac runs on battery power.
     static var keepUnmountedOnBattery: Bool {
         get {

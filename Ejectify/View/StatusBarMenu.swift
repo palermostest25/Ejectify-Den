@@ -385,7 +385,7 @@ final class StatusBarMenu: NSMenu {
 
         // The dock trigger can only fire once the user has remembered the dock it should watch for.
         if unmountWhen == .dockDisconnected, selectedTriggers.contains(unmountWhen), Preference.rememberedDocks.isEmpty {
-            item.attributedTitle = makeWarningTitle(title: title, warning: String(localized: "No dock remembered"))
+            item.attributedTitle = makeHintTitle(title: title, hint: String(localized: "No dock remembered"), isWarning: true)
         }
 
         return item
@@ -397,27 +397,16 @@ final class StatusBarMenu: NSMenu {
         dockMenu.autoenablesItems = false
 
         let currentAdapter = PowerAdapterObserver.snapshotCurrentAdapter()
-        let rememberedDocks = Preference.rememberedDocks
+        if let currentAdapter {
+            // Recording here means an adapter is offered in the menu even when no observer is running.
+            Preference.recordKnownPowerAdapter(currentAdapter)
+        }
 
         let connectedItem = NSMenuItem(title: connectedAdapterDescription(for: currentAdapter), action: nil, keyEquivalent: "")
         connectedItem.isEnabled = false
         dockMenu.addItem(connectedItem)
 
-        let rememberItem = NSMenuItem(
-            title: String(localized: "Remember current adapter as dock"),
-            action: #selector(rememberCurrentAdapterClicked(menuItem:)),
-            keyEquivalent: ""
-        )
-        rememberItem.target = self
-        if let currentAdapter {
-            rememberItem.representedObject = currentAdapter
-            rememberItem.isEnabled = !currentAdapter.isRemembered(in: rememberedDocks)
-        } else {
-            rememberItem.isEnabled = false
-        }
-        dockMenu.addItem(rememberItem)
-
-        addRememberedDocksSection(to: dockMenu, rememberedDocks: rememberedDocks)
+        addPowerAdapterSection(to: dockMenu, currentAdapter: currentAdapter)
 
         dockMenu.addItem(NSMenuItem.separator())
 
@@ -433,31 +422,26 @@ final class StatusBarMenu: NSMenu {
         return dockMenu
     }
 
-    /// Adds one row per remembered dock, each with its own submenu for forgetting it.
-    private func addRememberedDocksSection(to dockMenu: NSMenu, rememberedDocks: [PowerAdapterIdentity]) {
+    /// Adds one checkable row per known power adapter so docks can be selected while unplugged.
+    private func addPowerAdapterSection(to dockMenu: NSMenu, currentAdapter: PowerAdapterIdentity?) {
         dockMenu.addItem(NSMenuItem.separator())
-        dockMenu.addItem(NSMenuItem.sectionHeader(title: String(localized: "Remembered docks")))
+        dockMenu.addItem(NSMenuItem.sectionHeader(title: String(localized: "Power adapters")))
 
-        guard !rememberedDocks.isEmpty else {
-            let emptyItem = NSMenuItem(title: String(localized: "No dock remembered"), action: nil, keyEquivalent: "")
+        let knownAdapters = Preference.knownPowerAdapters
+        guard !knownAdapters.isEmpty else {
+            let emptyItem = NSMenuItem(title: String(localized: "Connect your dock to remember it"), action: nil, keyEquivalent: "")
             emptyItem.isEnabled = false
             dockMenu.addItem(emptyItem)
             return
         }
 
-        for rememberedDock in rememberedDocks {
-            let dockItem = NSMenuItem(title: rememberedDock.displayName, action: nil, keyEquivalent: "")
-            dockItem.state = .on
+        let rememberedDocks = Preference.rememberedDocks
+        for adapter in knownAdapters {
+            dockMenu.addItem(makeAdapterMenuItem(for: adapter, currentAdapter: currentAdapter, rememberedDocks: rememberedDocks))
+        }
 
-            let dockActionsMenu = NSMenu(title: rememberedDock.displayName)
-            dockActionsMenu.autoenablesItems = false
-            let forgetItem = NSMenuItem(title: String(localized: "Forget"), action: #selector(forgetDockClicked(menuItem:)), keyEquivalent: "")
-            forgetItem.target = self
-            forgetItem.representedObject = rememberedDock
-            dockActionsMenu.addItem(forgetItem)
-            dockItem.submenu = dockActionsMenu
-
-            dockMenu.addItem(dockItem)
+        guard !rememberedDocks.isEmpty else {
+            return
         }
 
         let forgetAllItem = NSMenuItem(
@@ -467,6 +451,35 @@ final class StatusBarMenu: NSMenu {
         )
         forgetAllItem.target = self
         dockMenu.addItem(forgetAllItem)
+    }
+
+    /// Creates one adapter row whose checkmark means "treat this adapter as a dock".
+    private func makeAdapterMenuItem(
+        for adapter: PowerAdapterIdentity,
+        currentAdapter: PowerAdapterIdentity?,
+        rememberedDocks: [PowerAdapterIdentity]
+    ) -> NSMenuItem {
+        let item = NSMenuItem(title: adapter.displayName, action: #selector(dockAdapterToggled(menuItem:)), keyEquivalent: "")
+        item.target = self
+        item.state = adapter.isRemembered(in: rememberedDocks) ? .on : .off
+        item.representedObject = adapter
+
+        // An adapter macOS barely describes can never be recognized again, so it cannot act as a dock.
+        guard adapter.isIdentifiable else {
+            item.isEnabled = false
+            item.attributedTitle = makeHintTitle(
+                title: adapter.displayName,
+                hint: String(localized: "Cannot be identified reliably"),
+                isWarning: true
+            )
+            return item
+        }
+
+        if currentAdapter?.matches(adapter) == true {
+            item.attributedTitle = makeHintTitle(title: adapter.displayName, hint: String(localized: "Connected"), isWarning: false)
+        }
+
+        return item
     }
 
     /// Returns the menu line describing the adapter the Mac is drawing power from right now.
@@ -483,15 +496,16 @@ final class StatusBarMenu: NSMenu {
         return "\(connectedNow) (\(String(localized: "Apple charger")))"
     }
 
-    /// Builds a menu title with a smaller trailing warning hint.
-    private func makeWarningTitle(title: String, warning: String) -> NSAttributedString {
+    /// Builds a menu title with a smaller trailing hint, marked with a warning sign when needed.
+    private func makeHintTitle(title: String, hint: String, isWarning: Bool) -> NSAttributedString {
         let attributedTitle = NSMutableAttributedString(
             string: title,
             attributes: [.font: NSFont.menuFont(ofSize: 0)]
         )
+        let hintText = isWarning ? "  \u{26A0}\u{FE0E} \(hint)" : "  \(hint)"
         attributedTitle.append(
             NSAttributedString(
-                string: "  \u{26A0}\u{FE0E} \(warning)",
+                string: hintText,
                 attributes: [
                     .font: NSFont.menuFont(ofSize: NSFont.smallSystemFontSize),
                     .foregroundColor: NSColor.secondaryLabelColor
@@ -608,15 +622,20 @@ final class StatusBarMenu: NSMenu {
         updateMenu()
     }
 
-    /// Remembers the currently connected power adapter as a dock, confirming first for Apple chargers.
+    /// Toggles whether one power adapter is treated as a dock.
     @MainActor
-    @objc private func rememberCurrentAdapterClicked(menuItem: NSMenuItem) {
-        guard let adapter = menuItem.representedObject as? PowerAdapterIdentity else {
+    @objc private func dockAdapterToggled(menuItem: NSMenuItem) {
+        guard let adapter = menuItem.representedObject as? PowerAdapterIdentity, adapter.isIdentifiable else {
             return
         }
 
         var rememberedDocks = Preference.rememberedDocks
+
         guard !adapter.isRemembered(in: rememberedDocks) else {
+            rememberedDocks.removeAll { $0.matches(adapter) }
+            Preference.rememberedDocks = rememberedDocks
+            Log.preferences.log("Remembered dock forgotten; adapter=\(adapter.logDescription)")
+            updateMenu()
             return
         }
 
@@ -642,19 +661,6 @@ final class StatusBarMenu: NSMenu {
         alert.addButton(withTitle: String(localized: "Cancel"))
         alert.addButton(withTitle: String(localized: "Remember anyway"))
         return alert.runModal() == .alertSecondButtonReturn
-    }
-
-    /// Forgets one remembered dock.
-    @objc private func forgetDockClicked(menuItem: NSMenuItem) {
-        guard let rememberedDock = menuItem.representedObject as? PowerAdapterIdentity else {
-            return
-        }
-
-        var rememberedDocks = Preference.rememberedDocks
-        rememberedDocks.removeAll { $0 == rememberedDock }
-        Preference.rememberedDocks = rememberedDocks
-        Log.preferences.log("Remembered dock forgotten; adapter=\(rememberedDock.logDescription)")
-        updateMenu()
     }
 
     /// Forgets every remembered dock.

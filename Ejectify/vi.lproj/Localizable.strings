@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Đây có vẻ là bộ sạc Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ghi nhớ nó là dock nghĩa là rút bộ sạc sẽ ngắt kết nối các ổ đĩa của bạn. Vẫn ghi nhớ?";
 "Remember anyway" = "Vẫn ghi nhớ";
+"Power adapters" = "Bộ chuyển đổi nguồn";
+"Connected" = "Đã kết nối";
+"Connect your dock to remember it" = "Kết nối dock để ghi nhớ nó";
+"Cannot be identified reliably" = "Không thể nhận dạng đáng tin cậy";

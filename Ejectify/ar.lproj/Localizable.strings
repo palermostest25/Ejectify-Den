@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "يبدو أن هذا شاحن Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "تذكره كقاعدة توصيل يعني أن فصل الشاحن سيلغي تحميل وحدات التخزين. تذكره على أي حال؟";
 "Remember anyway" = "تذكر على أي حال";
+"Power adapters" = "محولات الطاقة";
+"Connected" = "متصل";
+"Connect your dock to remember it" = "وصّل قاعدة التوصيل لتذكرها";
+"Cannot be identified reliably" = "يتعذر التعرف عليه بشكل موثوق";

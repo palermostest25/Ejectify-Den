@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Das sieht nach einem Apple-Ladegerät aus.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Wenn du es als Dock merkst, werden deine Volumes deaktiviert, sobald du das Ladegerät abziehst. Trotzdem merken?";
 "Remember anyway" = "Trotzdem merken";
+"Power adapters" = "Netzteile";
+"Connected" = "Verbunden";
+"Connect your dock to remember it" = "Schließe dein Dock an, um es zu merken";
+"Cannot be identified reliably" = "Kann nicht zuverlässig erkannt werden";

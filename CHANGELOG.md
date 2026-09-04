@@ -7,6 +7,7 @@
 - Added an "External display disconnected" trigger for clamshell setups.
 - Volumes now remount automatically when a remembered dock is reconnected.
 - Added an option to keep volumes unmounted while running on battery, with a new "Mount all" menu action to remount them on demand.
+- Docks can be chosen from a list of power adapters Ejectify has seen, so an adapter can be marked as a dock while it is unplugged.
 - Diagnostics reports now include power adapter, remembered dock, and trigger information.
 
 ## 2.1.0

@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Dette ser ut som en Apple-lader.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Hvis du husker den som dokk, blir volumene deaktivert når du kobler fra laderen. Husk likevel?";
 "Remember anyway" = "Husk likevel";
+"Power adapters" = "Strømforsyninger";
+"Connected" = "Tilkoblet";
+"Connect your dock to remember it" = "Koble til dokken for å huske den";
+"Cannot be identified reliably" = "Kan ikke gjenkjennes pålitelig";

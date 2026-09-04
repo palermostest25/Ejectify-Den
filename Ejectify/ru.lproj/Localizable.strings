@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Похоже, это зарядное устройство Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Если запомнить его как док-станцию, отключение зарядного устройства отключит ваши тома. Все равно запомнить?";
 "Remember anyway" = "Все равно запомнить";
+"Power adapters" = "Адаптеры питания";
+"Connected" = "Подключено";
+"Connect your dock to remember it" = "Подключите док-станцию, чтобы запомнить ее";
+"Cannot be identified reliably" = "Не удается надежно определить";

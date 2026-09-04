@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "これはApple製の充電器のようです。";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Dockとして記憶すると、充電器を抜いたときにボリュームがマウント解除されます。記憶しますか？";
 "Remember anyway" = "記憶する";
+"Power adapters" = "電源アダプタ";
+"Connected" = "接続済み";
+"Connect your dock to remember it" = "Dockを接続すると記憶できます";
+"Cannot be identified reliably" = "確実に識別できません";

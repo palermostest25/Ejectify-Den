@@ -93,6 +93,22 @@ struct PowerAdapterIdentity: Codable, Hashable, Sendable {
         return comparedFieldCount >= 2
     }
 
+    /// Whether this reading carries enough detail for `matches(_:)` to recognize the adapter again.
+    var isIdentifiable: Bool {
+        if Self.normalized(serial) != nil {
+            return true
+        }
+
+        // `matches(_:)` needs at least two comparable fields, so a thinner reading can never match.
+        let comparableFieldCount = [
+            adapterID != nil,
+            familyCode != nil,
+            Self.normalized(manufacturer) != nil,
+            Self.normalized(model) != nil
+        ].filter { $0 }.count
+        return comparableFieldCount >= 2
+    }
+
     /// Whether the adapter looks like an Apple charger, used only as a user-facing hint.
     var isLikelyAppleCharger: Bool {
         if let manufacturer, manufacturer.localizedCaseInsensitiveContains("Apple") {

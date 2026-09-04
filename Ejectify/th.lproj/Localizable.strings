@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "ดูเหมือนว่านี่จะเป็นที่ชาร์จ Apple";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "การจำไว้เป็นแท่นเชื่อมต่อหมายความว่าการถอดที่ชาร์จจะเลิกเมานต์ไดรฟ์ของคุณ ต้องการจำไว้หรือไม่";
 "Remember anyway" = "จำไว้";
+"Power adapters" = "อะแดปเตอร์จ่ายไฟ";
+"Connected" = "เชื่อมต่ออยู่";
+"Connect your dock to remember it" = "เชื่อมต่อแท่นเชื่อมต่อของคุณเพื่อจดจำ";
+"Cannot be identified reliably" = "ไม่สามารถระบุได้อย่างน่าเชื่อถือ";

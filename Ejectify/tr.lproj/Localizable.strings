@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Bu bir Apple şarj cihazına benziyor.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Bunu yerleştirme istasyonu olarak hatırlamak, şarj cihazını çıkardığınızda birimlerinizin bağlantısının kesilmesi anlamına gelir. Yine de hatırlansın mı?";
 "Remember anyway" = "Yine De Hatırla";
+"Power adapters" = "Güç Adaptörleri";
+"Connected" = "Bağlı";
+"Connect your dock to remember it" = "Hatırlamak için yerleştirme istasyonunu bağlayın";
+"Cannot be identified reliably" = "Güvenilir şekilde tanımlanamıyor";

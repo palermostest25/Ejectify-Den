@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Acesta pare a fi un încărcător Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Dacă îl reții ca doc, deconectarea încărcătorului va demonta volumele. Reții oricum?";
 "Remember anyway" = "Reține oricum";
+"Power adapters" = "Adaptoare de alimentare";
+"Connected" = "Conectat";
+"Connect your dock to remember it" = "Conectează docul pentru a-l reține";
+"Cannot be identified reliably" = "Nu poate fi identificat în mod fiabil";

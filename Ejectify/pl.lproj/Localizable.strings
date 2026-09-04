@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "To wygląda na ładowarkę Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Zapamiętanie jej jako stacji dokującej sprawi, że odłączenie ładowarki odmontuje woluminy. Zapamiętać mimo to?";
 "Remember anyway" = "Zapamiętaj mimo to";
+"Power adapters" = "Zasilacze";
+"Connected" = "Podłączono";
+"Connect your dock to remember it" = "Podłącz stację dokującą, aby ją zapamiętać";
+"Cannot be identified reliably" = "Nie można wiarygodnie zidentyfikować";

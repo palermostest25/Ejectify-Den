@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Sembra un caricabatterie Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Memorizzandolo come dock, scollegando il caricabatterie i volumi verranno disattivati. Memorizzare comunque?";
 "Remember anyway" = "Memorizza comunque";
+"Power adapters" = "Alimentatori";
+"Connected" = "Collegato";
+"Connect your dock to remember it" = "Collega il dock per memorizzarlo";
+"Cannot be identified reliably" = "Non può essere identificato in modo affidabile";

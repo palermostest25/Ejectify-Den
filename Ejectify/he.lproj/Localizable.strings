@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "זה נראה כמו מטען Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "זכירה שלו כעגינה משמעה שניתוק המטען ינתק את הכרכים שלך. לזכור בכל זאת?";
 "Remember anyway" = "זכור בכל זאת";
+"Power adapters" = "מתאמי מתח";
+"Connected" = "מחובר";
+"Connect your dock to remember it" = "חבר את העגינה כדי לזכור אותה";
+"Cannot be identified reliably" = "לא ניתן לזהות באופן אמין";

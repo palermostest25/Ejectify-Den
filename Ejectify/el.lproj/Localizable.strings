@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Αυτό μοιάζει με φορτιστή Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Αν τον απομνημονεύσετε ως σταθμό, η αποσύνδεση του φορτιστή θα καταργήσει την προσάρτηση των τόμων. Απομνημόνευση ούτως ή άλλως;";
 "Remember anyway" = "Απομνημόνευση ούτως ή άλλως";
+"Power adapters" = "Τροφοδοτικά";
+"Connected" = "Συνδεδεμένο";
+"Connect your dock to remember it" = "Συνδέστε τον σταθμό για να τον απομνημονεύσετε";
+"Cannot be identified reliably" = "Δεν είναι δυνατή η αξιόπιστη αναγνώριση";

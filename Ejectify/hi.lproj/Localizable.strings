@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "यह Apple चार्जर जैसा लगता है।";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "इसे डॉक के रूप में याद रखने का अर्थ है कि चार्जर हटाने पर आपके वॉल्यूम अनमाउंट हो जाएँगे। फिर भी याद रखें?";
 "Remember anyway" = "फिर भी याद रखें";
+"Power adapters" = "पावर अडैप्टर";
+"Connected" = "कनेक्टेड";
+"Connect your dock to remember it" = "याद रखने के लिए अपना डॉक कनेक्ट करें";
+"Cannot be identified reliably" = "विश्वसनीय रूप से पहचाना नहीं जा सकता";

@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Vypadá to na nabíječku Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Pokud ji zapamatujete jako dok, odpojení nabíječky odpojí vaše svazky. Přesto zapamatovat?";
 "Remember anyway" = "Přesto zapamatovat";
+"Power adapters" = "Napájecí adaptéry";
+"Connected" = "Připojeno";
+"Connect your dock to remember it" = "Připojte dok, abyste si jej zapamatovali";
+"Cannot be identified reliably" = "Nelze spolehlivě identifikovat";

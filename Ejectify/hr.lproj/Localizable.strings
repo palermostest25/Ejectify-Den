@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Ovo izgleda kao Apple punjač.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ako ga zapamtite kao priključnu stanicu, odspajanje punjača otpustit će vaše volumene. Svejedno zapamtiti?";
 "Remember anyway" = "Svejedno zapamti";
+"Power adapters" = "Strujni adapteri";
+"Connected" = "Spojeno";
+"Connect your dock to remember it" = "Spojite priključnu stanicu da biste je zapamtili";
+"Cannot be identified reliably" = "Nije moguće pouzdano prepoznati";

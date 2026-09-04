@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Tämä näyttää Applen laturilta.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Jos muistat sen telakkana, taltiot poistetaan näkyvistä kun irrotat laturin. Muistetaanko silti?";
 "Remember anyway" = "Muista silti";
+"Power adapters" = "Virtalähteet";
+"Connected" = "Yhdistetty";
+"Connect your dock to remember it" = "Yhdistä telakka muistaaksesi sen";
+"Cannot be identified reliably" = "Ei voida tunnistaa luotettavasti";

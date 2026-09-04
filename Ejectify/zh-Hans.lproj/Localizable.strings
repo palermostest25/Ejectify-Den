@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "这看起来像是 Apple 充电器。";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "将其记为扩展坞意味着拔下充电器时会卸载你的宗卷。仍要记住吗？";
 "Remember anyway" = "仍要记住";
+"Power adapters" = "电源适配器";
+"Connected" = "已连接";
+"Connect your dock to remember it" = "连接你的扩展坞以记住它";
+"Cannot be identified reliably" = "无法可靠识别";

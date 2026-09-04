@@ -79,3 +79,7 @@
 "This looks like an Apple charger." = "Схоже, це зарядний пристрій Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Якщо запам’ятати його як док-станцію, відключення зарядного пристрою відмонтує ваші томи. Усе одно запам’ятати?";
 "Remember anyway" = "Усе одно запам’ятати";
+"Power adapters" = "Адаптери живлення";
+"Connected" = "Підключено";
+"Connect your dock to remember it" = "Підключіть док-станцію, щоб запам’ятати її";
+"Cannot be identified reliably" = "Не вдається надійно розпізнати";

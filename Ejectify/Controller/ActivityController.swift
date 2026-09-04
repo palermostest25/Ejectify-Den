@@ -234,7 +234,12 @@ final class ActivityController {
             )
         }
 
-        return powerAdapterObserver?.start() ?? false
+        let didStart = powerAdapterObserver?.start() ?? false
+        if let currentAdapter = powerAdapterObserver?.currentAdapter {
+            Preference.recordKnownPowerAdapter(currentAdapter)
+        }
+
+        return didStart
     }
 
     /// Stops IOKit power-source monitoring and releases the observer.
@@ -291,6 +296,10 @@ final class ActivityController {
 
     /// Schedules a mount pass when external power returns, because the Mac never slept and no wake event will arrive.
     private func handleAdapterGained(_ adapter: PowerAdapterIdentity?) {
+        if let adapter {
+            Preference.recordKnownPowerAdapter(adapter)
+        }
+
         guard !remountCandidates.isEmpty else {
             return
         }
