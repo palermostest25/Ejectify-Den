@@ -25,7 +25,7 @@ final class PrivilegedDiskService: NSObject, PrivilegedDiskServiceProtocol {
 
     /// Queue used to execute disk-operation requests concurrently.
     private let operationQueue = DispatchQueue(
-        label: "nl.nielsmouthaan.Ejectify.PrivilegedHelper.DiskOperation",
+        label: "com.palermostest25.Ejectify.PrivilegedHelper.DiskOperation",
         qos: .userInitiated,
         attributes: .concurrent
     )

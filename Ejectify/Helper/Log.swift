@@ -308,7 +308,7 @@ extension Log {
             #if EJECTIFY_PRIVILEGED_HELPER
             PrivilegedHelperConfiguration.machServiceName
             #else
-            Bundle.main.bundleIdentifier ?? "nl.nielsmouthaan.Ejectify"
+            Bundle.main.bundleIdentifier ?? "com.palermostest25.Ejectify"
             #endif
         }
     }

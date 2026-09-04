@@ -11,7 +11,7 @@ enum PowerManagementLogPolicy {
     /// Identifiers that make a powerd message relevant to Ejectify.
     static let ejectifyIdentifiers = [
         "Ejectify",
-        "nl.nielsmouthaan.Ejectify"
+        "com.palermostest25.Ejectify"
     ]
 
     /// Returns whether a powerd message explicitly references Ejectify.

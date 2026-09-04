@@ -952,9 +952,9 @@ private extension UnifiedLogCollector.Kind {
     /// Ejectify identifiers used to keep launchd and ServiceManagement logs specific to this app.
     private var ejectifyLaunchdTerms: [String] {
         [
-            "nl.nielsmouthaan.Ejectify",
+            "com.palermostest25.Ejectify",
             PrivilegedHelperConfiguration.machServiceName,
-            "nl.nielsmouthaan.Ejectify-LaunchAtLoginHelper",
+            "com.palermostest25.Ejectify-LaunchAtLoginHelper",
             "EjectifyPrivilegedHelper"
         ]
     }

@@ -35,8 +35,8 @@
 	<key>SUEnableAutomaticChecks</key>
 	<false/>
 	<key>SUFeedURL</key>
-	<string>https://ejectify.app/updates/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/palermostest25/Ejectify-Den/main/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>+mYYmJOl4Ld/DHtQVz58Y5Y76vLwk6X2Ycvty26wfjk=</string>
+	<string>REPLACE_WITH_YOUR_SPARKLE_PUBLIC_ED_KEY</string>
 </dict>
 </plist>

@@ -3,16 +3,16 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>nl.nielsmouthaan.Ejectify.PrivilegedHelper</string>
+    <string>com.palermostest25.Ejectify.PrivilegedHelper</string>
     <key>BundleProgram</key>
     <string>Contents/Library/HelperTools/EjectifyPrivilegedHelper</string>
     <key>AssociatedBundleIdentifiers</key>
     <array>
-        <string>nl.nielsmouthaan.Ejectify</string>
+        <string>com.palermostest25.Ejectify</string>
     </array>
     <key>MachServices</key>
     <dict>
-        <key>nl.nielsmouthaan.Ejectify.PrivilegedHelper</key>
+        <key>com.palermostest25.Ejectify.PrivilegedHelper</key>
         <true/>
     </dict>
     <key>UserName</key>

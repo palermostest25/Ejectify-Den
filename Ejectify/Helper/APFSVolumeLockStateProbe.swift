@@ -48,7 +48,7 @@ final class APFSVolumeLockStateProbe: @unchecked Sendable {
 
     /// Queue that keeps `diskutil` execution off the main actor.
     private let queue = DispatchQueue(
-        label: "nl.nielsmouthaan.Ejectify.APFSVolumeLockStateProbe",
+        label: "com.palermostest25.Ejectify.APFSVolumeLockStateProbe",
         qos: .userInitiated
     )
 

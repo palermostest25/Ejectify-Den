@@ -41,7 +41,7 @@ final class APFSEncryptedVolumeUnlocker: @unchecked Sendable {
 
     /// Queue that keeps `diskutil` execution off the main actor.
     private let queue = DispatchQueue(
-        label: "nl.nielsmouthaan.Ejectify.APFSEncryptedVolumeUnlocker",
+        label: "com.palermostest25.Ejectify.APFSEncryptedVolumeUnlocker",
         qos: .userInitiated
     )
 

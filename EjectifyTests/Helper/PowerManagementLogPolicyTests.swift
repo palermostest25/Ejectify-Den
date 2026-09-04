@@ -12,7 +12,7 @@ struct PowerManagementLogPolicyTests {
         .bug("https://github.com/nielsmouthaan/ejectify-macos/issues/140"),
         arguments: [
             "Ejectify timed out while acknowledging sleep",
-            "Power client nl.nielsmouthaan.Ejectify acknowledged sleep",
+            "Power client com.palermostest25.Ejectify acknowledged sleep",
             "eJeCtIfY delayed sleep"
         ]
     )

@@ -11,7 +11,7 @@ import Foundation
 enum PrivilegedHelperConfiguration {
 
     /// Mach service name used to connect app and privileged helper via XPC.
-    static let machServiceName = "nl.nielsmouthaan.Ejectify.PrivilegedHelper"
+    static let machServiceName = "com.palermostest25.Ejectify.PrivilegedHelper"
 
     /// Launch daemon plist identifier bundled with the app.
     static let launchDaemonPlistName = "\(machServiceName).plist"
@@ -26,5 +26,5 @@ enum PrivilegedHelperConfiguration {
     static let helperStartedNotificationName = "\(machServiceName).started"
 
     /// In-app notification sent when router state changes and UI should refresh.
-    static let operationRouterDidChangeNotificationName = "nl.nielsmouthaan.Ejectify.VolumeOperationRouter.didChange"
+    static let operationRouterDidChangeNotificationName = "com.palermostest25.Ejectify.VolumeOperationRouter.didChange"
 }

@@ -119,7 +119,7 @@ enum DiskArbitrationVolumeOperator {
 
     /// Shared callback queue used by the shared Disk Arbitration session.
     private static let callbackQueue = DispatchQueue(
-        label: "nl.nielsmouthaan.Ejectify.DiskArbitrationVolumeOperator",
+        label: "com.palermostest25.Ejectify.DiskArbitrationVolumeOperator",
         qos: .userInitiated
     )
 

@@ -1,0 +1,140 @@
+name: Release
+
+# Push a tag to cut a release:  git tag v2.2.0 && git push origin v2.2.0
+#
+# Requires one repository secret:
+#   SPARKLE_PRIVATE_KEY  the EdDSA private key printed by Sparkle's generate_keys
+#
+# The matching public key must be in Ejectify/Info.plist under SUPublicEDKey,
+# and SUFeedURL must point at the appcast.xml this workflow commits to main.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to build
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build, sign and publish
+    runs-on: macos-15
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+          fetch-depth: 0
+
+      - name: Select newest Xcode
+        run: |
+          sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+          xcodebuild -version
+
+      - name: Resolve Swift packages
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project Ejectify.xcodeproj \
+            -scheme Ejectify \
+            -clonedSourcePackagesDirPath .spm
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project Ejectify.xcodeproj \
+            -scheme Ejectify \
+            -configuration Release \
+            -derivedDataPath build \
+            -clonedSourcePackagesDirPath .spm \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGNING_REQUIRED=YES \
+            CODE_SIGNING_ALLOWED=YES \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER=""
+
+      # Same LaunchAtLogin quirk the build workflow works around.
+      - name: Re-sign the bundled login item
+        run: |
+          APP=build/Build/Products/Release/Ejectify.app
+          HELPER="$APP/Contents/Library/LoginItems/LaunchAtLoginHelper.app"
+          if [ -d "$HELPER" ]; then
+            codesign --force --sign - --timestamp=none "$HELPER"
+            codesign --force --sign - --timestamp=none \
+              --preserve-metadata=entitlements,flags "$APP"
+          fi
+
+      - name: Package
+        id: package
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          mkdir -p updates
+          ditto -c -k --keepParent \
+            build/Build/Products/Release/Ejectify.app \
+            "updates/Ejectify-$VERSION.zip"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      # generate_appcast ships inside Sparkle's binary artifact; locate it rather
+      # than pinning a download URL to a version that may not exist.
+      - name: Generate the signed appcast
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          if [ -z "$SPARKLE_PRIVATE_KEY" ]; then
+            echo "::error::SPARKLE_PRIVATE_KEY is not set. Add it as a repository secret."
+            exit 1
+          fi
+
+          GENERATE_APPCAST=$(find .spm build -name generate_appcast -type f -perm +111 2>/dev/null | head -1)
+          if [ -z "$GENERATE_APPCAST" ]; then
+            echo "::error::Could not find Sparkle's generate_appcast tool."
+            exit 1
+          fi
+
+          KEY_FILE=$(mktemp)
+          chmod 600 "$KEY_FILE"
+          printf '%s' "$SPARKLE_PRIVATE_KEY" > "$KEY_FILE"
+          trap 'rm -f "$KEY_FILE"' EXIT
+
+          "$GENERATE_APPCAST" \
+            --ed-key-file "$KEY_FILE" \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.package.outputs.tag }}/" \
+            updates/
+
+          cp updates/appcast.xml appcast.xml
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.package.outputs.tag }}" \
+            "updates/Ejectify-${{ steps.package.outputs.version }}.zip" \
+            --title "Ejectify ${{ steps.package.outputs.version }}" \
+            --notes "See CHANGELOG.md for what changed." \
+            --verify-tag
+
+      # Sparkle reads the appcast from the default branch, so it has to land there
+      # rather than on the tag.
+      - name: Commit the appcast to main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout main
+          cp updates/appcast.xml appcast.xml
+          if git diff --quiet -- appcast.xml; then
+            echo "Appcast unchanged."
+            exit 0
+          fi
+          git add appcast.xml
+          git commit -m "Publish appcast for ${{ steps.package.outputs.tag }}"
+          git push origin main
