@@ -108,6 +108,9 @@ final class ActivityController {
     /// Grace period that lets display and USB topology settle before Disk Arbitration is asked to mount.
     private static let reconnectMountPassDelay: Duration = .seconds(2)
 
+    /// Time given to a sleep macOS started itself before Ejectify forces one.
+    private static let sleepSettleSeconds: Double = 4
+
     /// Maximum number of seconds sleep may be deferred while disk operations run.
     private static let maximumSystemSleepDelaySeconds = 10
 
@@ -1209,7 +1212,23 @@ final class ActivityController {
                 return
             }
 
-            Log.powerEvents.log("Requesting system sleep after unmount; trigger=\(trigger.rawValue)")
+            // Pulling a dock usually starts a sleep in macOS itself. Forcing one while that transition
+            // is still resolving is swallowed, so wait and see whether the Mac gets there on its own.
+            let waitStartDate = Date()
+            do {
+                try await Task.sleep(for: .seconds(Self.sleepSettleSeconds))
+            } catch {
+                return
+            }
+
+            // Sleeping suspends this process, so a wall clock jump means the Mac slept and has now woken.
+            let elapsedSeconds = Date().timeIntervalSince(waitStartDate)
+            guard elapsedSeconds < Self.sleepSettleSeconds * 2 else {
+                Log.powerEvents.log("System slept without help; skipping the forced sleep request")
+                return
+            }
+
+            Log.powerEvents.log("System still awake after unmount; forcing sleep; trigger=\(trigger.rawValue)")
             SystemPowerActionRequester.requestSleep()
         }
     }
