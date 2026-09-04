@@ -15,11 +15,15 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4
 
-      # The macos-15 image ships Xcode 16, which provides the Swift 6 compiler this
-      # project requires. Pin an explicit Xcode_16.x.app path here if a future image
-      # default ever regresses.
-      - name: Show toolchain
-        run: xcodebuild -version
+      # The project and its Diagnostics dependency use nonisolated(nonsending),
+      # which needs Swift 6.2, so the runner's default Xcode is not always new
+      # enough. Select the highest installed version rather than pinning a path.
+      - name: Select newest Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+          xcodebuild -version
+          swift --version
 
       - name: Cache Swift packages
         uses: actions/cache@v4
