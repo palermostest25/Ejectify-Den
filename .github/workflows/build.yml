@@ -1,0 +1,107 @@
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Test and ad-hoc build
+    runs-on: macos-15
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      # The project and its Diagnostics dependency use nonisolated(nonsending),
+      # which needs Swift 6.2, so the runner's default Xcode is not always new
+      # enough. Select the highest installed version rather than pinning a path.
+      - name: Select newest Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+          xcodebuild -version
+          swift --version
+
+      - name: Cache Swift packages
+        uses: actions/cache@v4
+        with:
+          path: .spm
+          key: spm-${{ runner.os }}-${{ hashFiles('Ejectify.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Resolve Swift packages
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project Ejectify.xcodeproj \
+            -scheme Ejectify \
+            -clonedSourcePackagesDirPath .spm
+
+      # EjectifyTests is a standalone bundle with no test host, so no app is launched
+      # and no GUI session is needed.
+      - name: Run tests
+        run: |
+          xcodebuild test \
+            -project Ejectify.xcodeproj \
+            -scheme Ejectify \
+            -configuration Debug \
+            -destination 'platform=macOS' \
+            -clonedSourcePackagesDirPath .spm \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER=""
+
+      # CODE_SIGN_IDENTITY="-" is ad-hoc signing: no Apple account, no certificate.
+      # The empty team and profile override the project's Developer ID settings, which
+      # only resolve on the upstream maintainer's machine.
+      - name: Build (ad-hoc signed)
+        run: |
+          xcodebuild build \
+            -project Ejectify.xcodeproj \
+            -scheme Ejectify \
+            -configuration Release \
+            -derivedDataPath build \
+            -clonedSourcePackagesDirPath .spm \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGNING_REQUIRED=YES \
+            CODE_SIGNING_ALLOWED=YES \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER=""
+
+      # The LaunchAtLogin package rewrites the bundled login item's Info.plist
+      # after that helper has been signed, which leaves its signature stale.
+      # Re-sign inside-out so the nested helper and the app agree again.
+      - name: Re-sign the bundled login item
+        run: |
+          APP=build/Build/Products/Release/Ejectify.app
+          HELPER="$APP/Contents/Library/LoginItems/LaunchAtLoginHelper.app"
+          if [ -d "$HELPER" ]; then
+            codesign --force --sign - --timestamp=none "$HELPER"
+            codesign --force --sign - --timestamp=none \
+              --preserve-metadata=entitlements,flags "$APP"
+          fi
+
+      - name: Verify the signature is ad-hoc and intact
+        run: |
+          APP=build/Build/Products/Release/Ejectify.app
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          codesign -dv --verbose=4 "$APP" 2>&1 | grep -q 'Signature=adhoc'
+
+      # ditto preserves the bundle's symlinks and extended attributes; letting
+      # upload-artifact zip the .app directly would break the code signature.
+      - name: Package
+        run: |
+          ditto -c -k --keepParent \
+            build/Build/Products/Release/Ejectify.app \
+            Ejectify-adhoc.zip
+
+      - name: Upload app
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ejectify-adhoc
+          path: Ejectify-adhoc.zip
+          if-no-files-found: error

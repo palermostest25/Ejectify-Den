@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.0
+
+- Multiple unmount triggers can now be enabled at once.
+- Added a "Dock disconnected" trigger that unmounts volumes when a remembered dock is unplugged, while ignoring MagSafe and other chargers.
+- Added an "External display disconnected" trigger for clamshell setups.
+- Volumes now remount automatically when a remembered dock is reconnected.
+- Added an option to keep volumes unmounted while running on battery, with a new "Mount all" menu action to remount them on demand.
+- Diagnostics reports now include power adapter, remembered dock, and trigger information.
+
 ## 2.1.0
 
 - Added an opt-in whole-disk eject mode for automatically and manually ejecting selected devices without attempting to remount them, including forced-unmount preparation when Force Unmount is enabled.

@@ -57,6 +57,15 @@ final class ActivityController {
     /// Handles IOKit system sleep callbacks used to temporarily delay system sleep.
     private var systemSleepPowerObserver: SystemSleepPowerObserver?
 
+    /// Handles IOKit power-source callbacks used by the dock trigger and the battery remount gate.
+    private var powerAdapterObserver: PowerAdapterObserver?
+
+    /// Handles CoreGraphics display callbacks used by the external display trigger.
+    private var externalDisplayObserver: ExternalDisplayObserver?
+
+    /// Pending mount pass scheduled after a dock or display reconnect.
+    private var delayedMountPassTask: Task<Void, Never>?
+
     /// Pending system-sleep token currently held while disk-operation requests run.
     private var pendingSystemSleepToken: Int?
 
@@ -85,6 +94,19 @@ final class ActivityController {
     private var isReadyToMount: Bool {
         systemAwake && displayAwake && sessionActive && !screenLocked && !screensaverActive
     }
+
+    /// Whether the Mac currently runs on battery, as reported by the power adapter observer.
+    private var isOnBattery: Bool {
+        powerAdapterObserver?.isOnBattery ?? false
+    }
+
+    /// Whether volumes unmounted automatically are still waiting to be remounted.
+    var hasPendingRemountCandidates: Bool {
+        !remountCandidates.isEmpty
+    }
+
+    /// Grace period that lets display and USB topology settle before Disk Arbitration is asked to mount.
+    private static let reconnectMountPassDelay: Duration = .seconds(2)
 
     /// Maximum number of seconds sleep may be deferred while disk operations run.
     private static let maximumSystemSleepDelaySeconds = 10
@@ -115,16 +137,24 @@ final class ActivityController {
         NSWorkspace.shared.notificationCenter.removeObserver(self)
         DistributedNotificationCenter.default.removeObserver(self)
         stopSystemSleepPowerMonitoring(reason: "Monitoring reconfigured")
+        stopPowerAdapterMonitoring()
+        stopExternalDisplayMonitoring()
         registerUnmountTriggerObserver()
         registerMountReadinessObservers()
         registerRemountCandidateObservers()
 
-        Log.powerEvents.log("Monitoring configured; trigger=\(Preference.unmountWhen.rawValue)")
+        let configuredTriggers = UnmountTriggersPreference.sortedRawValues(of: Preference.unmountWhen).joined(separator: ",")
+        Log.powerEvents.log("Monitoring configured; triggers=\(configuredTriggers)")
     }
 
-    /// Handles all currently enabled volumes using the configured automatic disk operation.
+    /// Handles all currently enabled volumes when a notification-based trigger fires.
     @objc func unmountVolumes(notification: Notification) {
-        Log.powerEvents.log("Disk operation trigger received; notification=\(notification.name.rawValue)")
+        performAutomaticDiskOperation(triggerDescription: notification.name.rawValue)
+    }
+
+    /// Runs the configured automatic disk operation for all enabled volumes.
+    private func performAutomaticDiskOperation(triggerDescription: String) {
+        Log.powerEvents.log("Disk operation trigger received; trigger=\(triggerDescription)")
         let enabledVolumes = Volume.mountedVolumes().filter(\.enabled)
 
         guard !Preference.ejectInsteadOfUnmount else {
@@ -158,21 +188,169 @@ final class ActivityController {
         Log.volumeOperations.log("Remount candidates cleared because eject mode is enabled: count=\(candidateCount)")
     }
 
-    /// Registers only the selected unmount trigger while remounting remains readiness-based.
+    /// Registers every selected unmount trigger while remounting remains readiness-based.
     private func registerUnmountTriggerObserver() {
-        switch Preference.unmountWhen {
-        case .systemStartsSleeping:
-            if !startSystemSleepPowerMonitoring() {
-                Log.powerEvents.warning("IOKit power monitoring unavailable; fallback=NSWorkspace.willSleepNotification")
-                NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: NSWorkspace.willSleepNotification, object: nil)
+        let selectedTriggers = Preference.unmountWhen
+
+        for trigger in Preference.UnmountWhen.allCases where selectedTriggers.contains(trigger) {
+            switch trigger {
+            case .systemStartsSleeping:
+                if !startSystemSleepPowerMonitoring() {
+                    Log.powerEvents.warning("IOKit power monitoring unavailable; fallback=NSWorkspace.willSleepNotification")
+                    NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: NSWorkspace.willSleepNotification, object: nil)
+                }
+            case .screensStartedSleeping:
+                NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: NSWorkspace.screensDidSleepNotification, object: nil)
+            case .screenIsLocked:
+                DistributedNotificationCenter.default.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: Self.screenLockedNotificationName, object: nil)
+            case .screensaverStarted:
+                DistributedNotificationCenter.default.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: Self.screensaverDidStartNotificationName, object: nil)
+            case .dockDisconnected:
+                startPowerAdapterMonitoring()
+                // Display state is reported alongside dock decisions, so topology stays observed as well.
+                startExternalDisplayMonitoring()
+            case .externalDisplayDisconnected:
+                startExternalDisplayMonitoring()
             }
-        case .screensStartedSleeping:
-            NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: NSWorkspace.screensDidSleepNotification, object: nil)
-        case .screenIsLocked:
-            DistributedNotificationCenter.default.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: Self.screenLockedNotificationName, object: nil)
-        case .screensaverStarted:
-            DistributedNotificationCenter.default.addObserver(self, selector: #selector(unmountVolumes(notification:)), name: Self.screensaverDidStartNotificationName, object: nil)
         }
+
+        // Power monitoring is also needed, read-only, to keep the battery remount gate accurate.
+        if Preference.keepUnmountedOnBattery {
+            startPowerAdapterMonitoring()
+        }
+    }
+
+    /// Starts IOKit power-source monitoring used by the dock trigger and the battery remount gate.
+    @discardableResult
+    private func startPowerAdapterMonitoring() -> Bool {
+        if powerAdapterObserver == nil {
+            powerAdapterObserver = PowerAdapterObserver(
+                onAdapterLost: { [weak self] adapter in
+                    self?.handleAdapterLost(adapter)
+                },
+                onAdapterGained: { [weak self] adapter in
+                    self?.handleAdapterGained(adapter)
+                }
+            )
+        }
+
+        return powerAdapterObserver?.start() ?? false
+    }
+
+    /// Stops IOKit power-source monitoring and releases the observer.
+    private func stopPowerAdapterMonitoring() {
+        powerAdapterObserver?.stop()
+        powerAdapterObserver = nil
+    }
+
+    /// Starts CoreGraphics display monitoring used by the external display trigger and dock diagnostics.
+    @discardableResult
+    private func startExternalDisplayMonitoring() -> Bool {
+        if externalDisplayObserver == nil {
+            externalDisplayObserver = ExternalDisplayObserver(
+                onLastExternalDisplayDisconnected: { [weak self] in
+                    self?.handleLastExternalDisplayDisconnected()
+                },
+                onExternalDisplayConnected: { [weak self] in
+                    self?.handleExternalDisplayConnected()
+                }
+            )
+        }
+
+        return externalDisplayObserver?.start() ?? false
+    }
+
+    /// Stops CoreGraphics display monitoring and releases the observer.
+    private func stopExternalDisplayMonitoring() {
+        externalDisplayObserver?.stop()
+        externalDisplayObserver = nil
+    }
+
+    /// Applies the dock policy when external power is lost, ignoring adapters that are not remembered docks.
+    private func handleAdapterLost(_ adapter: PowerAdapterIdentity) {
+        guard Preference.unmountWhen.contains(.dockDisconnected) else {
+            // The observer is only running to keep the battery remount gate accurate.
+            return
+        }
+
+        let externalDisplayStillConnected = externalDisplayObserver?.hasExternalDisplay ?? false
+        let decision = DockDisconnectPolicy.decision(
+            lostAdapter: adapter,
+            rememberedDocks: Preference.rememberedDocks,
+            externalDisplayStillConnected: externalDisplayStillConnected
+        )
+
+        switch decision {
+        case .unmount(let reason):
+            Log.powerEvents.log("Dock disconnect trigger fired; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
+            performAutomaticDiskOperation(triggerDescription: Preference.UnmountWhen.dockDisconnected.rawValue)
+        case .ignore(let reason):
+            Log.powerEvents.info("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
+        }
+    }
+
+    /// Schedules a mount pass when external power returns, because the Mac never slept and no wake event will arrive.
+    private func handleAdapterGained(_ adapter: PowerAdapterIdentity?) {
+        guard !remountCandidates.isEmpty else {
+            return
+        }
+
+        let isRememberedDock = adapter?.isRemembered(in: Preference.rememberedDocks) ?? false
+        let reason = isRememberedDock ? "Dock reconnected" : "External power restored"
+        Log.powerEvents.log("\(reason); scheduling mount pass")
+        scheduleDelayedMountPass(after: Self.reconnectMountPassDelay, reason: reason)
+    }
+
+    /// Runs the configured automatic disk operation when the last external display goes offline.
+    private func handleLastExternalDisplayDisconnected() {
+        guard Preference.unmountWhen.contains(.externalDisplayDisconnected) else {
+            // The observer is only running to report display state alongside dock decisions.
+            return
+        }
+
+        performAutomaticDiskOperation(triggerDescription: Preference.UnmountWhen.externalDisplayDisconnected.rawValue)
+    }
+
+    /// Schedules a mount pass when an external display returns after all of them were disconnected.
+    private func handleExternalDisplayConnected() {
+        guard !remountCandidates.isEmpty else {
+            return
+        }
+
+        Log.powerEvents.log("External display connected; scheduling mount pass")
+        scheduleDelayedMountPass(after: Self.reconnectMountPassDelay, reason: "External display connected")
+    }
+
+    /// Schedules one mount pass after a grace period, replacing any pass that has not run yet.
+    private func scheduleDelayedMountPass(after delay: Duration, reason: String) {
+        delayedMountPassTask?.cancel()
+        delayedMountPassTask = Task { @MainActor [weak self] in
+            do {
+                try await Task.sleep(for: delay)
+            } catch {
+                return
+            }
+
+            guard let self else {
+                return
+            }
+
+            self.delayedMountPassTask = nil
+
+            guard self.isReadyToMount else {
+                Log.volumeOperations.info("Delayed mount pass skipped: system is not ready to mount; reason=\(reason)")
+                return
+            }
+
+            Log.volumeOperations.log("Delayed mount pass started; reason=\(reason)")
+            self.triggerMountPass()
+        }
+    }
+
+    /// Cancels a mount pass that was scheduled after a reconnect.
+    private func cancelDelayedMountPass() {
+        delayedMountPassTask?.cancel()
+        delayedMountPassTask = nil
     }
 
     /// Registers notifications that update the "ready-to-mount" state.
@@ -269,12 +447,41 @@ final class ActivityController {
             return
         }
 
+        guard DockDisconnectPolicy.remountAllowed(
+            isOnBattery: isOnBattery,
+            keepUnmountedOnBattery: Preference.keepUnmountedOnBattery
+        ) else {
+            // Candidates are preserved so they mount on the next allowed pass, such as reconnecting the dock.
+            Log.volumeOperations.info("Mount pass skipped: on battery and keepUnmountedOnBattery is enabled")
+            return
+        }
+
         guard !self.remountCandidates.isEmpty else {
             Log.volumeOperations.info("Mount pass skipped: no remount candidates")
             return
         }
 
         Log.volumeOperations.log("Mount pass triggered: \(self.remountCandidates.count) candidate(s)")
+        for volume in self.remountCandidates {
+            scheduleMountTask(for: volume)
+        }
+    }
+
+    /// Mounts every pending remount candidate on user request, ignoring the battery preference.
+    func performManualMountPass() {
+        guard !Preference.ejectInsteadOfUnmount else {
+            clearRemountStateForEjectMode()
+            Log.volumeOperations.info("Manual mount pass skipped because eject mode is enabled")
+            return
+        }
+
+        guard !self.remountCandidates.isEmpty else {
+            Log.volumeOperations.log("Manual mount pass skipped: no remount candidates")
+            return
+        }
+
+        cancelDelayedMountPass()
+        Log.volumeOperations.log("Manual mount pass triggered: \(self.remountCandidates.count) candidate(s)")
         for volume in self.remountCandidates {
             scheduleMountTask(for: volume)
         }
@@ -385,8 +592,10 @@ final class ActivityController {
         pendingMountTasks.removeValue(forKey: volumeID)
     }
 
-    /// Cancels all currently pending mount or retry tasks.
+    /// Cancels all currently pending mount or retry tasks, including a scheduled reconnect pass.
     private func cancelAllPendingMountTasks(reason: String) {
+        cancelDelayedMountPass()
+
         guard !pendingMountTasks.isEmpty else {
             return
         }
