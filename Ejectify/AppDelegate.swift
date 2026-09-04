@@ -44,6 +44,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         globalHotKeyController?.isRegistered(.mountAll) ?? false
     }
 
+    /// Returns whether the global unmount-and-sleep hotkey is currently registered.
+    var isUnmountAllAndSleepHotKeyRegistered: Bool {
+        globalHotKeyController?.isRegistered(.unmountAllAndSleep) ?? false
+    }
+
     /// Owns the window used to change global keyboard shortcuts.
     private var shortcutSettingsWindowController: ShortcutSettingsWindowController?
 
@@ -81,6 +86,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.performManualUnmountAll()
             case .mountAll:
                 self?.activityController?.performManualMountPass()
+            case .unmountAllAndSleep:
+                self?.activityController?.performManualUnmountAndSleep()
             }
         }
         statusBar = StatusBar()

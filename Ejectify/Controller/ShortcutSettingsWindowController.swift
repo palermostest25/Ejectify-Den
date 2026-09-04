@@ -124,6 +124,8 @@ final class ShortcutSettingsWindowController: NSWindowController, NSWindowDelega
             Preference.ejectInsteadOfUnmount ? String(localized: "Eject all") : String(localized: "Unmount all")
         case .mountAll:
             String(localized: "Mount all")
+        case .unmountAllAndSleep:
+            String(localized: "Unmount all and sleep")
         }
     }
 

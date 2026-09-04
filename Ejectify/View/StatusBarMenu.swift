@@ -238,6 +238,19 @@ final class StatusBarMenu: NSMenu {
         mountAllItem.isEnabled = hasPendingRemountCandidates
         applyShortcut(for: .mountAll, to: mountAllItem, isRegistered: isMountHotKeyRegistered)
         addItem(mountAllItem)
+
+        let isSleepHotKeyRegistered = MainActor.assumeIsolated {
+            AppDelegate.shared.isUnmountAllAndSleepHotKeyRegistered
+        }
+        let unmountAndSleepItem = NSMenuItem(
+            title: String(localized: "Unmount all and sleep"),
+            action: #selector(unmountAllAndSleepClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        unmountAndSleepItem.target = self
+        unmountAndSleepItem.isEnabled = !volumes.isEmpty
+        applyShortcut(for: .unmountAllAndSleep, to: unmountAndSleepItem, isRegistered: isSleepHotKeyRegistered)
+        addItem(unmountAndSleepItem)
     }
 
     /// Shows an action's global shortcut next to its menu item, but only while that shortcut is actually registered.
@@ -579,6 +592,13 @@ final class StatusBarMenu: NSMenu {
     @objc private func mountAllClicked(menuItem _: NSMenuItem) {
         MainActor.assumeIsolated {
             AppDelegate.shared.activityController?.performManualMountPass()
+        }
+    }
+
+    /// Unmounts every enabled volume and puts the Mac to sleep.
+    @objc private func unmountAllAndSleepClicked(menuItem _: NSMenuItem) {
+        MainActor.assumeIsolated {
+            AppDelegate.shared.activityController?.performManualUnmountAndSleep()
         }
     }
 
