@@ -56,8 +56,9 @@ enum DockDisconnectPolicy {
             return false
         }
 
-        // A volume that is still mounted means the user needs to see the failure, not a sleeping Mac.
-        return requestedCount > 0 && succeededCount == requestedCount
+        // An empty batch means another trigger unmounted everything first, which is still success.
+        // Only a volume left mounted blocks sleep, so the failure stays visible.
+        return succeededCount == requestedCount
     }
 
     /// Decides whether an automatic remount pass is allowed to run right now.

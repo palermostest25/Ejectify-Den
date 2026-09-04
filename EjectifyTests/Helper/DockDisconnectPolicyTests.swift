@@ -81,8 +81,8 @@ struct DockDisconnectPolicyTests {
         // A volume stayed mounted, so the failure must stay visible instead.
         #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: true, requestedCount: 2, succeededCount: 1) == false)
 
-        // Nothing was unmounted, so there is nothing to sleep after.
-        #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: true, requestedCount: 0, succeededCount: 0) == false)
+        // An empty batch means the sleep trigger raced ahead and unmounted everything already.
+        #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: true, requestedCount: 0, succeededCount: 0))
     }
 
     @Test func onlyTriggersThatLeaveTheMacAwakeCanRequestSleep() {
