@@ -40,6 +40,26 @@ enum DockDisconnectPolicy {
         return .unmount(reason: "remembered dock lost")
     }
 
+    /// Decides whether the Mac should be put to sleep after a trigger finished unmounting.
+    static func shouldSleepAfterUnmount(
+        trigger: UnmountTrigger,
+        sleepAfterDockDisconnect: Bool,
+        requestedCount: Int,
+        succeededCount: Int
+    ) -> Bool {
+        guard sleepAfterDockDisconnect else {
+            return false
+        }
+
+        // Only the triggers that leave the Mac awake need this; the sleep trigger would be circular.
+        guard trigger == .dockDisconnected || trigger == .externalDisplayDisconnected else {
+            return false
+        }
+
+        // A volume that is still mounted means the user needs to see the failure, not a sleeping Mac.
+        return requestedCount > 0 && succeededCount == requestedCount
+    }
+
     /// Decides whether an automatic remount pass is allowed to run right now.
     static func remountAllowed(isOnBattery: Bool, keepUnmountedOnBattery: Bool) -> Bool {
         !(isOnBattery && keepUnmountedOnBattery)

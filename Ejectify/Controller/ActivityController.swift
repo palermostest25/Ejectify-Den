@@ -308,7 +308,7 @@ final class ActivityController {
         switch decision {
         case .unmount(let reason):
             Log.powerEvents.log("Dock disconnect trigger fired; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
-            performDiskOperation(triggerDescription: Preference.UnmountWhen.dockDisconnected.rawValue)
+            performDiskOperationAndSleepIfNeeded(trigger: .dockDisconnected)
         case .ignore(let reason):
             Log.powerEvents.info("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
         }
@@ -337,7 +337,7 @@ final class ActivityController {
             return
         }
 
-        performDiskOperation(triggerDescription: Preference.UnmountWhen.externalDisplayDisconnected.rawValue)
+        performDiskOperationAndSleepIfNeeded(trigger: .externalDisplayDisconnected)
     }
 
     /// Schedules a mount pass when an external display returns after all of them were disconnected.
@@ -1162,23 +1162,55 @@ final class ActivityController {
     }
 
     /// Handles all enabled volumes using the configured operation and waits for every callback.
-    private func handleEnabledVolumesAndWait() async -> DiskOperationBatchResult {
+    private func handleEnabledVolumesAndWait(reason: String = "system sleep") async -> DiskOperationBatchResult {
         let enabledVolumes = Volume.mountedVolumes().filter { $0.enabled }
 
         guard !Preference.ejectInsteadOfUnmount else {
             clearRemountStateForEjectMode()
             let representatives = Volume.uniqueWholeDiskRepresentatives(from: enabledVolumes)
-            Log.volumeOperations.log("System sleep eject batch started: \(representatives.count) whole disk(s) for \(enabledVolumes.count) enabled volume(s)")
+            Log.volumeOperations.log("Eject batch started for \(reason): \(representatives.count) whole disk(s) for \(enabledVolumes.count) enabled volume(s)")
 
+            DiskOperationHUDController.shared.begin(kind: .ejecting, volumes: Self.hudVolumes(for: representatives))
             return await performDiskOperationBatch(volumes: representatives) { volume, completion in
                 self.requestEject(for: volume, completion: completion)
             }
         }
 
-        mergeRemountCandidates(with: enabledVolumes, reason: "Starting new system sleep unmount batch")
+        mergeRemountCandidates(with: enabledVolumes, reason: "Starting new unmount batch for \(reason)")
 
+        DiskOperationHUDController.shared.begin(kind: .unmounting, volumes: Self.hudVolumes(for: enabledVolumes))
         return await performDiskOperationBatch(volumes: enabledVolumes) { volume, completion in
             self.requestUnmount(for: volume, completion: completion)
+        }
+    }
+
+    /// Handles a trigger that leaves the Mac awake, optionally sleeping once every volume is unmounted.
+    private func performDiskOperationAndSleepIfNeeded(trigger: UnmountTrigger) {
+        guard Preference.sleepAfterDockDisconnect else {
+            performDiskOperation(triggerDescription: trigger.rawValue)
+            return
+        }
+
+        Log.powerEvents.log("Disk operation trigger received; trigger=\(trigger.rawValue); sleepAfterUnmount=true")
+        Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            let batchResult = await self.handleEnabledVolumesAndWait(reason: trigger.rawValue)
+
+            guard DockDisconnectPolicy.shouldSleepAfterUnmount(
+                trigger: trigger,
+                sleepAfterDockDisconnect: Preference.sleepAfterDockDisconnect,
+                requestedCount: batchResult.requestedCount,
+                succeededCount: batchResult.succeededCount
+            ) else {
+                Log.powerEvents.warning("Sleep after unmount skipped; requestedCount=\(batchResult.requestedCount); succeededCount=\(batchResult.succeededCount)")
+                return
+            }
+
+            Log.powerEvents.log("Requesting system sleep after unmount; trigger=\(trigger.rawValue)")
+            SystemPowerActionRequester.requestSleep()
         }
     }
 

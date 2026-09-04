@@ -103,6 +103,7 @@
 		F1D00000000000000000020C /* GlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000E /* GlobalShortcut.swift */; };
 		F1D00000000000000000020D /* GlobalShortcutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000F /* GlobalShortcutPreference.swift */; };
 		F1D00000000000000000020E /* GlobalShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000014 /* GlobalShortcutTests.swift */; };
+		F1D00000000000000000010F /* SystemPowerActionRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000015 /* SystemPowerActionRequester.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +243,7 @@
 		F1D000000000000000000012 /* DiskOperationHUDController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskOperationHUDController.swift; sourceTree = "<group>"; };
 		F1D000000000000000000013 /* ShortcutSettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingsWindowController.swift; sourceTree = "<group>"; };
 		F1D000000000000000000014 /* GlobalShortcutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutTests.swift; sourceTree = "<group>"; };
+		F1D000000000000000000015 /* SystemPowerActionRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPowerActionRequester.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,6 +389,7 @@
 				C0A100000000000000000063 /* VolumeLogLabelFormatter.swift */,
 				C0A100000000000000000013 /* com.palermostest25.Ejectify.PrivilegedHelper.plist */,
 				F1D000000000000000000005 /* DockDisconnectPolicy.swift */,
+				F1D000000000000000000015 /* SystemPowerActionRequester.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -672,6 +675,7 @@
 				F1D00000000000000000010C /* DiskOperationHUDView.swift in Sources */,
 				F1D00000000000000000010D /* DiskOperationHUDController.swift in Sources */,
 				F1D00000000000000000010E /* ShortcutSettingsWindowController.swift in Sources */,
+				F1D00000000000000000010F /* SystemPowerActionRequester.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

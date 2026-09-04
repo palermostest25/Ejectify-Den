@@ -433,6 +433,15 @@ final class StatusBarMenu: NSMenu {
 
         dockMenu.addItem(NSMenuItem.separator())
 
+        let sleepAfterDockDisconnectItem = NSMenuItem(
+            title: String(localized: "Sleep after unmounting"),
+            action: #selector(sleepAfterDockDisconnectClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        sleepAfterDockDisconnectItem.target = self
+        sleepAfterDockDisconnectItem.state = Preference.sleepAfterDockDisconnect ? .on : .off
+        dockMenu.addItem(sleepAfterDockDisconnectItem)
+
         let keepUnmountedOnBatteryItem = NSMenuItem(
             title: String(localized: "Keep volumes unmounted on battery"),
             action: #selector(keepUnmountedOnBatteryClicked(menuItem:)),
@@ -697,6 +706,12 @@ final class StatusBarMenu: NSMenu {
         updateMenu()
     }
 
+    /// Toggles whether the Mac sleeps once a dock or display disconnect has unmounted every volume.
+    @objc private func sleepAfterDockDisconnectClicked(menuItem: NSMenuItem) {
+        Preference.sleepAfterDockDisconnect = toggledValue(for: menuItem.state)
+        updateMenu()
+    }
+
     /// Toggles whether automatic remount passes are skipped while running on battery.
     @objc private func keepUnmountedOnBatteryClicked(menuItem: NSMenuItem) {
         Preference.keepUnmountedOnBattery = toggledValue(for: menuItem.state)
@@ -803,61 +818,10 @@ final class StatusBarMenu: NSMenu {
         requestSystemRestart()
     }
 
-    /// Requests a soft restart by sending `kAERestart` to the system loginwindow process.
+    /// Requests a soft restart through the shared system power action requester.
     @MainActor
     private func requestSystemRestart() {
-        var targetDescriptor = AEAddressDesc()
-        let targetProcessSerialNumber = ProcessSerialNumber(highLongOfPSN: 0, lowLongOfPSN: UInt32(kSystemProcess))
-        let targetCreateStatus = withUnsafePointer(to: targetProcessSerialNumber) { pointer in
-            AECreateDesc(
-                DescType(typeProcessSerialNumber),
-                pointer,
-                MemoryLayout<ProcessSerialNumber>.size,
-                &targetDescriptor
-            )
-        }
-        guard targetCreateStatus == noErr else {
-            Log.app.error("System restart target creation failed; status=\(targetCreateStatus)")
-            return
-        }
-        defer {
-            AEDisposeDesc(&targetDescriptor)
-        }
-
-        var restartEvent = AppleEvent()
-        let eventCreateStatus = AECreateAppleEvent(
-            AEEventClass(kCoreEventClass),
-            AEEventID(kAERestart),
-            &targetDescriptor,
-            AEReturnID(kAutoGenerateReturnID),
-            AETransactionID(kAnyTransactionID),
-            &restartEvent
-        )
-        guard eventCreateStatus == noErr else {
-            Log.app.error("System restart Apple Event creation failed; status=\(eventCreateStatus)")
-            return
-        }
-        defer {
-            AEDisposeDesc(&restartEvent)
-        }
-
-        var eventReply = AppleEvent()
-        defer {
-            AEDisposeDesc(&eventReply)
-        }
-
-        let sendStatus = AESendMessage(
-            &restartEvent,
-            &eventReply,
-            AESendMode(kAENoReply),
-            kAEDefaultTimeout
-        )
-        guard sendStatus == noErr else {
-            Log.app.error("System restart Apple Event send failed; status=\(sendStatus)")
-            return
-        }
-
-        Log.app.log("System restart Apple Event sent")
+        SystemPowerActionRequester.requestRestart()
     }
 }
 

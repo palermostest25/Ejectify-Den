@@ -72,6 +72,17 @@ enum Preference {
         Log.preferences.info("Power adapter seen; adapter=\(adapter.logDescription)")
     }
 
+    /// Controls whether the Mac is put to sleep once a dock or display disconnect has unmounted every volume.
+    static var sleepAfterDockDisconnect: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "preference.sleepAfterDockDisconnect")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "preference.sleepAfterDockDisconnect")
+            Log.preferences.log("Preference changed: sleepAfterDockDisconnect=\(newValue)")
+        }
+    }
+
     /// Controls whether automatic remount passes are skipped while the Mac runs on battery power.
     static var keepUnmountedOnBattery: Bool {
         get {
