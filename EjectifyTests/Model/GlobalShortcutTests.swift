@@ -18,7 +18,11 @@ struct GlobalShortcutTests {
 
         #expect(unmountAll.displayString == "⇧⌘E")
         #expect(mountAll.displayString == "⇧⌘M")
-        #expect(unmountAll != mountAll)
+        #expect(GlobalShortcut.Action.unmountAllAndSleep.defaultShortcut.displayString == "⇧⌘S")
+
+        // No two actions may ship with the same default, or one could never register.
+        let defaults = GlobalShortcut.Action.allCases.map(\.defaultShortcut)
+        #expect(Set(defaults).count == defaults.count)
     }
 
     @Test func actionsHaveDistinctHotKeyIdentifiers() {

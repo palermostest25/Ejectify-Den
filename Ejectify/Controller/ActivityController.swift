@@ -504,6 +504,27 @@ final class ActivityController {
         performDiskOperation(triggerDescription: "manual")
     }
 
+    /// Unmounts every enabled volume on user request and puts the Mac to sleep once they are gone.
+    func performManualUnmountAndSleep() {
+        Log.powerEvents.log("Manual unmount and sleep requested")
+        Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            let batchResult = await self.handleEnabledVolumesAndWait(reason: "manual sleep")
+
+            // A volume left mounted keeps the Mac awake so the failure is visible.
+            guard batchResult.succeededCount == batchResult.requestedCount else {
+                Log.powerEvents.warning("Sleep skipped after manual unmount; requestedCount=\(batchResult.requestedCount); succeededCount=\(batchResult.succeededCount)")
+                return
+            }
+
+            // No system sleep transition is in flight for a user-initiated action, so no settling wait.
+            SystemPowerActionRequester.requestSleep()
+        }
+    }
+
     /// Mounts every pending remount candidate on user request, ignoring the battery preference.
     func performManualMountPass() {
         guard !Preference.ejectInsteadOfUnmount else {

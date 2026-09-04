@@ -21,6 +21,7 @@ struct GlobalShortcut: Codable, Hashable, Sendable {
     enum Action: String, CaseIterable, Sendable {
         case unmountAll
         case mountAll
+        case unmountAllAndSleep
 
         /// Shortcut used until the user changes it.
         var defaultShortcut: GlobalShortcut {
@@ -29,6 +30,8 @@ struct GlobalShortcut: Codable, Hashable, Sendable {
                 GlobalShortcut(keyCode: UInt32(kVK_ANSI_E), carbonModifiers: UInt32(cmdKey | shiftKey))
             case .mountAll:
                 GlobalShortcut(keyCode: UInt32(kVK_ANSI_M), carbonModifiers: UInt32(cmdKey | shiftKey))
+            case .unmountAllAndSleep:
+                GlobalShortcut(keyCode: UInt32(kVK_ANSI_S), carbonModifiers: UInt32(cmdKey | shiftKey))
             }
         }
 
@@ -37,6 +40,7 @@ struct GlobalShortcut: Codable, Hashable, Sendable {
             switch self {
             case .unmountAll: 1
             case .mountAll: 2
+            case .unmountAllAndSleep: 3
             }
         }
     }
