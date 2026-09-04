@@ -72,6 +72,19 @@ jobs:
             DEVELOPMENT_TEAM="" \
             PROVISIONING_PROFILE_SPECIFIER=""
 
+      # The LaunchAtLogin package rewrites the bundled login item's Info.plist
+      # after that helper has been signed, which leaves its signature stale.
+      # Re-sign inside-out so the nested helper and the app agree again.
+      - name: Re-sign the bundled login item
+        run: |
+          APP=build/Build/Products/Release/Ejectify.app
+          HELPER="$APP/Contents/Library/LoginItems/LaunchAtLoginHelper.app"
+          if [ -d "$HELPER" ]; then
+            codesign --force --sign - --timestamp=none "$HELPER"
+            codesign --force --sign - --timestamp=none \
+              --preserve-metadata=entitlements,flags "$APP"
+          fi
+
       - name: Verify the signature is ad-hoc and intact
         run: |
           APP=build/Build/Products/Release/Ejectify.app
