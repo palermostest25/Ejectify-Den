@@ -30,6 +30,8 @@
 	<string>Ejectify needs access to removable volumes to unmount, unlock, and remount external disks.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Ejectify sends system power events so it can restart your Mac when you ask it to.</string>
 	<key>SUAllowsAutomaticUpdates</key>
 	<false/>
 	<key>SUEnableAutomaticChecks</key>

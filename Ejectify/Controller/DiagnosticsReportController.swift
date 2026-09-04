@@ -190,6 +190,9 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
     /// Whether automatic remount passes are skipped while on battery.
     let keepUnmountedOnBattery: Bool
 
+    /// Whether the Mac sleeps after a dock or display disconnect has unmounted every volume.
+    let sleepAfterDockDisconnect: Bool
+
     /// Number of online displays that are not built into the Mac.
     let externalDisplayCount: Int
 
@@ -236,6 +239,7 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
             currentPowerAdapter: currentPowerAdapter?.logDescription ?? "-",
             rememberedDocks: Preference.rememberedDocks.map(\.logDescription),
             keepUnmountedOnBattery: Preference.keepUnmountedOnBattery,
+            sleepAfterDockDisconnect: Preference.sleepAfterDockDisconnect,
             externalDisplayCount: ExternalDisplayObserver.currentExternalDisplayCount(),
             forceUnmount: Preference.forceUnmount,
             ejectInsteadOfUnmount: Preference.ejectInsteadOfUnmount,
@@ -546,6 +550,7 @@ private struct EjectifyStateReporter: DiagnosticsReporting {
             ("Power adapter", snapshot.currentPowerAdapter),
             ("Remembered docks", snapshot.rememberedDocks.isEmpty ? "-" : snapshot.rememberedDocks.joined(separator: " | ")),
             ("Keep volumes unmounted on battery", snapshot.keepUnmountedOnBattery.diagnosticsDescription),
+            ("Sleep after unmounting", snapshot.sleepAfterDockDisconnect.diagnosticsDescription),
             ("External displays", String(snapshot.externalDisplayCount)),
             ("Force unmount", snapshot.forceUnmount.diagnosticsDescription),
             ("Eject instead of unmount", snapshot.ejectInsteadOfUnmount.diagnosticsDescription),
