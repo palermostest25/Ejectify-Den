@@ -206,8 +206,11 @@ final class StatusBarMenu: NSMenu {
 
     /// Builds the top "Actions" section.
     private func buildActionsMenu() {
-        let isHotKeyRegistered = MainActor.assumeIsolated {
+        let isUnmountHotKeyRegistered = MainActor.assumeIsolated {
             AppDelegate.shared.isUnmountAllHotKeyRegistered
+        }
+        let isMountHotKeyRegistered = MainActor.assumeIsolated {
+            AppDelegate.shared.isMountAllHotKeyRegistered
         }
         let hasPendingRemountCandidates = MainActor.assumeIsolated {
             AppDelegate.shared.activityController?.hasPendingRemountCandidates ?? false
@@ -218,11 +221,11 @@ final class StatusBarMenu: NSMenu {
         let unmountAllItem = NSMenuItem(
             title: allVolumesActionTitle,
             action: #selector(unmountAllClicked(menuItem:)),
-            keyEquivalent: isHotKeyRegistered ? "u" : ""
+            keyEquivalent: ""
         )
         unmountAllItem.target = self
-        unmountAllItem.keyEquivalentModifierMask = isHotKeyRegistered ? [.control, .command] : []
         unmountAllItem.isEnabled = !volumes.isEmpty
+        applyShortcut(for: .unmountAll, to: unmountAllItem, isRegistered: isUnmountHotKeyRegistered)
         addItem(unmountAllItem)
 
         // Ejected disks are never remounted automatically, so a manual mount action would have nothing to act on.
@@ -233,7 +236,19 @@ final class StatusBarMenu: NSMenu {
         let mountAllItem = NSMenuItem(title: String(localized: "Mount all"), action: #selector(mountAllClicked(menuItem:)), keyEquivalent: "")
         mountAllItem.target = self
         mountAllItem.isEnabled = hasPendingRemountCandidates
+        applyShortcut(for: .mountAll, to: mountAllItem, isRegistered: isMountHotKeyRegistered)
         addItem(mountAllItem)
+    }
+
+    /// Shows an action's global shortcut next to its menu item, but only while that shortcut is actually registered.
+    private func applyShortcut(for action: GlobalShortcut.Action, to menuItem: NSMenuItem, isRegistered: Bool) {
+        guard isRegistered else {
+            return
+        }
+
+        let shortcut = Preference.shortcut(for: action)
+        menuItem.keyEquivalent = shortcut.menuKeyEquivalent
+        menuItem.keyEquivalentModifierMask = shortcut.modifierFlags
     }
 
     /// Builds the "Volumes" section with one toggle row per mounted volume.
@@ -311,6 +326,14 @@ final class StatusBarMenu: NSMenu {
         elevatedPermissionsItem.target = self
         elevatedPermissionsItem.state = elevatedPermissionsMenuState
         addItem(elevatedPermissionsItem)
+
+        let shortcutsItem = NSMenuItem(
+            title: String(localized: "Keyboard Shortcuts…"),
+            action: #selector(shortcutSettingsClicked),
+            keyEquivalent: ""
+        )
+        shortcutsItem.target = self
+        addItem(shortcutsItem)
 
         let muteNotificationsItem = NSMenuItem(title: String(localized: "Force mute notifications"), action: #selector(muteNotificationsClicked(menuItem:)), keyEquivalent: "")
         muteNotificationsItem.target = self
@@ -719,6 +742,12 @@ final class StatusBarMenu: NSMenu {
             showRestartRequiredAlert(shouldMute: shouldMute)
             updateMenu()
         }
+    }
+
+    /// Opens the window for changing global keyboard shortcuts.
+    @MainActor
+    @objc private func shortcutSettingsClicked() {
+        AppDelegate.shared.showShortcutSettings()
     }
 
     /// Opens the Ejectify Help Center website.

@@ -94,6 +94,15 @@
 		F1D000000000000000000108 /* KnownPowerAdaptersPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */; };
 		F1D00000000000000000020A /* KnownPowerAdaptersPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */; };
 		F1D00000000000000000020B /* KnownPowerAdaptersPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000D /* KnownPowerAdaptersPreferenceTests.swift */; };
+		F1D000000000000000000109 /* GlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000E /* GlobalShortcut.swift */; };
+		F1D00000000000000000010A /* GlobalShortcutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000F /* GlobalShortcutPreference.swift */; };
+		F1D00000000000000000010B /* DiskOperationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000010 /* DiskOperationProgress.swift */; };
+		F1D00000000000000000010C /* DiskOperationHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000011 /* DiskOperationHUDView.swift */; };
+		F1D00000000000000000010D /* DiskOperationHUDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000012 /* DiskOperationHUDController.swift */; };
+		F1D00000000000000000010E /* ShortcutSettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000013 /* ShortcutSettingsWindowController.swift */; };
+		F1D00000000000000000020C /* GlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000E /* GlobalShortcut.swift */; };
+		F1D00000000000000000020D /* GlobalShortcutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000F /* GlobalShortcutPreference.swift */; };
+		F1D00000000000000000020E /* GlobalShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000014 /* GlobalShortcutTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,6 +235,13 @@
 		F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberedDocksPreferenceTests.swift; sourceTree = "<group>"; };
 		F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPowerAdaptersPreference.swift; sourceTree = "<group>"; };
 		F1D00000000000000000000D /* KnownPowerAdaptersPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPowerAdaptersPreferenceTests.swift; sourceTree = "<group>"; };
+		F1D00000000000000000000E /* GlobalShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcut.swift; sourceTree = "<group>"; };
+		F1D00000000000000000000F /* GlobalShortcutPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutPreference.swift; sourceTree = "<group>"; };
+		F1D000000000000000000010 /* DiskOperationProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskOperationProgress.swift; sourceTree = "<group>"; };
+		F1D000000000000000000011 /* DiskOperationHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskOperationHUDView.swift; sourceTree = "<group>"; };
+		F1D000000000000000000012 /* DiskOperationHUDController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskOperationHUDController.swift; sourceTree = "<group>"; };
+		F1D000000000000000000013 /* ShortcutSettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingsWindowController.swift; sourceTree = "<group>"; };
+		F1D000000000000000000014 /* GlobalShortcutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +332,8 @@
 				D2A100A22F9B100100A0C001 /* UpdateController.swift */,
 				F1D000000000000000000007 /* ExternalDisplayObserver.swift */,
 				F1D000000000000000000006 /* PowerAdapterObserver.swift */,
+				F1D000000000000000000012 /* DiskOperationHUDController.swift */,
+				F1D000000000000000000013 /* ShortcutSettingsWindowController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -331,6 +349,9 @@
 				F1D000000000000000000001 /* UnmountTrigger.swift */,
 				F1D000000000000000000002 /* UnmountTriggersPreference.swift */,
 				F1D00000000000000000000C /* KnownPowerAdaptersPreference.swift */,
+				F1D00000000000000000000E /* GlobalShortcut.swift */,
+				F1D00000000000000000000F /* GlobalShortcutPreference.swift */,
+				F1D000000000000000000010 /* DiskOperationProgress.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +365,7 @@
 				D1E700AA2F8A000100C0D001 /* OnboardingView.swift */,
 				B8DFADB0256CF511009E9296 /* StatusBar.swift */,
 				B8DFADB4256CF511009E9296 /* StatusBarMenu.swift */,
+				F1D000000000000000000011 /* DiskOperationHUDView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -411,6 +433,7 @@
 				F1D00000000000000000000B /* RememberedDocksPreferenceTests.swift */,
 				F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */,
 				F1D00000000000000000000D /* KnownPowerAdaptersPreferenceTests.swift */,
+				F1D000000000000000000014 /* GlobalShortcutTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -643,6 +666,12 @@
 				F1D000000000000000000106 /* PowerAdapterObserver.swift in Sources */,
 				F1D000000000000000000107 /* ExternalDisplayObserver.swift in Sources */,
 				F1D000000000000000000108 /* KnownPowerAdaptersPreference.swift in Sources */,
+				F1D000000000000000000109 /* GlobalShortcut.swift in Sources */,
+				F1D00000000000000000010A /* GlobalShortcutPreference.swift in Sources */,
+				F1D00000000000000000010B /* DiskOperationProgress.swift in Sources */,
+				F1D00000000000000000010C /* DiskOperationHUDView.swift in Sources */,
+				F1D00000000000000000010D /* DiskOperationHUDController.swift in Sources */,
+				F1D00000000000000000010E /* ShortcutSettingsWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +725,9 @@
 				F1D000000000000000000209 /* RememberedDocksPreferenceTests.swift in Sources */,
 				F1D00000000000000000020A /* KnownPowerAdaptersPreference.swift in Sources */,
 				F1D00000000000000000020B /* KnownPowerAdaptersPreferenceTests.swift in Sources */,
+				F1D00000000000000000020C /* GlobalShortcut.swift in Sources */,
+				F1D00000000000000000020D /* GlobalShortcutPreference.swift in Sources */,
+				F1D00000000000000000020E /* GlobalShortcutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

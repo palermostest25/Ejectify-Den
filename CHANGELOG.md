@@ -7,6 +7,9 @@
 - Added an "External display disconnected" trigger for clamshell setups.
 - Volumes now remount automatically when a remembered dock is reconnected.
 - Added an option to keep volumes unmounted while running on battery, with a new "Mount all" menu action to remount them on demand.
+- Added a progress panel below the menu bar icon that reports unmounting, remounting and ejecting, and stays on screen when a disk could not be handled.
+- Unmount results are now verified, so a disk that is still mounted is reported instead of being treated as unmounted.
+- The unmount-all and mount-all keyboard shortcuts can now be changed, and default to Shift-Command-E and Shift-Command-M.
 - Docks can be chosen from a list of power adapters Ejectify has seen, so an adapter can be marked as a dock while it is unplugged.
 - Diagnostics reports now include power adapter, remembered dock, and trigger information.
 
