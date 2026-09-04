@@ -71,6 +71,27 @@ struct DockDisconnectPolicyTests {
         #expect(withDisplay == withoutDisplay)
     }
 
+    @Test func sleepAfterUnmountNeedsThePreferenceAndAFullySuccessfulBatch() {
+        #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: true, requestedCount: 2, succeededCount: 2))
+        #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .externalDisplayDisconnected, sleepAfterDockDisconnect: true, requestedCount: 1, succeededCount: 1))
+
+        // The preference is off.
+        #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: false, requestedCount: 1, succeededCount: 1) == false)
+
+        // A volume stayed mounted, so the failure must stay visible instead.
+        #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: true, requestedCount: 2, succeededCount: 1) == false)
+
+        // Nothing was unmounted, so there is nothing to sleep after.
+        #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: true, requestedCount: 0, succeededCount: 0) == false)
+    }
+
+    @Test func onlyTriggersThatLeaveTheMacAwakeCanRequestSleep() {
+        // Sleeping after the sleep trigger would be circular, and the others are not power transitions.
+        for trigger in [UnmountTrigger.systemStartsSleeping, .screensStartedSleeping, .screenIsLocked, .screensaverStarted] {
+            #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: trigger, sleepAfterDockDisconnect: true, requestedCount: 1, succeededCount: 1) == false)
+        }
+    }
+
     @Test func remountIsOnlyBlockedOnBatteryWithThePreferenceEnabled() {
         #expect(DockDisconnectPolicy.remountAllowed(isOnBattery: false, keepUnmountedOnBattery: false))
         #expect(DockDisconnectPolicy.remountAllowed(isOnBattery: false, keepUnmountedOnBattery: true))
