@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Giữ các ổ đĩa được ngắt khi dùng pin";
 "This looks like an Apple charger." = "Đây có vẻ là bộ sạc Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ghi nhớ nó là dock nghĩa là rút bộ sạc sẽ ngắt kết nối các ổ đĩa của bạn. Vẫn ghi nhớ?";
+"This adapter can only be matched by its wattage." = "Bộ chuyển đổi này chỉ có thể khớp theo công suất.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Máy Mac không báo cáo gì khác về nó, nên mọi bộ chuyển đổi cùng công suất sẽ được tính là dock này. Vẫn ghi nhớ chứ?";
 "Remember anyway" = "Vẫn ghi nhớ";
 "Power adapters" = "Bộ chuyển đổi nguồn";
 "Connected" = "Đã kết nối";
 "Connect your dock to remember it" = "Kết nối dock để ghi nhớ nó";
 "Cannot be identified reliably" = "Không thể nhận dạng đáng tin cậy";
+"Matched by wattage only" = "Chỉ khớp theo công suất";
 "Unmounting disks…" = "Đang ngắt kết nối đĩa…";
 "Remounting disks…" = "Đang kết nối lại đĩa…";
 "Ejecting disks…" = "Đang đẩy đĩa ra…";

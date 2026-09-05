@@ -177,4 +177,48 @@ struct PowerAdapterIdentityTests {
         #expect(partialReading.isRemembered(in: [rememberedDock]))
         #expect(PowerAdapterIdentity(adapterID: 9, familyCode: 99).isRemembered(in: [rememberedDock]) == false)
     }
+
+    @Test func wattageOnlyMatchingIsOffByDefault() {
+        // The reading a Mac gives for an adapter it cannot describe: a wattage and nothing usable.
+        let dock = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 100)
+        let sameDock = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 100)
+
+        #expect(dock.hasOnlyWattage)
+        #expect(dock.matches(sameDock) == false)
+        #expect(dock.matches(sameDock, allowingWattageOnly: true))
+    }
+
+    @Test func wattageOnlyMatchingStillRespectsDifferingWattage() {
+        let dock = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 100)
+        let charger = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 65)
+
+        #expect(dock.matches(charger, allowingWattageOnly: true) == false)
+    }
+
+    @Test func wattageOnlyMatchingNeverAppliesToADescribedAdapter() {
+        let describedDock = PowerAdapterIdentity(adapterID: 4, familyCode: 12, watts: 100)
+        let undescribedCharger = PowerAdapterIdentity(watts: 100)
+
+        #expect(describedDock.hasOnlyWattage == false)
+        #expect(describedDock.matches(undescribedCharger, allowingWattageOnly: true) == false)
+        #expect(undescribedCharger.matches(describedDock, allowingWattageOnly: true) == false)
+    }
+
+    @Test func anAdapterWithoutAWattageIsNeverMatchedByWattage() {
+        let dock = PowerAdapterIdentity(adapterID: 0)
+        let charger = PowerAdapterIdentity(adapterID: 0)
+
+        #expect(dock.hasOnlyWattage == false)
+        #expect(dock.matches(charger, allowingWattageOnly: true) == false)
+    }
+
+    @Test func remembersAWattageOnlyDockUnlessAskedNotTo() {
+        let rememberedDock = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 100)
+        let sameDock = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 100)
+        let charger = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 65)
+
+        #expect(sameDock.isRemembered(in: [rememberedDock]))
+        #expect(charger.isRemembered(in: [rememberedDock]) == false)
+        #expect(sameDock.isRemembered(in: [rememberedDock], allowingWattageOnly: false) == false)
+    }
 }

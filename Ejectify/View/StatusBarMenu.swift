@@ -518,21 +518,30 @@ final class StatusBarMenu: NSMenu {
         item.state = adapter.isRemembered(in: rememberedDocks) ? .on : .off
         item.representedObject = adapter
 
-        // An adapter macOS barely describes can never be recognized again, so it cannot act as a dock.
-        guard adapter.isIdentifiable else {
-            item.isEnabled = false
-            item.attributedTitle = makeHintTitle(
-                title: adapter.displayName,
-                hint: String(localized: "Cannot be identified reliably"),
-                isWarning: true
-            )
+        // macOS describes some adapters with nothing but a wattage. Those stay selectable, because a
+        // wattage still tells a 100 W dock apart from a 65 W charger, but the row says so plainly.
+        let isSelectable = adapter.isIdentifiable || adapter.hasOnlyWattage
+        item.isEnabled = isSelectable
+
+        var hints: [String] = []
+        if currentAdapter?.matches(adapter, allowingWattageOnly: true) == true {
+            hints.append(String(localized: "Connected"))
+        }
+        if !adapter.isIdentifiable {
+            hints.append(isSelectable
+                ? String(localized: "Matched by wattage only")
+                : String(localized: "Cannot be identified reliably"))
+        }
+
+        guard !hints.isEmpty else {
             return item
         }
 
-        if currentAdapter?.matches(adapter) == true {
-            item.attributedTitle = makeHintTitle(title: adapter.displayName, hint: String(localized: "Connected"), isWarning: false)
-        }
-
+        item.attributedTitle = makeHintTitle(
+            title: adapter.displayName,
+            hint: hints.joined(separator: " \u{00B7} "),
+            isWarning: !adapter.isIdentifiable
+        )
         return item
     }
 
@@ -686,14 +695,15 @@ final class StatusBarMenu: NSMenu {
     /// Toggles whether one power adapter is treated as a dock.
     @MainActor
     @objc private func dockAdapterToggled(menuItem: NSMenuItem) {
-        guard let adapter = menuItem.representedObject as? PowerAdapterIdentity, adapter.isIdentifiable else {
+        guard let adapter = menuItem.representedObject as? PowerAdapterIdentity,
+              adapter.isIdentifiable || adapter.hasOnlyWattage else {
             return
         }
 
         var rememberedDocks = Preference.rememberedDocks
 
         guard !adapter.isRemembered(in: rememberedDocks) else {
-            rememberedDocks.removeAll { $0.matches(adapter) }
+            rememberedDocks.removeAll { $0.matches(adapter, allowingWattageOnly: true) }
             Preference.rememberedDocks = rememberedDocks
             Log.preferences.log("Remembered dock forgotten; adapter=\(adapter.logDescription)")
             updateMenu()
@@ -702,6 +712,12 @@ final class StatusBarMenu: NSMenu {
 
         guard !adapter.isLikelyAppleCharger || confirmRememberingAppleCharger() else {
             Log.preferences.info("Remembering adapter cancelled; reason=apple charger confirmation declined")
+            return
+        }
+
+        // Wattage is weak evidence, so the choice to rely on it is made once, deliberately, here.
+        guard adapter.isIdentifiable || confirmRememberingWattageOnlyAdapter() else {
+            Log.preferences.info("Remembering adapter cancelled; reason=wattage only confirmation declined")
             return
         }
 
@@ -718,6 +734,19 @@ final class StatusBarMenu: NSMenu {
         alert.alertStyle = .warning
         alert.messageText = String(localized: "This looks like an Apple charger.")
         alert.informativeText = String(localized: "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?")
+        // Cancel is added first so it stays the default button.
+        alert.addButton(withTitle: String(localized: "Cancel"))
+        alert.addButton(withTitle: String(localized: "Remember anyway"))
+        return alert.runModal() == .alertSecondButtonReturn
+    }
+
+    /// Asks for confirmation before relying on wattage alone to recognize an adapter.
+    @MainActor
+    private func confirmRememberingWattageOnlyAdapter() -> Bool {
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = String(localized: "This adapter can only be matched by its wattage.")
+        alert.informativeText = String(localized: "Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?")
         // Cancel is added first so it stays the default button.
         alert.addButton(withTitle: String(localized: "Cancel"))
         alert.addButton(withTitle: String(localized: "Remember anyway"))

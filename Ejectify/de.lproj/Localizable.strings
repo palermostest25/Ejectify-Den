@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Volumes im Batteriebetrieb deaktiviert lassen";
 "This looks like an Apple charger." = "Das sieht nach einem Apple-Ladegerät aus.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Wenn du es als Dock merkst, werden deine Volumes deaktiviert, sobald du das Ladegerät abziehst. Trotzdem merken?";
+"This adapter can only be matched by its wattage." = "Dieses Netzteil lässt sich nur anhand seiner Wattzahl erkennen.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Dein Mac meldet sonst nichts darüber, daher gilt jedes Netzteil mit derselben Wattzahl als dieses Dock. Trotzdem merken?";
 "Remember anyway" = "Trotzdem merken";
 "Power adapters" = "Netzteile";
 "Connected" = "Verbunden";
 "Connect your dock to remember it" = "Schließe dein Dock an, um es zu merken";
 "Cannot be identified reliably" = "Kann nicht zuverlässig erkannt werden";
+"Matched by wattage only" = "Wird nur anhand der Wattzahl erkannt";
 "Unmounting disks…" = "Volumes werden deaktiviert…";
 "Remounting disks…" = "Volumes werden reaktiviert…";
 "Ejecting disks…" = "Volumes werden ausgeworfen…";

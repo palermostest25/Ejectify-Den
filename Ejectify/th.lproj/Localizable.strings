@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "คงสถานะเลิกเมานต์ไว้เมื่อใช้แบตเตอรี่";
 "This looks like an Apple charger." = "ดูเหมือนว่านี่จะเป็นที่ชาร์จ Apple";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "การจำไว้เป็นแท่นเชื่อมต่อหมายความว่าการถอดที่ชาร์จจะเลิกเมานต์ไดรฟ์ของคุณ ต้องการจำไว้หรือไม่";
+"This adapter can only be matched by its wattage." = "อะแดปเตอร์นี้จับคู่ได้ด้วยกำลังไฟเท่านั้น";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Mac ของคุณไม่ได้รายงานข้อมูลอื่นเกี่ยวกับอะแดปเตอร์นี้ อะแดปเตอร์ใดก็ตามที่มีกำลังไฟเท่ากันจึงจะถูกนับเป็นด็อกนี้ ต้องการจดจำต่อไปหรือไม่";
 "Remember anyway" = "จำไว้";
 "Power adapters" = "อะแดปเตอร์จ่ายไฟ";
 "Connected" = "เชื่อมต่ออยู่";
 "Connect your dock to remember it" = "เชื่อมต่อแท่นเชื่อมต่อของคุณเพื่อจดจำ";
 "Cannot be identified reliably" = "ไม่สามารถระบุได้อย่างน่าเชื่อถือ";
+"Matched by wattage only" = "จับคู่ด้วยกำลังไฟเท่านั้น";
 "Unmounting disks…" = "กำลังเลิกเมานต์ดิสก์…";
 "Remounting disks…" = "กำลังเมานต์ดิสก์อีกครั้ง…";
 "Ejecting disks…" = "กำลังดีดดิสก์ออก…";

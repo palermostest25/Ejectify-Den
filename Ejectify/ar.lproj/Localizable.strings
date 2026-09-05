@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "إبقاء وحدات التخزين غير محملة على البطارية";
 "This looks like an Apple charger." = "يبدو أن هذا شاحن Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "تذكره كقاعدة توصيل يعني أن فصل الشاحن سيلغي تحميل وحدات التخزين. تذكره على أي حال؟";
+"This adapter can only be matched by its wattage." = "لا يمكن مطابقة هذا المحول إلا حسب قدرته.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "لا يبلّغ Mac بأي معلومات أخرى عنه، لذا سيُعد أي محول بالقدرة نفسها هو هذه القاعدة. هل تريد تذكّره على أي حال؟";
 "Remember anyway" = "تذكر على أي حال";
 "Power adapters" = "محولات الطاقة";
 "Connected" = "متصل";
 "Connect your dock to remember it" = "وصّل قاعدة التوصيل لتذكرها";
 "Cannot be identified reliably" = "يتعذر التعرف عليه بشكل موثوق";
+"Matched by wattage only" = "المطابقة حسب القدرة فقط";
 "Unmounting disks…" = "جارٍ إلغاء تحميل الأقراص…";
 "Remounting disks…" = "جارٍ إعادة تحميل الأقراص…";
 "Ejecting disks…" = "جارٍ إخراج الأقراص…";

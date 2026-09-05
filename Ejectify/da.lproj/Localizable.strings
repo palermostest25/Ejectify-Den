@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Behold enheder passive på batteri";
 "This looks like an Apple charger." = "Dette ligner en Apple-oplader.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Hvis du husker den som dock, bliver dine enheder passive, når du frakobler opladeren. Husk alligevel?";
+"This adapter can only be matched by its wattage." = "Denne adapter kan kun genkendes ud fra sin watt.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Din Mac oplyser intet andet om den, så enhver adapter med samme watt tæller som denne dock. Vil du huske den alligevel?";
 "Remember anyway" = "Husk alligevel";
 "Power adapters" = "Strømforsyninger";
 "Connected" = "Tilsluttet";
 "Connect your dock to remember it" = "Tilslut din dock for at huske den";
 "Cannot be identified reliably" = "Kan ikke genkendes pålideligt";
+"Matched by wattage only" = "Genkendes kun ud fra watt";
 "Unmounting disks…" = "Gør diske passive…";
 "Remounting disks…" = "Gør diske aktive igen…";
 "Ejecting disks…" = "Skubber diske ud…";

@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Ponechať zväzky odpojené pri napájaní z batérie";
 "This looks like an Apple charger." = "Vyzerá to ako nabíjačka Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ak ju zapamätáte ako dok, odpojenie nabíjačky odpojí vaše zväzky. Napriek tomu zapamätať?";
+"This adapter can only be matched by its wattage." = "Tento adaptér sa dá rozpoznať len podľa wattáže.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Váš Mac o ňom nič ďalšie nehlási, takže za tento dok sa bude považovať každý adaptér s rovnakou wattážou. Zapamätať si ho aj tak?";
 "Remember anyway" = "Napriek tomu zapamätať";
 "Power adapters" = "Napájacie adaptéry";
 "Connected" = "Pripojené";
 "Connect your dock to remember it" = "Pripojte dok, aby ste si ho zapamätali";
 "Cannot be identified reliably" = "Nedá sa spoľahlivo identifikovať";
+"Matched by wattage only" = "Rozpozná sa len podľa wattáže";
 "Unmounting disks…" = "Odpájanie diskov…";
 "Remounting disks…" = "Opätovné pripájanie diskov…";
 "Ejecting disks…" = "Vysúvanie diskov…";

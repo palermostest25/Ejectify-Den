@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Διατήρηση τόμων χωρίς προσάρτηση στη μπαταρία";
 "This looks like an Apple charger." = "Αυτό μοιάζει με φορτιστή Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Αν τον απομνημονεύσετε ως σταθμό, η αποσύνδεση του φορτιστή θα καταργήσει την προσάρτηση των τόμων. Απομνημόνευση ούτως ή άλλως;";
+"This adapter can only be matched by its wattage." = "Αυτός ο τροφοδοτικός μπορεί να αναγνωριστεί μόνο από την ισχύ του.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Το Mac σας δεν αναφέρει τίποτα άλλο γι' αυτό, οπότε κάθε τροφοδοτικό ίδιας ισχύος θα θεωρείται αυτό το dock. Να αποθηκευτεί ούτως ή άλλως;";
 "Remember anyway" = "Απομνημόνευση ούτως ή άλλως";
 "Power adapters" = "Τροφοδοτικά";
 "Connected" = "Συνδεδεμένο";
 "Connect your dock to remember it" = "Συνδέστε τον σταθμό για να τον απομνημονεύσετε";
 "Cannot be identified reliably" = "Δεν είναι δυνατή η αξιόπιστη αναγνώριση";
+"Matched by wattage only" = "Αναγνωρίζεται μόνο από την ισχύ";
 "Unmounting disks…" = "Κατάργηση προσάρτησης δίσκων…";
 "Remounting disks…" = "Επαναπροσάρτηση δίσκων…";
 "Ejecting disks…" = "Εξαγωγή δίσκων…";

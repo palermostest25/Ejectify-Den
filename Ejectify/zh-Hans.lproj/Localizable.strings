@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "使用电池时保持宗卷卸载";
 "This looks like an Apple charger." = "这看起来像是 Apple 充电器。";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "将其记为扩展坞意味着拔下充电器时会卸载你的宗卷。仍要记住吗？";
+"This adapter can only be matched by its wattage." = "此电源适配器只能按功率匹配。";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "你的 Mac 未报告它的其他信息，因此任何相同功率的适配器都会被视为此扩展坞。仍要记住吗？";
 "Remember anyway" = "仍要记住";
 "Power adapters" = "电源适配器";
 "Connected" = "已连接";
 "Connect your dock to remember it" = "连接你的扩展坞以记住它";
 "Cannot be identified reliably" = "无法可靠识别";
+"Matched by wattage only" = "仅按功率匹配";
 "Unmounting disks…" = "正在卸载磁盘…";
 "Remounting disks…" = "正在重新装载磁盘…";
 "Ejecting disks…" = "正在推出磁盘…";

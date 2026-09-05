@@ -73,8 +73,17 @@ struct PowerAdapterIdentity: Codable, Hashable, Sendable {
         )
     }
 
+    /// Whether this reading carries no field capable of telling it apart from another adapter.
+    var hasOnlyWattage: Bool {
+        !isIdentifiable && watts != nil
+    }
+
     /// Whether both identities describe the same physical adapter.
-    func matches(_ other: PowerAdapterIdentity) -> Bool {
+    ///
+    /// Set `allowingWattageOnly` for an adapter the user deliberately remembered despite macOS
+    /// describing it with nothing but a wattage. It is weak evidence, and only ever applied when
+    /// neither reading carries anything stronger.
+    func matches(_ other: PowerAdapterIdentity, allowingWattageOnly: Bool = false) -> Bool {
         if let serial = Self.normalized(serial), let otherSerial = Self.normalized(other.serial) {
             return serial == otherSerial
         }
@@ -94,8 +103,16 @@ struct PowerAdapterIdentity: Codable, Hashable, Sendable {
             return false
         }
 
-        // A single shared field is too weak to identify an adapter, so nil is only treated as a wildcard beyond that.
-        return comparedFieldCount >= 2
+        if comparedFieldCount >= 2 {
+            return true
+        }
+
+        // Last resort for adapters macOS will not describe: wattage alone, and only by request.
+        guard allowingWattageOnly, hasOnlyWattage, other.hasOnlyWattage else {
+            return false
+        }
+
+        return watts == other.watts
     }
 
     /// Whether this reading carries enough detail for `matches(_:)` to recognize the adapter again.
@@ -139,8 +156,8 @@ struct PowerAdapterIdentity: Codable, Hashable, Sendable {
     private static let unknownLogValue = "unknown"
 
     /// Returns whether a remembered list already contains this adapter.
-    func isRemembered(in rememberedDocks: [PowerAdapterIdentity]) -> Bool {
-        rememberedDocks.contains { $0.matches(self) }
+    func isRemembered(in rememberedDocks: [PowerAdapterIdentity], allowingWattageOnly: Bool = true) -> Bool {
+        rememberedDocks.contains { $0.matches(self, allowingWattageOnly: allowingWattageOnly) }
     }
 
     /// Compares one optional field, counting it only when both sides provide a value.

@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Biarkan volume terlepas saat memakai baterai";
 "This looks like an Apple charger." = "Ini tampak seperti pengisi daya Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Mengingatnya sebagai dok berarti mencabut pengisi daya akan melepas volume Anda. Tetap ingat?";
+"This adapter can only be matched by its wattage." = "Adaptor ini hanya dapat dicocokkan berdasarkan dayanya.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Mac Anda tidak melaporkan hal lain tentangnya, jadi setiap adaptor dengan daya yang sama akan dianggap dok ini. Tetap ingat?";
 "Remember anyway" = "Tetap Ingat";
 "Power adapters" = "Adaptor Daya";
 "Connected" = "Terhubung";
 "Connect your dock to remember it" = "Hubungkan dok Anda untuk mengingatnya";
 "Cannot be identified reliably" = "Tidak dapat diidentifikasi dengan andal";
+"Matched by wattage only" = "Dicocokkan hanya berdasarkan daya";
 "Unmounting disks…" = "Melepas disk…";
 "Remounting disks…" = "Memasang disk kembali…";
 "Ejecting disks…" = "Mengeluarkan disk…";
