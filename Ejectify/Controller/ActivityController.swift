@@ -298,6 +298,7 @@ final class ActivityController {
     private func handleAdapterLost(_ adapter: PowerAdapterIdentity) {
         guard Preference.unmountWhen.contains(.dockDisconnected) else {
             // The observer is only running to keep the battery remount gate accurate.
+            Log.powerEvents.log("Dock disconnect ignored; reason=trigger not enabled; adapter=\(adapter.logDescription)")
             return
         }
 
@@ -316,7 +317,7 @@ final class ActivityController {
             Log.powerEvents.log("Dock disconnect trigger fired; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected); lidClosed=\(isLidClosed.map(String.init) ?? "unknown")")
             performDiskOperationAndSleepIfNeeded(trigger: .dockDisconnected)
         case .ignore(let reason):
-            Log.powerEvents.info("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected); lidClosed=\(isLidClosed.map(String.init) ?? "unknown")")
+            Log.powerEvents.log("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected); lidClosed=\(isLidClosed.map(String.init) ?? "unknown")")
         }
     }
 
@@ -340,6 +341,7 @@ final class ActivityController {
     private func handleLastExternalDisplayDisconnected() {
         guard Preference.unmountWhen.contains(.externalDisplayDisconnected) else {
             // The observer is only running to report display state alongside dock decisions.
+            Log.powerEvents.log("External display disconnect ignored; reason=trigger not enabled")
             return
         }
 
@@ -350,7 +352,7 @@ final class ActivityController {
             isLidClosed: isLidClosed,
             requiresClosedLid: Preference.requireClosedLidForDockTrigger
         ) else {
-            Log.powerEvents.info("External display disconnect ignored; reason=lid is open")
+            Log.powerEvents.log("External display disconnect ignored; reason=lid is open; lidClosed=\(isLidClosed.map(String.init) ?? "unknown")")
             return
         }
 
