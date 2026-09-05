@@ -343,6 +343,17 @@ final class ActivityController {
             return
         }
 
+        // Unplugging a display with the lid open leaves the Mac in use on its built-in screen,
+        // so the same clamshell requirement as the dock trigger applies.
+        let isLidClosed = ClamshellStateProbe.isLidClosed()
+        guard DockDisconnectPolicy.allowsTrigger(
+            isLidClosed: isLidClosed,
+            requiresClosedLid: Preference.requireClosedLidForDockTrigger
+        ) else {
+            Log.powerEvents.info("External display disconnect ignored; reason=lid is open")
+            return
+        }
+
         performDiskOperationAndSleepIfNeeded(trigger: .externalDisplayDisconnected)
     }
 
