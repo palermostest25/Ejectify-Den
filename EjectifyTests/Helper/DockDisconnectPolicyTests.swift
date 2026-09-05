@@ -71,6 +71,36 @@ struct DockDisconnectPolicyTests {
         #expect(withDisplay == withoutDisplay)
     }
 
+    @Test func anOpenLidBlocksTheTrigger() {
+        let openLid = DockDisconnectPolicy.decision(
+            lostAdapter: dock,
+            rememberedDocks: [dock],
+            externalDisplayStillConnected: false,
+            isLidClosed: false,
+            requiresClosedLid: true
+        )
+        #expect(openLid == .ignore(reason: "lid is open"))
+
+        let closedLid = DockDisconnectPolicy.decision(
+            lostAdapter: dock,
+            rememberedDocks: [dock],
+            externalDisplayStillConnected: false,
+            isLidClosed: true,
+            requiresClosedLid: true
+        )
+        #expect(closedLid == .unmount(reason: "remembered dock lost"))
+
+        // A Mac that reports no clamshell state must not lose the trigger entirely.
+        let unknownLid = DockDisconnectPolicy.decision(
+            lostAdapter: dock,
+            rememberedDocks: [dock],
+            externalDisplayStillConnected: false,
+            isLidClosed: nil,
+            requiresClosedLid: true
+        )
+        #expect(unknownLid == .unmount(reason: "remembered dock lost"))
+    }
+
     @Test func sleepAfterUnmountNeedsThePreferenceAndAFullySuccessfulBatch() {
         #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .dockDisconnected, sleepAfterDockDisconnect: true, requestedCount: 2, succeededCount: 2))
         #expect(DockDisconnectPolicy.shouldSleepAfterUnmount(trigger: .externalDisplayDisconnected, sleepAfterDockDisconnect: true, requestedCount: 1, succeededCount: 1))

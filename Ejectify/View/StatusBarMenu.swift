@@ -446,6 +446,15 @@ final class StatusBarMenu: NSMenu {
 
         dockMenu.addItem(NSMenuItem.separator())
 
+        let requireClosedLidItem = NSMenuItem(
+            title: String(localized: "Only when the lid is closed"),
+            action: #selector(requireClosedLidClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        requireClosedLidItem.target = self
+        requireClosedLidItem.state = Preference.requireClosedLidForDockTrigger ? .on : .off
+        dockMenu.addItem(requireClosedLidItem)
+
         let sleepAfterDockDisconnectItem = NSMenuItem(
             title: String(localized: "Sleep after unmounting"),
             action: #selector(sleepAfterDockDisconnectClicked(menuItem:)),
@@ -723,6 +732,12 @@ final class StatusBarMenu: NSMenu {
 
         Preference.rememberedDocks = []
         Log.preferences.log("All remembered docks forgotten")
+        updateMenu()
+    }
+
+    /// Toggles whether the dock trigger only fires while the lid is closed.
+    @objc private func requireClosedLidClicked(menuItem: NSMenuItem) {
+        Preference.requireClosedLidForDockTrigger = toggledValue(for: menuItem.state)
         updateMenu()
     }
 

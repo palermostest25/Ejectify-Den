@@ -104,3 +104,4 @@
 "Reset" = "Alaphelyzet";
 "Sleep after unmounting" = "Alvás a lecsatolás után";
 "Unmount all and sleep" = "Összes lecsatolása és alvás";
+"Only when the lid is closed" = "Csak lecsukott fedélnél";

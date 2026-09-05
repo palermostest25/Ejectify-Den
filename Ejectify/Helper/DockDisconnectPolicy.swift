@@ -20,8 +20,16 @@ enum DockDisconnectPolicy {
     static func decision(
         lostAdapter: PowerAdapterIdentity?,
         rememberedDocks: [PowerAdapterIdentity],
-        externalDisplayStillConnected: Bool
+        externalDisplayStillConnected: Bool,
+        isLidClosed: Bool? = nil,
+        requiresClosedLid: Bool = false
     ) -> Decision {
+        // With the lid open the Mac is in use, so losing power is not a reason to pull a volume
+        // out from under whatever is writing to it.
+        if requiresClosedLid, isLidClosed == false {
+            return .ignore(reason: "lid is open")
+        }
+
         // The reasons below are stable diagnostic strings; keep them in sync with the support documentation.
         guard let lostAdapter else {
             return .ignore(reason: "no adapter snapshot")
