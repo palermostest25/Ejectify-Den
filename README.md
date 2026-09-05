@@ -1,6 +1,4 @@
-# Ejectify for Mac
-
-[Ejectify](https://ejectify.app) is a Mac menu bar utility that helps prevent “Disk Not Ejected Properly” notifications by safely unmounting, or optionally ejecting, selected volumes when your Mac starts sleeping or the display turns off, then attempting to mount them again after wake.
+Ejectify is a Mac menu bar utility that helps prevent “Disk Not Ejected Properly” notifications by safely unmounting, or optionally ejecting, selected volumes when your Mac starts sleeping or the display turns off, then attempting to mount them again after wake.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Follow](https://img.shields.io/twitter/follow/nielsmouthaan?style=social)
 
@@ -18,7 +16,15 @@
 
 ## Download
 
-[Get Ejectify](https://ejectify.app/get) or build it yourself from this repository.
+Build it yourself from this repository.
+1. Clone Repo
+2. Open XCode Project
+3. Go to signing and capabilities, select your team for all three items
+4. Command + B to build
+5. Product/Open in Finder
+6. Go to Products/Debug/
+7. Cooy Ejectify.app to Applications
+8. Enjoy!
 
 ## FAQ & Support
 
