@@ -24,9 +24,7 @@ enum DockDisconnectPolicy {
         isLidClosed: Bool? = nil,
         requiresClosedLid: Bool = false
     ) -> Decision {
-        // With the lid open the Mac is in use, so losing power is not a reason to pull a volume
-        // out from under whatever is writing to it.
-        if requiresClosedLid, isLidClosed == false {
+        guard allowsTrigger(isLidClosed: isLidClosed, requiresClosedLid: requiresClosedLid) else {
             return .ignore(reason: "lid is open")
         }
 
@@ -46,6 +44,19 @@ enum DockDisconnectPolicy {
 
         // `externalDisplayStillConnected` is reported for diagnostics only and does not change this decision yet.
         return .unmount(reason: "remembered dock lost")
+    }
+
+    /// Whether a disconnect trigger may fire at all given the lid state.
+    ///
+    /// With the lid open the Mac is in use, so losing a display or a charger is not a reason to pull a
+    /// volume out from under whatever is writing to it. A Mac that reports no clamshell state at all is
+    /// not blocked, so the trigger never disappears silently.
+    static func allowsTrigger(isLidClosed: Bool?, requiresClosedLid: Bool) -> Bool {
+        guard requiresClosedLid, let isLidClosed else {
+            return true
+        }
+
+        return isLidClosed
     }
 
     /// Decides whether the Mac should be put to sleep after a trigger finished unmounting.
