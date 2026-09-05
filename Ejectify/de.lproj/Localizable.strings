@@ -104,3 +104,4 @@
 "Reset" = "Zurücksetzen";
 "Sleep after unmounting" = "Nach dem Deaktivieren in den Ruhezustand";
 "Unmount all and sleep" = "Alle deaktivieren und Ruhezustand";
+"Only when the lid is closed" = "Nur bei geschlossenem Deckel";

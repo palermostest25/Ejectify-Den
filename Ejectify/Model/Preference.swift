@@ -72,6 +72,18 @@ enum Preference {
         Log.preferences.info("Power adapter seen; adapter=\(adapter.logDescription)")
     }
 
+    /// Controls whether the dock disconnect trigger only fires while the lid is closed. Defaults to on,
+    /// because an open lid means the Mac is in use and volumes may be written to.
+    static var requireClosedLidForDockTrigger: Bool {
+        get {
+            UserDefaults.standard.object(forKey: "preference.requireClosedLidForDockTrigger") as? Bool ?? true
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "preference.requireClosedLidForDockTrigger")
+            Log.preferences.log("Preference changed: requireClosedLidForDockTrigger=\(newValue)")
+        }
+    }
+
     /// Controls whether the Mac is put to sleep once a dock or display disconnect has unmounted every volume.
     static var sleepAfterDockDisconnect: Bool {
         get {

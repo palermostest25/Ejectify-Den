@@ -104,3 +104,4 @@
 "Reset" = "リセット";
 "Sleep after unmounting" = "マウント解除後にスリープ";
 "Unmount all and sleep" = "すべてマウント解除してスリープ";
+"Only when the lid is closed" = "ふたを閉じているときのみ";

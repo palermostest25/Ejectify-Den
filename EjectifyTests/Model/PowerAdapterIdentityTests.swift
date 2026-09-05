@@ -141,6 +141,24 @@ struct PowerAdapterIdentityTests {
         #expect(decodedDock == dock)
     }
 
+    @Test func adaptersMacOSCannotIdentifyDoNotMatchEachOther() {
+        // Both a dock and a charger report a zero adapter ID when macOS cannot identify them.
+        let dock = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 90)
+        let charger = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 65)
+
+        #expect(dock.matches(charger) == false)
+        #expect(dock.isIdentifiable == false)
+    }
+
+    @Test func differentWattageDisprovesAMatch() {
+        let dock = PowerAdapterIdentity(adapterID: 4, familyCode: 12, watts: 90)
+        let charger = PowerAdapterIdentity(adapterID: 4, familyCode: 12, watts: 65)
+
+        #expect(dock.matches(charger) == false)
+        // The same adapter reporting no wattage on one reading still matches.
+        #expect(dock.matches(PowerAdapterIdentity(adapterID: 4, familyCode: 12)))
+    }
+
     @Test func identifiableRequiresASerialOrTwoComparableFields() {
         #expect(PowerAdapterIdentity(serial: "SERIAL-1").isIdentifiable)
         #expect(PowerAdapterIdentity(adapterID: 4, familyCode: 12).isIdentifiable)

@@ -302,18 +302,21 @@ final class ActivityController {
         }
 
         let externalDisplayStillConnected = externalDisplayObserver?.hasExternalDisplay ?? false
+        let isLidClosed = ClamshellStateProbe.isLidClosed()
         let decision = DockDisconnectPolicy.decision(
             lostAdapter: adapter,
             rememberedDocks: Preference.rememberedDocks,
-            externalDisplayStillConnected: externalDisplayStillConnected
+            externalDisplayStillConnected: externalDisplayStillConnected,
+            isLidClosed: isLidClosed,
+            requiresClosedLid: Preference.requireClosedLidForDockTrigger
         )
 
         switch decision {
         case .unmount(let reason):
-            Log.powerEvents.log("Dock disconnect trigger fired; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
+            Log.powerEvents.log("Dock disconnect trigger fired; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected); lidClosed=\(isLidClosed.map(String.init) ?? "unknown")")
             performDiskOperationAndSleepIfNeeded(trigger: .dockDisconnected)
         case .ignore(let reason):
-            Log.powerEvents.info("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected)")
+            Log.powerEvents.info("Dock disconnect ignored; reason=\(reason); adapter=\(adapter.logDescription); externalDisplayStillConnected=\(externalDisplayStillConnected); lidClosed=\(isLidClosed.map(String.init) ?? "unknown")")
         }
     }
 

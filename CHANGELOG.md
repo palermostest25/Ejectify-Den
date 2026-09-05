@@ -7,6 +7,8 @@
 - Added an "External display disconnected" trigger for clamshell setups.
 - Volumes now remount automatically when a remembered dock is reconnected.
 - Added an option to keep volumes unmounted while running on battery, with a new "Mount all" menu action to remount them on demand.
+- Fixed the dock disconnected trigger unmounting volumes when an unrelated charger was unplugged, on Macs that report the same placeholder identifiers for every power adapter.
+- The dock disconnected trigger now only fires while the lid is closed by default, so a Mac in use never has a volume pulled out from under it.
 - Added an "Unmount all and sleep" action, on Shift-Command-S by default, that unmounts every selected volume and then sleeps the Mac.
 - Added an option to put the Mac to sleep once a dock or external display disconnect has unmounted every volume, which unplugging a dock in clamshell mode does not do on its own.
 - Added a progress panel below the menu bar icon that reports unmounting, remounting and ejecting, and stays on screen when a disk could not be handled.

@@ -79,11 +79,16 @@ struct PowerAdapterIdentity: Codable, Hashable, Sendable {
             return serial == otherSerial
         }
 
+        // Wattage can never prove two adapters are the same, but a known difference disproves it:
+        // a 90 W dock and a 65 W charger are not one adapter, whatever else they report.
+        if let watts, let otherWatts = other.watts, watts != otherWatts {
+            return false
+        }
+
         var comparedFieldCount = 0
 
-        // Wattage is deliberately excluded: chargers and docks routinely share a wattage rating.
-        guard Self.compare(adapterID, other.adapterID, matchCount: &comparedFieldCount),
-              Self.compare(familyCode, other.familyCode, matchCount: &comparedFieldCount),
+        guard Self.compare(Self.meaningfulIdentifier(adapterID), Self.meaningfulIdentifier(other.adapterID), matchCount: &comparedFieldCount),
+              Self.compare(Self.meaningfulIdentifier(familyCode), Self.meaningfulIdentifier(other.familyCode), matchCount: &comparedFieldCount),
               Self.compare(Self.normalized(manufacturer), Self.normalized(other.manufacturer), matchCount: &comparedFieldCount),
               Self.compare(Self.normalized(model), Self.normalized(other.model), matchCount: &comparedFieldCount) else {
             return false
@@ -101,8 +106,8 @@ struct PowerAdapterIdentity: Codable, Hashable, Sendable {
 
         // `matches(_:)` needs at least two comparable fields, so a thinner reading can never match.
         let comparableFieldCount = [
-            adapterID != nil,
-            familyCode != nil,
+            Self.meaningfulIdentifier(adapterID) != nil,
+            Self.meaningfulIdentifier(familyCode) != nil,
             Self.normalized(manufacturer) != nil,
             Self.normalized(model) != nil
         ].filter { $0 }.count
@@ -150,6 +155,16 @@ struct PowerAdapterIdentity: Codable, Hashable, Sendable {
 
         matchCount += 1
         return true
+    }
+
+    /// Returns an identifier only when it distinguishes anything. Macs report zero for adapters they
+    /// cannot identify, so treating zero as a value makes every unidentified adapter look alike.
+    private static func meaningfulIdentifier(_ value: Int?) -> Int? {
+        guard let value, value != 0 else {
+            return nil
+        }
+
+        return value
     }
 
     /// Returns a trimmed, case-folded string, or `nil` when the value is missing or blank.

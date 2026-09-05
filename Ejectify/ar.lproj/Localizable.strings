@@ -104,3 +104,4 @@
 "Reset" = "إعادة تعيين";
 "Sleep after unmounting" = "السكون بعد إلغاء التحميل";
 "Unmount all and sleep" = "إلغاء تحميل الكل والسكون";
+"Only when the lid is closed" = "فقط عند إغلاق الغطاء";
