@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Kötetek lecsatolva tartása akkumulátorról";
 "This looks like an Apple charger." = "Ez Apple töltőnek tűnik.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ha dokkolóként jegyzi meg, a töltő kihúzása lecsatolja a köteteket. Mégis megjegyzi?";
+"This adapter can only be matched by its wattage." = "Ez az adapter csak a wattszáma alapján azonosítható.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "A Mac semmi mást nem jelent róla, ezért minden azonos wattszámú adapter ennek a dokkolónak számít. Mégis megjegyzi?";
 "Remember anyway" = "Mégis megjegyzem";
 "Power adapters" = "Hálózati adapterek";
 "Connected" = "Csatlakoztatva";
 "Connect your dock to remember it" = "Csatlakoztassa a dokkolót a megjegyzéshez";
 "Cannot be identified reliably" = "Nem azonosítható megbízhatóan";
+"Matched by wattage only" = "Csak a wattszám alapján azonosítható";
 "Unmounting disks…" = "Lemezek lecsatolása…";
 "Remounting disks…" = "Lemezek újracsatolása…";
 "Ejecting disks…" = "Lemezek kiadása…";

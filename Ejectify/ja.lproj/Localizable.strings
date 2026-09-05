@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "バッテリー駆動中はマウント解除のままにする";
 "This looks like an Apple charger." = "これはApple製の充電器のようです。";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Dockとして記憶すると、充電器を抜いたときにボリュームがマウント解除されます。記憶しますか？";
+"This adapter can only be matched by its wattage." = "この電源アダプタはワット数でしか識別できません。";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Mac はそれ以外の情報を報告しないため、同じワット数のアダプタはすべてこのドックとして扱われます。それでも記憶しますか？";
 "Remember anyway" = "記憶する";
 "Power adapters" = "電源アダプタ";
 "Connected" = "接続済み";
 "Connect your dock to remember it" = "Dockを接続すると記憶できます";
 "Cannot be identified reliably" = "確実に識別できません";
+"Matched by wattage only" = "ワット数のみで識別されます";
 "Unmounting disks…" = "ディスクをマウント解除中…";
 "Remounting disks…" = "ディスクを再マウント中…";
 "Ejecting disks…" = "ディスクを取り出し中…";

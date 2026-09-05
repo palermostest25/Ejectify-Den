@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Menține volumele demontate pe baterie";
 "This looks like an Apple charger." = "Acesta pare a fi un încărcător Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Dacă îl reții ca doc, deconectarea încărcătorului va demonta volumele. Reții oricum?";
+"This adapter can only be matched by its wattage." = "Acest adaptor poate fi identificat doar după putere.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Mac-ul nu raportează nimic altceva despre el, așa că orice adaptor de aceeași putere va conta ca acest doc. Îl reții oricum?";
 "Remember anyway" = "Reține oricum";
 "Power adapters" = "Adaptoare de alimentare";
 "Connected" = "Conectat";
 "Connect your dock to remember it" = "Conectează docul pentru a-l reține";
 "Cannot be identified reliably" = "Nu poate fi identificat în mod fiabil";
+"Matched by wattage only" = "Identificat doar după putere";
 "Unmounting disks…" = "Se demontează discurile…";
 "Remounting disks…" = "Se remontează discurile…";
 "Ejecting disks…" = "Se scot discurile…";

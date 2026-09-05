@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Zadrži volumene otpuštenima na bateriji";
 "This looks like an Apple charger." = "Ovo izgleda kao Apple punjač.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ako ga zapamtite kao priključnu stanicu, odspajanje punjača otpustit će vaše volumene. Svejedno zapamtiti?";
+"This adapter can only be matched by its wattage." = "Ovaj se adapter može prepoznati samo po snazi.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Vaš Mac o njemu ne javlja ništa drugo, pa će se svaki adapter iste snage smatrati ovom priključnom stanicom. Svejedno zapamtiti?";
 "Remember anyway" = "Svejedno zapamti";
 "Power adapters" = "Strujni adapteri";
 "Connected" = "Spojeno";
 "Connect your dock to remember it" = "Spojite priključnu stanicu da biste je zapamtili";
 "Cannot be identified reliably" = "Nije moguće pouzdano prepoznati";
+"Matched by wattage only" = "Prepoznaje se samo po snazi";
 "Unmounting disks…" = "Otpuštanje diskova…";
 "Remounting disks…" = "Ponovno pridruživanje diskova…";
 "Ejecting disks…" = "Izbacivanje diskova…";

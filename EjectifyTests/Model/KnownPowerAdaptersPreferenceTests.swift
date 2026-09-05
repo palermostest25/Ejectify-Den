@@ -35,6 +35,19 @@ struct KnownPowerAdaptersPreferenceTests {
         #expect(adapters.first?.watts == 100)
     }
 
+    @Test func anAdapterMacOSCannotDescribeCollapsesIntoOneEntry() {
+        // Without wattage matching every reconnection of this adapter would add another identical row.
+        let firstReading = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 100)
+        let secondReading = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 100)
+        let charger = PowerAdapterIdentity(adapterID: 0, familyCode: 1, watts: 65)
+
+        var adapters = KnownPowerAdaptersPreference.list([firstReading], recording: secondReading)
+        #expect(adapters.count == 1)
+
+        adapters = KnownPowerAdaptersPreference.list(adapters, recording: charger)
+        #expect(adapters == [charger, secondReading])
+    }
+
     @Test func recordingMovesAKnownAdapterBackToTheFront() {
         let first = makeAdapter(id: 1)
         let second = makeAdapter(id: 2)

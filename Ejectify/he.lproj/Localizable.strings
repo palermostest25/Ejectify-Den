@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "השאר את הכרכים מנותקים בסוללה";
 "This looks like an Apple charger." = "זה נראה כמו מטען Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "זכירה שלו כעגינה משמעה שניתוק המטען ינתק את הכרכים שלך. לזכור בכל זאת?";
+"This adapter can only be matched by its wattage." = "ניתן לזהות מתאם זה לפי ההספק שלו בלבד.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "ה‑Mac אינו מדווח דבר נוסף עליו, ולכן כל מתאם באותו הספק ייחשב כתחנת עגינה זו. לזכור בכל זאת?";
 "Remember anyway" = "זכור בכל זאת";
 "Power adapters" = "מתאמי מתח";
 "Connected" = "מחובר";
 "Connect your dock to remember it" = "חבר את העגינה כדי לזכור אותה";
 "Cannot be identified reliably" = "לא ניתן לזהות באופן אמין";
+"Matched by wattage only" = "מזוהה לפי הספק בלבד";
 "Unmounting disks…" = "מנתק דיסקים…";
 "Remounting disks…" = "מחבר דיסקים מחדש…";
 "Ejecting disks…" = "מוציא דיסקים…";

@@ -47,7 +47,9 @@ enum KnownPowerAdaptersPreference {
     /// Returns the list with `adapter` moved to the front, replacing any earlier reading of the same adapter.
     static func list(_ adapters: [PowerAdapterIdentity], recording adapter: PowerAdapterIdentity) -> [PowerAdapterIdentity] {
         // A later reading usually carries more complete details, so it replaces the earlier one.
-        var updatedAdapters = adapters.filter { !$0.matches(adapter) }
+        // Wattage counts here so adapters macOS cannot describe collapse into one row instead of
+        // accumulating an identical entry per reading.
+        var updatedAdapters = adapters.filter { !$0.matches(adapter, allowingWattageOnly: true) }
         updatedAdapters.insert(adapter, at: 0)
         return Array(updatedAdapters.prefix(limit))
     }

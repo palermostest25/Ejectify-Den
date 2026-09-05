@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Не подключать тома при работе от аккумулятора";
 "This looks like an Apple charger." = "Похоже, это зарядное устройство Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Если запомнить его как док-станцию, отключение зарядного устройства отключит ваши тома. Все равно запомнить?";
+"This adapter can only be matched by its wattage." = "Этот адаптер можно определить только по мощности.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Mac не сообщает о нем ничего другого, поэтому любой адаптер той же мощности будет считаться этой док-станцией. Все равно запомнить?";
 "Remember anyway" = "Все равно запомнить";
 "Power adapters" = "Адаптеры питания";
 "Connected" = "Подключено";
 "Connect your dock to remember it" = "Подключите док-станцию, чтобы запомнить ее";
 "Cannot be identified reliably" = "Не удается надежно определить";
+"Matched by wattage only" = "Определяется только по мощности";
 "Unmounting disks…" = "Отключение дисков…";
 "Remounting disks…" = "Повторное подключение дисков…";
 "Ejecting disks…" = "Извлечение дисков…";

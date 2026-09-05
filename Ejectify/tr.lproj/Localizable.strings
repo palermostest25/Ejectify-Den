@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Pilde birimlerin bağlantısını kesik tut";
 "This looks like an Apple charger." = "Bu bir Apple şarj cihazına benziyor.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Bunu yerleştirme istasyonu olarak hatırlamak, şarj cihazını çıkardığınızda birimlerinizin bağlantısının kesilmesi anlamına gelir. Yine de hatırlansın mı?";
+"This adapter can only be matched by its wattage." = "Bu adaptör yalnızca gücüne göre eşleştirilebilir.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Mac'iniz bu adaptör hakkında başka bir şey bildirmiyor; bu nedenle aynı güçteki her adaptör bu yerleştirme istasyonu sayılır. Yine de hatırlansın mı?";
 "Remember anyway" = "Yine De Hatırla";
 "Power adapters" = "Güç Adaptörleri";
 "Connected" = "Bağlı";
 "Connect your dock to remember it" = "Hatırlamak için yerleştirme istasyonunu bağlayın";
 "Cannot be identified reliably" = "Güvenilir şekilde tanımlanamıyor";
+"Matched by wattage only" = "Yalnızca güce göre eşleştirilir";
 "Unmounting disks…" = "Diskler ayrılıyor…";
 "Remounting disks…" = "Diskler yeniden bağlanıyor…";
 "Ejecting disks…" = "Diskler çıkarılıyor…";

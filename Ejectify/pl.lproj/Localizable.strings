@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Nie montuj woluminów na baterii";
 "This looks like an Apple charger." = "To wygląda na ładowarkę Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Zapamiętanie jej jako stacji dokującej sprawi, że odłączenie ładowarki odmontuje woluminy. Zapamiętać mimo to?";
+"This adapter can only be matched by its wattage." = "Ten zasilacz można rozpoznać tylko po mocy.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Mac nie podaje o nim nic więcej, więc każdy zasilacz o tej samej mocy będzie uznawany za tę stację dokującą. Zapamiętać mimo to?";
 "Remember anyway" = "Zapamiętaj mimo to";
 "Power adapters" = "Zasilacze";
 "Connected" = "Podłączono";
 "Connect your dock to remember it" = "Podłącz stację dokującą, aby ją zapamiętać";
 "Cannot be identified reliably" = "Nie można wiarygodnie zidentyfikować";
+"Matched by wattage only" = "Rozpoznawany tylko po mocy";
 "Unmounting disks…" = "Odmontowywanie dysków…";
 "Remounting disks…" = "Ponowne montowanie dysków…";
 "Ejecting disks…" = "Wysuwanie dysków…";

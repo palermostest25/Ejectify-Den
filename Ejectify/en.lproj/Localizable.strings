@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "Keep Volumes Unmounted on Battery";
 "This looks like an Apple charger." = "This looks like an Apple charger.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?";
+"This adapter can only be matched by its wattage." = "This adapter can only be matched by its wattage.";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?";
 "Remember anyway" = "Remember Anyway";
 "Power adapters" = "Power Adapters";
 "Connected" = "Connected";
 "Connect your dock to remember it" = "Connect your dock to remember it";
 "Cannot be identified reliably" = "Cannot be identified reliably";
+"Matched by wattage only" = "Matched by wattage only";
 "Unmounting disks…" = "Unmounting Disks…";
 "Remounting disks…" = "Remounting Disks…";
 "Ejecting disks…" = "Ejecting Disks…";

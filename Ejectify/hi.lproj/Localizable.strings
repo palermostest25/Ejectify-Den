@@ -78,11 +78,14 @@
 "Keep volumes unmounted on battery" = "बैटरी पर वॉल्यूम अनमाउंट रखें";
 "This looks like an Apple charger." = "यह Apple चार्जर जैसा लगता है।";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "इसे डॉक के रूप में याद रखने का अर्थ है कि चार्जर हटाने पर आपके वॉल्यूम अनमाउंट हो जाएँगे। फिर भी याद रखें?";
+"This adapter can only be matched by its wattage." = "इस अडैप्टर को केवल इसकी वाट क्षमता से ही पहचाना जा सकता है।";
+"Your Mac reports nothing else about it, so any adapter of the same wattage counts as this dock. Remember anyway?" = "आपका Mac इसके बारे में और कुछ नहीं बताता, इसलिए समान वाट क्षमता वाला कोई भी अडैप्टर इसी डॉक के रूप में गिना जाएगा। फिर भी याद रखें?";
 "Remember anyway" = "फिर भी याद रखें";
 "Power adapters" = "पावर अडैप्टर";
 "Connected" = "कनेक्टेड";
 "Connect your dock to remember it" = "याद रखने के लिए अपना डॉक कनेक्ट करें";
 "Cannot be identified reliably" = "विश्वसनीय रूप से पहचाना नहीं जा सकता";
+"Matched by wattage only" = "केवल वाट क्षमता से पहचाना जाता है";
 "Unmounting disks…" = "डिस्क अनमाउंट हो रही हैं…";
 "Remounting disks…" = "डिस्क फिर से माउंट हो रही हैं…";
 "Ejecting disks…" = "डिस्क निकाली जा रही हैं…";
