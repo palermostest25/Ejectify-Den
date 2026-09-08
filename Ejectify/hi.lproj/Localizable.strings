@@ -75,6 +75,15 @@
 "No dock remembered" = "कोई डॉक याद नहीं रखा गया";
 "Forget" = "भूल जाएँ";
 "Forget all remembered docks" = "सभी याद रखे गए डॉक भूल जाएँ";
+"Keep mounted while running" = "चलते समय माउंट रखें";
+"Volumes stay mounted while any ticked app is open" = "किसी भी चुने हुए ऐप के खुले रहने तक वॉल्यूम माउंट रहते हैं";
+"Running" = "चल रहा है";
+"Stop protecting all apps" = "सभी ऐप्स की सुरक्षा बंद करें";
+"Still open: %@" = "अब भी खुला है: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "यह खुला रहने तक Ejectify आपके वॉल्यूम माउंट रखता है। अभी अनमाउंट करने से चल रहा काम बाधित हो सकता है।";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "यह खुला रहने तक Ejectify आपके वॉल्यूम माउंट रखता है। अभी इजेक्ट करने से चल रहा काम बाधित हो सकता है।";
+"Unmount anyway" = "फिर भी अनमाउंट करें";
+"Eject anyway" = "फिर भी इजेक्ट करें";
 "Keep volumes unmounted on battery" = "बैटरी पर वॉल्यूम अनमाउंट रखें";
 "This looks like an Apple charger." = "यह Apple चार्जर जैसा लगता है।";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "इसे डॉक के रूप में याद रखने का अर्थ है कि चार्जर हटाने पर आपके वॉल्यूम अनमाउंट हो जाएँगे। फिर भी याद रखें?";

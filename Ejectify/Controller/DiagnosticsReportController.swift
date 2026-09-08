@@ -196,6 +196,12 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
     /// Number of online displays that are not built into the Mac.
     let externalDisplayCount: Int
 
+    /// Bundle identifiers of the applications that hold automatic disk operations back.
+    let guardedApplications: [String]
+
+    /// Guarded applications that were running when the report was made.
+    let blockingApplications: String
+
     /// Current force-unmount preference.
     let forceUnmount: Bool
 
@@ -241,6 +247,9 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
             keepUnmountedOnBattery: Preference.keepUnmountedOnBattery,
             sleepAfterDockDisconnect: Preference.sleepAfterDockDisconnect,
             externalDisplayCount: ExternalDisplayObserver.currentExternalDisplayCount(),
+            guardedApplications: Preference.guardedApplications.map { $0.bundleIdentifier ?? "unknown" },
+            blockingApplications: AppDelegate.shared.activityController
+                .map { GuardedApplicationPolicy.logDescription(of: $0.blockingGuardedApplications()) } ?? "unknown",
             forceUnmount: Preference.forceUnmount,
             ejectInsteadOfUnmount: Preference.ejectInsteadOfUnmount,
             unlockVolumesWhenNeeded: Preference.unlockVolumesWhenNeeded,
@@ -552,6 +561,8 @@ private struct EjectifyStateReporter: DiagnosticsReporting {
             ("Keep volumes unmounted on battery", snapshot.keepUnmountedOnBattery.diagnosticsDescription),
             ("Sleep after unmounting", snapshot.sleepAfterDockDisconnect.diagnosticsDescription),
             ("External displays", String(snapshot.externalDisplayCount)),
+            ("Keep mounted while running", snapshot.guardedApplications.isEmpty ? "-" : snapshot.guardedApplications.joined(separator: " | ")),
+            ("Guarded apps running now", snapshot.blockingApplications),
             ("Force unmount", snapshot.forceUnmount.diagnosticsDescription),
             ("Eject instead of unmount", snapshot.ejectInsteadOfUnmount.diagnosticsDescription),
             ("Unlock volumes when needed", snapshot.unlockVolumesWhenNeeded.diagnosticsDescription),

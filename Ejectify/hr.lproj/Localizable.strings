@@ -75,6 +75,15 @@
 "No dock remembered" = "Nema zapamćene priključne stanice";
 "Forget" = "Zaboravi";
 "Forget all remembered docks" = "Zaboravi sve zapamćene priključne stanice";
+"Keep mounted while running" = "Zadrži montirano tijekom rada";
+"Volumes stay mounted while any ticked app is open" = "Volumeni ostaju montirani dok je otvorena bilo koja označena aplikacija";
+"Running" = "Pokrenuto";
+"Stop protecting all apps" = "Prestani štititi sve aplikacije";
+"Still open: %@" = "Još otvoreno: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify zadržava volumene montiranima dok je ovo otvoreno. Odmontiranje sada može prekinuti rad u tijeku.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify zadržava volumene montiranima dok je ovo otvoreno. Izbacivanje sada može prekinuti rad u tijeku.";
+"Unmount anyway" = "Ipak odmontiraj";
+"Eject anyway" = "Ipak izbaci";
 "Keep volumes unmounted on battery" = "Zadrži volumene otpuštenima na bateriji";
 "This looks like an Apple charger." = "Ovo izgleda kao Apple punjač.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ako ga zapamtite kao priključnu stanicu, odspajanje punjača otpustit će vaše volumene. Svejedno zapamtiti?";

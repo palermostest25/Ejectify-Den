@@ -75,6 +75,15 @@
 "No dock remembered" = "未記住任何擴充基座";
 "Forget" = "忘記";
 "Forget all remembered docks" = "忘記所有已記住的擴充基座";
+"Keep mounted while running" = "執行時保持掛載";
+"Volumes stay mounted while any ticked app is open" = "只要勾選的 App 處於開啟狀態，卷宗就保持掛載";
+"Running" = "正在執行";
+"Stop protecting all apps" = "不再保護任何 App";
+"Still open: %@" = "仍然開啟：%@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "此 App 開啟期間，Ejectify 會保持卷宗掛載。現在卸載可能會中斷進行中的工作。";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "此 App 開啟期間，Ejectify 會保持卷宗掛載。現在退出可能會中斷進行中的工作。";
+"Unmount anyway" = "仍然卸載";
+"Eject anyway" = "仍然退出";
 "Keep volumes unmounted on battery" = "使用電池時保持卸載狀態";
 "This looks like an Apple charger." = "這看起來像是 Apple 充電器。";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "將它記為擴充基座代表拔除充電器時會卸載你的儲存空間。仍要記住嗎？";

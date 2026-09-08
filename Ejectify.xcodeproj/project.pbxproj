@@ -103,7 +103,18 @@
 		F1D00000000000000000020C /* GlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000E /* GlobalShortcut.swift */; };
 		F1D00000000000000000020D /* GlobalShortcutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000F /* GlobalShortcutPreference.swift */; };
 		F1D00000000000000000020E /* GlobalShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000014 /* GlobalShortcutTests.swift */; };
+		F1D000000000000000000215 /* GuardedApplicationsPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001D /* GuardedApplicationsPreferenceTests.swift */; };
+		F1D00000000000000000020F /* GuardedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000017 /* GuardedApplication.swift */; };
+		F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000018 /* GuardedApplicationsPreference.swift */; };
+		F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000019 /* RunningApplicationProbe.swift */; };
+		F1D000000000000000000212 /* GuardedApplicationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001A /* GuardedApplicationPolicy.swift */; };
+		F1D000000000000000000213 /* GuardedApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001B /* GuardedApplicationTests.swift */; };
+		F1D000000000000000000214 /* GuardedApplicationPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001C /* GuardedApplicationPolicyTests.swift */; };
 		F1D00000000000000000010F /* SystemPowerActionRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000015 /* SystemPowerActionRequester.swift */; };
+		F1D000000000000000000111 /* GuardedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000017 /* GuardedApplication.swift */; };
+		F1D000000000000000000112 /* GuardedApplicationsPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000018 /* GuardedApplicationsPreference.swift */; };
+		F1D000000000000000000113 /* RunningApplicationProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000019 /* RunningApplicationProbe.swift */; };
+		F1D000000000000000000114 /* GuardedApplicationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001A /* GuardedApplicationPolicy.swift */; };
 		F1D000000000000000000110 /* ClamshellStateProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000016 /* ClamshellStateProbe.swift */; };
 /* End PBXBuildFile section */
 
@@ -245,6 +256,13 @@
 		F1D000000000000000000013 /* ShortcutSettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingsWindowController.swift; sourceTree = "<group>"; };
 		F1D000000000000000000014 /* GlobalShortcutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutTests.swift; sourceTree = "<group>"; };
 		F1D000000000000000000015 /* SystemPowerActionRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPowerActionRequester.swift; sourceTree = "<group>"; };
+		F1D000000000000000000017 /* GuardedApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplication.swift; sourceTree = "<group>"; };
+		F1D000000000000000000018 /* GuardedApplicationsPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationsPreference.swift; sourceTree = "<group>"; };
+		F1D000000000000000000019 /* RunningApplicationProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningApplicationProbe.swift; sourceTree = "<group>"; };
+		F1D00000000000000000001A /* GuardedApplicationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationPolicy.swift; sourceTree = "<group>"; };
+		F1D00000000000000000001B /* GuardedApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationTests.swift; sourceTree = "<group>"; };
+		F1D00000000000000000001C /* GuardedApplicationPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationPolicyTests.swift; sourceTree = "<group>"; };
+		F1D00000000000000000001D /* GuardedApplicationsPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationsPreferenceTests.swift; sourceTree = "<group>"; };
 		F1D000000000000000000016 /* ClamshellStateProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClamshellStateProbe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -356,6 +374,8 @@
 				F1D00000000000000000000E /* GlobalShortcut.swift */,
 				F1D00000000000000000000F /* GlobalShortcutPreference.swift */,
 				F1D000000000000000000010 /* DiskOperationProgress.swift */,
+				F1D000000000000000000017 /* GuardedApplication.swift */,
+				F1D000000000000000000018 /* GuardedApplicationsPreference.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -393,6 +413,8 @@
 				F1D000000000000000000005 /* DockDisconnectPolicy.swift */,
 				F1D000000000000000000015 /* SystemPowerActionRequester.swift */,
 				F1D000000000000000000016 /* ClamshellStateProbe.swift */,
+				F1D000000000000000000019 /* RunningApplicationProbe.swift */,
+				F1D00000000000000000001A /* GuardedApplicationPolicy.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -426,6 +448,7 @@
 				E7C710040000000000000004 /* VolumeOperationOutcomePolicyTests.swift */,
 				E7C700070000000000000007 /* VolumeLogLabelFormatterTests.swift */,
 				F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */,
+				F1D00000000000000000001C /* GuardedApplicationPolicyTests.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -440,6 +463,8 @@
 				F1D00000000000000000000A /* UnmountTriggersPreferenceTests.swift */,
 				F1D00000000000000000000D /* KnownPowerAdaptersPreferenceTests.swift */,
 				F1D000000000000000000014 /* GlobalShortcutTests.swift */,
+				F1D00000000000000000001B /* GuardedApplicationTests.swift */,
+				F1D00000000000000000001D /* GuardedApplicationsPreferenceTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -680,6 +705,10 @@
 				F1D00000000000000000010E /* ShortcutSettingsWindowController.swift in Sources */,
 				F1D00000000000000000010F /* SystemPowerActionRequester.swift in Sources */,
 				F1D000000000000000000110 /* ClamshellStateProbe.swift in Sources */,
+				F1D000000000000000000111 /* GuardedApplication.swift in Sources */,
+				F1D000000000000000000112 /* GuardedApplicationsPreference.swift in Sources */,
+				F1D000000000000000000113 /* RunningApplicationProbe.swift in Sources */,
+				F1D000000000000000000114 /* GuardedApplicationPolicy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,6 +765,13 @@
 				F1D00000000000000000020C /* GlobalShortcut.swift in Sources */,
 				F1D00000000000000000020D /* GlobalShortcutPreference.swift in Sources */,
 				F1D00000000000000000020E /* GlobalShortcutTests.swift in Sources */,
+				F1D000000000000000000215 /* GuardedApplicationsPreferenceTests.swift in Sources */,
+				F1D00000000000000000020F /* GuardedApplication.swift in Sources */,
+				F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */,
+				F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */,
+				F1D000000000000000000212 /* GuardedApplicationPolicy.swift in Sources */,
+				F1D000000000000000000213 /* GuardedApplicationTests.swift in Sources */,
+				F1D000000000000000000214 /* GuardedApplicationPolicyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -75,6 +75,15 @@
 "No dock remembered" = "ไม่มีแท่นเชื่อมต่อที่จำไว้";
 "Forget" = "ลืม";
 "Forget all remembered docks" = "ลืมแท่นเชื่อมต่อที่จำไว้ทั้งหมด";
+"Keep mounted while running" = "เชื่อมต่อไว้ขณะทำงาน";
+"Volumes stay mounted while any ticked app is open" = "ดิสก์จะยังเชื่อมต่ออยู่ตราบใดที่แอปที่ติ๊กไว้เปิดอยู่";
+"Running" = "กำลังทำงาน";
+"Stop protecting all apps" = "หยุดปกป้องทุกแอป";
+"Still open: %@" = "ยังเปิดอยู่: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify จะคงดิสก์ไว้ตราบใดที่แอปนี้เปิดอยู่ การถอนเชื่อมต่อตอนนี้อาจขัดจังหวะงานที่กำลังทำอยู่";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify จะคงดิสก์ไว้ตราบใดที่แอปนี้เปิดอยู่ การดีดออกตอนนี้อาจขัดจังหวะงานที่กำลังทำอยู่";
+"Unmount anyway" = "ถอนเชื่อมต่อต่อไป";
+"Eject anyway" = "ดีดออกต่อไป";
 "Keep volumes unmounted on battery" = "คงสถานะเลิกเมานต์ไว้เมื่อใช้แบตเตอรี่";
 "This looks like an Apple charger." = "ดูเหมือนว่านี่จะเป็นที่ชาร์จ Apple";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "การจำไว้เป็นแท่นเชื่อมต่อหมายความว่าการถอดที่ชาร์จจะเลิกเมานต์ไดรฟ์ของคุณ ต้องการจำไว้หรือไม่";

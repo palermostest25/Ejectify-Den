@@ -75,6 +75,15 @@
 "No dock remembered" = "Nincs megjegyzett dokkoló";
 "Forget" = "Elfelejtés";
 "Forget all remembered docks" = "Összes megjegyzett dokkoló elfelejtése";
+"Keep mounted while running" = "Csatlakoztatva tartás futás közben";
+"Volumes stay mounted while any ticked app is open" = "A kötetek csatlakoztatva maradnak, amíg egy kipipált app nyitva van";
+"Running" = "Fut";
+"Stop protecting all apps" = "Egyik app védelme se";
+"Still open: %@" = "Még nyitva: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Az Ejectify csatlakoztatva tartja a köteteket, amíg ez nyitva van. A mostani leválasztás megszakíthatja a folyamatban lévő munkát.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Az Ejectify csatlakoztatva tartja a köteteket, amíg ez nyitva van. A mostani kiadás megszakíthatja a folyamatban lévő munkát.";
+"Unmount anyway" = "Leválasztás mégis";
+"Eject anyway" = "Kiadás mégis";
 "Keep volumes unmounted on battery" = "Kötetek lecsatolva tartása akkumulátorról";
 "This looks like an Apple charger." = "Ez Apple töltőnek tűnik.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ha dokkolóként jegyzi meg, a töltő kihúzása lecsatolja a köteteket. Mégis megjegyzi?";

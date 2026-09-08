@@ -75,6 +75,15 @@
 "No dock remembered" = "No Dock Remembered";
 "Forget" = "Forget";
 "Forget all remembered docks" = "Forget All Remembered Docks";
+"Keep mounted while running" = "Keep Mounted While Running";
+"Volumes stay mounted while any ticked app is open" = "Volumes stay mounted while any ticked app is open";
+"Running" = "Running";
+"Stop protecting all apps" = "Stop Protecting All Apps";
+"Still open: %@" = "Still open: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress.";
+"Unmount anyway" = "Unmount Anyway";
+"Eject anyway" = "Eject Anyway";
 "Keep volumes unmounted on battery" = "Keep Volumes Unmounted on Battery";
 "This looks like an Apple charger." = "This looks like an Apple charger.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?";

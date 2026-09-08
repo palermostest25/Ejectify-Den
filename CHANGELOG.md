@@ -16,7 +16,8 @@
 - The unmount-all and mount-all keyboard shortcuts can now be changed, and default to Shift-Command-E and Shift-Command-M.
 - Docks can be chosen from a list of power adapters Ejectify has seen, so an adapter can be marked as a dock while it is unplugged.
 - A power adapter that macOS refuses to describe can now be marked as a dock anyway, matched on its wattage alone after a confirmation that says what that means; adapters of a different wattage still never match it.
-- Diagnostics reports now include power adapter, remembered dock, and trigger information.
+- Added a "Keep mounted while running" list: while any chosen app is open, automatic triggers leave volumes mounted instead of unmounting them, and a manual unmount or eject asks for confirmation first.
+- Diagnostics reports now include power adapter, remembered dock, guarded application, and trigger information.
 
 ## 2.1.0
 

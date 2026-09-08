@@ -75,6 +75,15 @@
 "No dock remembered" = "לא נזכרה עגינה";
 "Forget" = "שכח";
 "Forget all remembered docks" = "שכח את כל העגינות שנזכרו";
+"Keep mounted while running" = "להשאיר מחוברים בזמן פעולה";
+"Volumes stay mounted while any ticked app is open" = "הכרכים יישארו מחוברים כל עוד יישום מסומן פתוח";
+"Running" = "פועל";
+"Stop protecting all apps" = "להפסיק להגן על כל היישומים";
+"Still open: %@" = "עדיין פתוח: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "‏Ejectify משאיר את הכרכים מחוברים כל עוד זה פתוח. ניתוק כעת עלול לקטוע עבודה שמתבצעת.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "‏Ejectify משאיר את הכרכים מחוברים כל עוד זה פתוח. הוצאה כעת עלולה לקטוע עבודה שמתבצעת.";
+"Unmount anyway" = "לנתק בכל זאת";
+"Eject anyway" = "להוציא בכל זאת";
 "Keep volumes unmounted on battery" = "השאר את הכרכים מנותקים בסוללה";
 "This looks like an Apple charger." = "זה נראה כמו מטען Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "זכירה שלו כעגינה משמעה שניתוק המטען ינתק את הכרכים שלך. לזכור בכל זאת?";

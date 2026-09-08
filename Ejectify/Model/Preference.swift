@@ -53,6 +53,17 @@ enum Preference {
         }
     }
 
+    /// Applications that hold volumes back: while any of them runs, automatic operations stand down.
+    static var guardedApplications: [GuardedApplication] {
+        get {
+            GuardedApplicationsPreference.value(in: .standard)
+        }
+        set {
+            GuardedApplicationsPreference.set(newValue, in: .standard)
+            Log.preferences.log("Preference changed: guardedApplications=\(newValue.count)")
+        }
+    }
+
     /// Power adapters Ejectify has seen, most recently connected first, so the menu can list unplugged ones.
     static var knownPowerAdapters: [PowerAdapterIdentity] {
         get {

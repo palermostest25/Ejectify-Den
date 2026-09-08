@@ -75,6 +75,15 @@
 "No dock remembered" = "Ningún dock recordado";
 "Forget" = "Olvidar";
 "Forget all remembered docks" = "Olvidar todos los docks recordados";
+"Keep mounted while running" = "Mantener montados mientras se ejecutan";
+"Volumes stay mounted while any ticked app is open" = "Los volúmenes siguen montados mientras haya una app marcada abierta";
+"Running" = "En ejecución";
+"Stop protecting all apps" = "Dejar de proteger todas las apps";
+"Still open: %@" = "Todavía abierto: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify mantiene tus volúmenes montados mientras esto está abierto. Desmontar ahora podría interrumpir el trabajo en curso.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify mantiene tus volúmenes montados mientras esto está abierto. Expulsar ahora podría interrumpir el trabajo en curso.";
+"Unmount anyway" = "Desmontar igualmente";
+"Eject anyway" = "Expulsar igualmente";
 "Keep volumes unmounted on battery" = "Mantener los volúmenes desmontados con batería";
 "This looks like an Apple charger." = "Esto parece un cargador de Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Si lo recuerdas como dock, desconectar el cargador desmontará tus volúmenes. ¿Recordarlo de todos modos?";

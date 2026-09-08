@@ -75,6 +75,15 @@
 "No dock remembered" = "Δεν έχει απομνημονευτεί σταθμός";
 "Forget" = "Διαγραφή";
 "Forget all remembered docks" = "Διαγραφή όλων των απομνημονευμένων σταθμών";
+"Keep mounted while running" = "Διατήρηση προσαρτημένων κατά την εκτέλεση";
+"Volumes stay mounted while any ticked app is open" = "Οι τόμοι παραμένουν προσαρτημένοι όσο είναι ανοιχτή μια επιλεγμένη εφαρμογή";
+"Running" = "Εκτελείται";
+"Stop protecting all apps" = "Διακοπή προστασίας όλων των εφαρμογών";
+"Still open: %@" = "Ακόμη ανοιχτό: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Το Ejectify διατηρεί τους τόμους προσαρτημένους όσο αυτό είναι ανοιχτό. Η αποπροσάρτηση τώρα μπορεί να διακόψει εργασία σε εξέλιξη.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Το Ejectify διατηρεί τους τόμους προσαρτημένους όσο αυτό είναι ανοιχτό. Η εξαγωγή τώρα μπορεί να διακόψει εργασία σε εξέλιξη.";
+"Unmount anyway" = "Αποπροσάρτηση ούτως ή άλλως";
+"Eject anyway" = "Εξαγωγή ούτως ή άλλως";
 "Keep volumes unmounted on battery" = "Διατήρηση τόμων χωρίς προσάρτηση στη μπαταρία";
 "This looks like an Apple charger." = "Αυτό μοιάζει με φορτιστή Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Αν τον απομνημονεύσετε ως σταθμό, η αποσύνδεση του φορτιστή θα καταργήσει την προσάρτηση των τόμων. Απομνημόνευση ούτως ή άλλως;";

@@ -75,6 +75,15 @@
 "No dock remembered" = "Док-станції не запам’ятано";
 "Forget" = "Забути";
 "Forget all remembered docks" = "Забути всі запам’ятані док-станції";
+"Keep mounted while running" = "Не від’єднувати під час роботи";
+"Volumes stay mounted while any ticked app is open" = "Томи лишаються під’єднаними, доки відкрито будь-яку позначену програму";
+"Running" = "Працює";
+"Stop protecting all apps" = "Не захищати жодної програми";
+"Still open: %@" = "Ще відкрито: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify лишає томи під’єднаними, доки це відкрито. Від’єднання зараз може перервати поточну роботу.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify лишає томи під’єднаними, доки це відкрито. Вилучення зараз може перервати поточну роботу.";
+"Unmount anyway" = "Однаково від’єднати";
+"Eject anyway" = "Однаково вилучити";
 "Keep volumes unmounted on battery" = "Не монтувати томи від акумулятора";
 "This looks like an Apple charger." = "Схоже, це зарядний пристрій Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Якщо запам’ятати його як док-станцію, відключення зарядного пристрою відмонтує ваші томи. Усе одно запам’ятати?";
