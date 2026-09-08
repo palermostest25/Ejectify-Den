@@ -75,6 +75,15 @@
 "No dock remembered" = "Tiada dok diingat";
 "Forget" = "Lupakan";
 "Forget all remembered docks" = "Lupakan semua dok yang diingat";
+"Keep mounted while running" = "Kekal dipasang semasa berjalan";
+"Volumes stay mounted while any ticked app is open" = "Volum kekal dipasang selagi mana-mana app bertanda dibuka";
+"Running" = "Sedang berjalan";
+"Stop protecting all apps" = "Berhenti melindungi semua app";
+"Still open: %@" = "Masih dibuka: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify mengekalkan volum dipasang selagi ini dibuka. Menanggalkannya sekarang boleh mengganggu kerja yang sedang berjalan.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify mengekalkan volum dipasang selagi ini dibuka. Mengeluarkannya sekarang boleh mengganggu kerja yang sedang berjalan.";
+"Unmount anyway" = "Tanggalkan juga";
+"Eject anyway" = "Keluarkan juga";
 "Keep volumes unmounted on battery" = "Kekalkan volum dinyahlekap pada bateri";
 "This looks like an Apple charger." = "Ini kelihatan seperti pengecas Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Mengingatinya sebagai dok bermakna mencabut pengecas akan menyahlekap volum anda. Ingat juga?";

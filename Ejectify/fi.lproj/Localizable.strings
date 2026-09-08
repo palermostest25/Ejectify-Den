@@ -75,6 +75,15 @@
 "No dock remembered" = "Ei muistettuja telakoita";
 "Forget" = "Unohda";
 "Forget all remembered docks" = "Unohda kaikki muistetut telakat";
+"Keep mounted while running" = "Pidä liitettyinä suorituksen aikana";
+"Volumes stay mounted while any ticked app is open" = "Taltiot pysyvät liitettyinä, kun jokin valittu ohjelma on auki";
+"Running" = "Käynnissä";
+"Stop protecting all apps" = "Lopeta kaikkien ohjelmien suojaus";
+"Still open: %@" = "Yhä auki: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify pitää taltiot liitettyinä, kun tämä on auki. Irrottaminen nyt voi keskeyttää keskeneräisen työn.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify pitää taltiot liitettyinä, kun tämä on auki. Poistaminen nyt voi keskeyttää keskeneräisen työn.";
+"Unmount anyway" = "Irrota silti";
+"Eject anyway" = "Poista silti";
 "Keep volumes unmounted on battery" = "Pidä taltiot poistettuina akkuvirralla";
 "This looks like an Apple charger." = "Tämä näyttää Applen laturilta.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Jos muistat sen telakkana, taltiot poistetaan näkyvistä kun irrotat laturin. Muistetaanko silti?";

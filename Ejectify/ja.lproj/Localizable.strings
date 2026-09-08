@@ -75,6 +75,15 @@
 "No dock remembered" = "記憶したDockがありません";
 "Forget" = "削除";
 "Forget all remembered docks" = "記憶したDockをすべて削除";
+"Keep mounted while running" = "実行中はマウントしたままにする";
+"Volumes stay mounted while any ticked app is open" = "チェックしたAppが開いている間、ボリュームはマウントされたままになります";
+"Running" = "実行中";
+"Stop protecting all apps" = "すべてのAppの保護をやめる";
+"Still open: %@" = "まだ開いています: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "このAppが開いている間、Ejectifyはボリュームをマウントしたままにします。今アンマウントすると作業が中断される可能性があります。";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "このAppが開いている間、Ejectifyはボリュームをマウントしたままにします。今取り出すと作業が中断される可能性があります。";
+"Unmount anyway" = "かまわずアンマウント";
+"Eject anyway" = "かまわず取り出す";
 "Keep volumes unmounted on battery" = "バッテリー駆動中はマウント解除のままにする";
 "This looks like an Apple charger." = "これはApple製の充電器のようです。";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Dockとして記憶すると、充電器を抜いたときにボリュームがマウント解除されます。記憶しますか？";

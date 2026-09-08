@@ -75,6 +75,15 @@
 "No dock remembered" = "Geen dock onthouden";
 "Forget" = "Vergeet";
 "Forget all remembered docks" = "Alle onthouden docks vergeten";
+"Keep mounted while running" = "Gekoppeld houden tijdens gebruik";
+"Volumes stay mounted while any ticked app is open" = "Volumes blijven gekoppeld zolang een aangevinkte app openstaat";
+"Running" = "Actief";
+"Stop protecting all apps" = "Geen apps meer beschermen";
+"Still open: %@" = "Nog open: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify houdt je volumes gekoppeld zolang dit openstaat. Nu ontkoppelen kan lopend werk onderbreken.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify houdt je volumes gekoppeld zolang dit openstaat. Nu uitwerpen kan lopend werk onderbreken.";
+"Unmount anyway" = "Toch ontkoppelen";
+"Eject anyway" = "Toch uitwerpen";
 "Keep volumes unmounted on battery" = "Volumes gedeactiveerd houden op batterij";
 "This looks like an Apple charger." = "Dit lijkt een Apple-lader te zijn.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Als je deze als dock onthoudt, worden je volumes gedeactiveerd zodra je de lader loskoppelt. Toch onthouden?";

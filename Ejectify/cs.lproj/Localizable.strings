@@ -75,6 +75,15 @@
 "No dock remembered" = "Žádný dok není zapamatován";
 "Forget" = "Zapomenout";
 "Forget all remembered docks" = "Zapomenout všechny zapamatované doky";
+"Keep mounted while running" = "Ponechat připojené za běhu";
+"Volumes stay mounted while any ticked app is open" = "Svazky zůstanou připojené, dokud je otevřená některá zaškrtnutá aplikace";
+"Running" = "Spuštěno";
+"Stop protecting all apps" = "Přestat chránit všechny aplikace";
+"Still open: %@" = "Stále otevřeno: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify ponechává svazky připojené, dokud je toto otevřené. Odpojení teď může přerušit rozdělanou práci.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify ponechává svazky připojené, dokud je toto otevřené. Vysunutí teď může přerušit rozdělanou práci.";
+"Unmount anyway" = "Přesto odpojit";
+"Eject anyway" = "Přesto vysunout";
 "Keep volumes unmounted on battery" = "Ponechat svazky odpojené při napájení z baterie";
 "This looks like an Apple charger." = "Vypadá to na nabíječku Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Pokud ji zapamatujete jako dok, odpojení nabíječky odpojí vaše svazky. Přesto zapamatovat?";

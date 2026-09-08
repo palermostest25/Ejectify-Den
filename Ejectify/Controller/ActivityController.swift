@@ -155,9 +155,29 @@ final class ActivityController {
         performDiskOperation(triggerDescription: notification.name.rawValue)
     }
 
+    /// Guarded applications running right now, which hold automatic disk operations back.
+    func blockingGuardedApplications() -> [GuardedApplication] {
+        GuardedApplicationPolicy.blockingApplications(
+            guardedApplications: Preference.guardedApplications,
+            runningApplications: RunningApplicationProbe.runningApplications()
+        )
+    }
+
     /// Runs the configured disk operation for all enabled volumes.
-    private func performDiskOperation(triggerDescription: String) {
+    ///
+    /// A user-initiated request has already been confirmed by the caller, so it is never held back
+    /// by a guarded application; every automatic trigger is.
+    private func performDiskOperation(triggerDescription: String, isUserInitiated: Bool = false) {
         Log.powerEvents.log("Disk operation trigger received; trigger=\(triggerDescription)")
+
+        if !isUserInitiated {
+            let blockingApplications = blockingGuardedApplications()
+            guard blockingApplications.isEmpty else {
+                Log.volumeOperations.log("Disk operation held back by a running application; trigger=\(triggerDescription); apps=\(GuardedApplicationPolicy.logDescription(of: blockingApplications))")
+                return
+            }
+        }
+
         let enabledVolumes = Volume.mountedVolumes().filter(\.enabled)
 
         guard !Preference.ejectInsteadOfUnmount else {
@@ -517,18 +537,51 @@ final class ActivityController {
 
     /// Runs the configured all-volumes action for a user-initiated request such as the menu or a hotkey.
     func performManualAllVolumesAction() {
-        performDiskOperation(triggerDescription: "manual")
+        guard confirmProceedingDespiteGuardedApplications() else {
+            return
+        }
+
+        performDiskOperation(triggerDescription: "manual", isUserInitiated: true)
+    }
+
+    /// Asks whether to go ahead while a guarded application is running, and returns whether to proceed.
+    ///
+    /// Nothing running means nothing to ask, so this doubles as a plain gate for user-initiated work.
+    private func confirmProceedingDespiteGuardedApplications() -> Bool {
+        let blockingApplications = blockingGuardedApplications()
+        guard !blockingApplications.isEmpty else {
+            return true
+        }
+
+        let isEjecting = Preference.ejectInsteadOfUnmount
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = String(localized: "Still open: \(GuardedApplicationPolicy.description(of: blockingApplications))")
+        alert.informativeText = isEjecting
+            ? String(localized: "Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress.")
+            : String(localized: "Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress.")
+        // Cancel is added first so it stays the default button.
+        alert.addButton(withTitle: String(localized: "Cancel"))
+        alert.addButton(withTitle: isEjecting ? String(localized: "Eject anyway") : String(localized: "Unmount anyway"))
+
+        let didConfirm = alert.runModal() == .alertSecondButtonReturn
+        Log.volumeOperations.log("Guarded application prompt answered; proceed=\(didConfirm); apps=\(GuardedApplicationPolicy.logDescription(of: blockingApplications))")
+        return didConfirm
     }
 
     /// Unmounts every enabled volume on user request and puts the Mac to sleep once they are gone.
     func performManualUnmountAndSleep() {
         Log.powerEvents.log("Manual unmount and sleep requested")
+        guard confirmProceedingDespiteGuardedApplications() else {
+            return
+        }
+
         Task { @MainActor [weak self] in
             guard let self else {
                 return
             }
 
-            let batchResult = await self.handleEnabledVolumesAndWait(reason: "manual sleep")
+            let batchResult = await self.handleEnabledVolumesAndWait(reason: "manual sleep", isUserInitiated: true)
 
             // A volume left mounted keeps the Mac awake so the failure is visible.
             guard batchResult.succeededCount == batchResult.requestedCount else {
@@ -1199,10 +1252,24 @@ final class ActivityController {
 
         /// Number of disk operations that reported success.
         let succeededCount: Int
+
+        /// Whether a guarded application held the batch back before any volume was touched.
+        var wasBlocked: Bool = false
     }
 
     /// Handles all enabled volumes using the configured operation and waits for every callback.
-    private func handleEnabledVolumesAndWait(reason: String = "system sleep") async -> DiskOperationBatchResult {
+    ///
+    /// A user-initiated request has already been confirmed by the caller, so it is never held back
+    /// by a guarded application; every automatic trigger is.
+    private func handleEnabledVolumesAndWait(reason: String = "system sleep", isUserInitiated: Bool = false) async -> DiskOperationBatchResult {
+        if !isUserInitiated {
+            let blockingApplications = blockingGuardedApplications()
+            guard blockingApplications.isEmpty else {
+                Log.volumeOperations.log("Disk operation held back by a running application; reason=\(reason); apps=\(GuardedApplicationPolicy.logDescription(of: blockingApplications))")
+                return DiskOperationBatchResult(requestedCount: 0, succeededCount: 0, wasBlocked: true)
+            }
+        }
+
         let enabledVolumes = Volume.mountedVolumes().filter { $0.enabled }
 
         guard !Preference.ejectInsteadOfUnmount else {
@@ -1238,6 +1305,13 @@ final class ActivityController {
             }
 
             let batchResult = await self.handleEnabledVolumesAndWait(reason: trigger.rawValue)
+
+            // Volumes are still mounted on purpose, so forcing the Mac down now would put them to
+            // sleep underneath the very app the guard exists to protect.
+            guard !batchResult.wasBlocked else {
+                Log.powerEvents.log("Sleep after unmount skipped; reason=held back by a running application")
+                return
+            }
 
             guard DockDisconnectPolicy.shouldSleepAfterUnmount(
                 trigger: trigger,

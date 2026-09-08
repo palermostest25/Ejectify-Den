@@ -75,6 +75,15 @@
 "No dock remembered" = "Ingen docka ihågkommen";
 "Forget" = "Glöm";
 "Forget all remembered docks" = "Glöm alla ihågkomna dockor";
+"Keep mounted while running" = "Behåll monterade under körning";
+"Volumes stay mounted while any ticked app is open" = "Volymer förblir monterade så länge en markerad app är öppen";
+"Running" = "Körs";
+"Stop protecting all apps" = "Sluta skydda alla appar";
+"Still open: %@" = "Fortfarande öppen: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify behåller dina volymer monterade så länge det här är öppet. Att avmontera nu kan avbryta pågående arbete.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify behåller dina volymer monterade så länge det här är öppet. Att mata ut nu kan avbryta pågående arbete.";
+"Unmount anyway" = "Avmontera ändå";
+"Eject anyway" = "Mata ut ändå";
 "Keep volumes unmounted on battery" = "Behåll volymer borttagna på batteri";
 "This looks like an Apple charger." = "Det här ser ut som en Apple-laddare.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Om du kommer ihåg den som docka tas dina volymer bort när du kopplar ur laddaren. Kom ihåg ändå?";

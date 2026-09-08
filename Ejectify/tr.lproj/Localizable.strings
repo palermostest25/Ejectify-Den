@@ -75,6 +75,15 @@
 "No dock remembered" = "Hatırlanan istasyon yok";
 "Forget" = "Unut";
 "Forget all remembered docks" = "Hatırlanan Tüm İstasyonları Unut";
+"Keep mounted while running" = "Çalışırken bağlı tut";
+"Volumes stay mounted while any ticked app is open" = "İşaretli bir uygulama açıkken birimler bağlı kalır";
+"Running" = "Çalışıyor";
+"Stop protecting all apps" = "Hiçbir uygulamayı koruma";
+"Still open: %@" = "Hâlâ açık: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Bu açıkken Ejectify birimlerinizi bağlı tutar. Şimdi çıkarmak süren çalışmayı yarıda kesebilir.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Bu açıkken Ejectify birimlerinizi bağlı tutar. Şimdi çıkartmak süren çalışmayı yarıda kesebilir.";
+"Unmount anyway" = "Yine de bağlantıyı kes";
+"Eject anyway" = "Yine de çıkart";
 "Keep volumes unmounted on battery" = "Pilde birimlerin bağlantısını kesik tut";
 "This looks like an Apple charger." = "Bu bir Apple şarj cihazına benziyor.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Bunu yerleştirme istasyonu olarak hatırlamak, şarj cihazını çıkardığınızda birimlerinizin bağlantısının kesilmesi anlamına gelir. Yine de hatırlansın mı?";

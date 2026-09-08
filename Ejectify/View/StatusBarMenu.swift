@@ -312,6 +312,10 @@ final class StatusBarMenu: NSMenu {
         dockItem.submenu = buildDockMenu()
         addItem(dockItem)
 
+        let guardedApplicationsItem = NSMenuItem(title: String(localized: "Keep mounted while running"), action: nil, keyEquivalent: "")
+        guardedApplicationsItem.submenu = buildGuardedApplicationsMenu()
+        addItem(guardedApplicationsItem)
+
         let ejectInsteadOfUnmountItem = NSMenuItem(
             title: String(localized: "Eject instead of unmount"),
             action: #selector(ejectInsteadOfUnmountClicked(menuItem:)),
@@ -578,6 +582,73 @@ final class StatusBarMenu: NSMenu {
         return attributedTitle
     }
 
+    /// Builds the submenu for choosing applications that hold automatic disk operations back.
+    private func buildGuardedApplicationsMenu() -> NSMenu {
+        let guardedApplicationsMenu = NSMenu(title: String(localized: "Keep mounted while running"))
+        guardedApplicationsMenu.autoenablesItems = false
+
+        let explanationItem = NSMenuItem(title: String(localized: "Volumes stay mounted while any ticked app is open"), action: nil, keyEquivalent: "")
+        explanationItem.isEnabled = false
+        guardedApplicationsMenu.addItem(explanationItem)
+        guardedApplicationsMenu.addItem(NSMenuItem.separator())
+
+        let guardedApplications = Preference.guardedApplications
+        let runningApplications = RunningApplicationProbe.runningApplications()
+
+        let selectableApplications = GuardedApplicationPolicy.selectableApplications(
+            guardedApplications: guardedApplications,
+            runningApplications: runningApplications,
+            excludingBundleIdentifier: Bundle.main.bundleIdentifier
+        )
+
+        for application in selectableApplications {
+            guardedApplicationsMenu.addItem(
+                makeGuardedApplicationMenuItem(
+                    for: application,
+                    guardedApplications: guardedApplications,
+                    runningApplications: runningApplications
+                )
+            )
+        }
+
+        guard !guardedApplications.isEmpty else {
+            return guardedApplicationsMenu
+        }
+
+        guardedApplicationsMenu.addItem(NSMenuItem.separator())
+        let forgetAllItem = NSMenuItem(
+            title: String(localized: "Stop protecting all apps"),
+            action: #selector(forgetAllGuardedApplicationsClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        forgetAllItem.target = self
+        guardedApplicationsMenu.addItem(forgetAllItem)
+
+        return guardedApplicationsMenu
+    }
+
+    /// Creates one application row whose checkmark means "keep volumes mounted while this runs".
+    private func makeGuardedApplicationMenuItem(
+        for application: GuardedApplication,
+        guardedApplications: [GuardedApplication],
+        runningApplications: [RunningApplication]
+    ) -> NSMenuItem {
+        let isGuarded = guardedApplications.contains { $0.id == application.id }
+        let item = NSMenuItem(title: application.name, action: #selector(guardedApplicationToggled(menuItem:)), keyEquivalent: "")
+        item.target = self
+        item.state = isGuarded ? .on : .off
+        item.representedObject = application
+
+        // Every unticked row came from the running list, so the hint would say nothing there. On a
+        // ticked row it answers "why did nothing unmount?" at a glance.
+        guard isGuarded, application.isRunning(among: runningApplications) else {
+            return item
+        }
+
+        item.attributedTitle = makeHintTitle(title: application.name, hint: String(localized: "Running"), isWarning: false)
+        return item
+    }
+
     /// Builds app-level actions such as Help and Quit.
     private func buildAppMenu() {
         addItem(NSMenuItem.separator())
@@ -751,6 +822,33 @@ final class StatusBarMenu: NSMenu {
         alert.addButton(withTitle: String(localized: "Cancel"))
         alert.addButton(withTitle: String(localized: "Remember anyway"))
         return alert.runModal() == .alertSecondButtonReturn
+    }
+
+    /// Toggles whether one application keeps volumes mounted while it runs.
+    @MainActor
+    @objc private func guardedApplicationToggled(menuItem: NSMenuItem) {
+        guard let application = menuItem.representedObject as? GuardedApplication else {
+            return
+        }
+
+        let guardedApplications = Preference.guardedApplications
+        let isGuarded = guardedApplications.contains { $0.id == application.id }
+        Preference.guardedApplications = isGuarded
+            ? GuardedApplicationsPreference.list(guardedApplications, removing: application)
+            : GuardedApplicationsPreference.list(guardedApplications, adding: application)
+        Log.preferences.log("Guarded application \(isGuarded ? "removed" : "added"); bundleIdentifier=\(application.bundleIdentifier ?? "unknown")")
+        updateMenu()
+    }
+
+    /// Stops protecting every application.
+    @objc private func forgetAllGuardedApplicationsClicked(menuItem _: NSMenuItem) {
+        guard !Preference.guardedApplications.isEmpty else {
+            return
+        }
+
+        Preference.guardedApplications = []
+        Log.preferences.log("All guarded applications forgotten")
+        updateMenu()
     }
 
     /// Forgets every remembered dock.

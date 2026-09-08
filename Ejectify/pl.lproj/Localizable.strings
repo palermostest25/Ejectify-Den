@@ -75,6 +75,15 @@
 "No dock remembered" = "Nie zapamiętano stacji dokującej";
 "Forget" = "Zapomnij";
 "Forget all remembered docks" = "Zapomnij wszystkie zapamiętane stacje dokujące";
+"Keep mounted while running" = "Nie odłączaj podczas działania";
+"Volumes stay mounted while any ticked app is open" = "Wolumeny pozostają zamontowane, dopóki otwarta jest któraś zaznaczona aplikacja";
+"Running" = "Działa";
+"Stop protecting all apps" = "Przestań chronić wszystkie aplikacje";
+"Still open: %@" = "Wciąż otwarte: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify utrzymuje wolumeny zamontowane, dopóki to jest otwarte. Odmontowanie teraz może przerwać trwającą pracę.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify utrzymuje wolumeny zamontowane, dopóki to jest otwarte. Wysunięcie teraz może przerwać trwającą pracę.";
+"Unmount anyway" = "Odmontuj mimo to";
+"Eject anyway" = "Wysuń mimo to";
 "Keep volumes unmounted on battery" = "Nie montuj woluminów na baterii";
 "This looks like an Apple charger." = "To wygląda na ładowarkę Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Zapamiętanie jej jako stacji dokującej sprawi, że odłączenie ładowarki odmontuje woluminy. Zapamiętać mimo to?";

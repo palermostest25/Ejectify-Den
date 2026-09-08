@@ -75,6 +75,15 @@
 "No dock remembered" = "لا توجد قاعدة توصيل متذكرة";
 "Forget" = "نسيان";
 "Forget all remembered docks" = "نسيان كل قواعد التوصيل المتذكرة";
+"Keep mounted while running" = "الإبقاء عليها موصولة أثناء التشغيل";
+"Volumes stay mounted while any ticked app is open" = "تبقى وحدات التخزين موصولة أثناء فتح أي تطبيق محدد";
+"Running" = "قيد التشغيل";
+"Stop protecting all apps" = "إيقاف حماية كل التطبيقات";
+"Still open: %@" = "ما زال مفتوحًا: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "يُبقي Ejectify وحدات التخزين موصولة أثناء فتح هذا التطبيق. قد يؤدي إلغاء التوصيل الآن إلى مقاطعة عمل قيد التنفيذ.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "يُبقي Ejectify وحدات التخزين موصولة أثناء فتح هذا التطبيق. قد يؤدي الإخراج الآن إلى مقاطعة عمل قيد التنفيذ.";
+"Unmount anyway" = "إلغاء التوصيل على أي حال";
+"Eject anyway" = "الإخراج على أي حال";
 "Keep volumes unmounted on battery" = "إبقاء وحدات التخزين غير محملة على البطارية";
 "This looks like an Apple charger." = "يبدو أن هذا شاحن Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "تذكره كقاعدة توصيل يعني أن فصل الشاحن سيلغي تحميل وحدات التخزين. تذكره على أي حال؟";

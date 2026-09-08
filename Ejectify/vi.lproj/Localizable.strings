@@ -75,6 +75,15 @@
 "No dock remembered" = "Chưa ghi nhớ dock nào";
 "Forget" = "Quên";
 "Forget all remembered docks" = "Quên tất cả dock đã ghi nhớ";
+"Keep mounted while running" = "Giữ gắn kết khi đang chạy";
+"Volumes stay mounted while any ticked app is open" = "Các ổ đĩa vẫn được gắn kết khi còn ứng dụng đã đánh dấu đang mở";
+"Running" = "Đang chạy";
+"Stop protecting all apps" = "Ngừng bảo vệ mọi ứng dụng";
+"Still open: %@" = "Vẫn đang mở: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify giữ các ổ đĩa được gắn kết khi ứng dụng này còn mở. Tháo gắn kết bây giờ có thể làm gián đoạn công việc đang dở.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify giữ các ổ đĩa được gắn kết khi ứng dụng này còn mở. Đẩy ra bây giờ có thể làm gián đoạn công việc đang dở.";
+"Unmount anyway" = "Vẫn tháo gắn kết";
+"Eject anyway" = "Vẫn đẩy ra";
 "Keep volumes unmounted on battery" = "Giữ các ổ đĩa được ngắt khi dùng pin";
 "This looks like an Apple charger." = "Đây có vẻ là bộ sạc Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Ghi nhớ nó là dock nghĩa là rút bộ sạc sẽ ngắt kết nối các ổ đĩa của bạn. Vẫn ghi nhớ?";

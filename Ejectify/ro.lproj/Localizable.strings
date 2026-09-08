@@ -75,6 +75,15 @@
 "No dock remembered" = "Niciun doc reținut";
 "Forget" = "Uită";
 "Forget all remembered docks" = "Uită toate docurile reținute";
+"Keep mounted while running" = "Păstrează montate în timpul rulării";
+"Volumes stay mounted while any ticked app is open" = "Volumele rămân montate cât timp o aplicație bifată este deschisă";
+"Running" = "În execuție";
+"Stop protecting all apps" = "Nu mai proteja nicio aplicație";
+"Still open: %@" = "Încă deschis: %@";
+"Ejectify keeps your volumes mounted while this is open. Unmounting now could interrupt work in progress." = "Ejectify păstrează volumele montate cât timp aceasta este deschisă. Demontarea acum ar putea întrerupe lucrul în curs.";
+"Ejectify keeps your volumes mounted while this is open. Ejecting now could interrupt work in progress." = "Ejectify păstrează volumele montate cât timp aceasta este deschisă. Scoaterea acum ar putea întrerupe lucrul în curs.";
+"Unmount anyway" = "Demontează oricum";
+"Eject anyway" = "Scoate oricum";
 "Keep volumes unmounted on battery" = "Menține volumele demontate pe baterie";
 "This looks like an Apple charger." = "Acesta pare a fi un încărcător Apple.";
 "Remembering it as a dock means unplugging your charger will unmount your volumes. Remember anyway?" = "Dacă îl reții ca doc, deconectarea încărcătorului va demonta volumele. Reții oricum?";
