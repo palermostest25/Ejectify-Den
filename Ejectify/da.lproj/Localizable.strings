@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Glem alle huskede docks";
 "Keep mounted while running" = "Behold arkiveret under kørsel";
 "Volumes stay mounted while any ticked app is open" = "Enheder forbliver arkiveret, så længe et markeret program er åbent";
+"Ticked apps are asked to save and quit before unmounting" = "Markerede programmer bliver bedt om at gemme og slutte før afmontering";
+"Save and quit them instead" = "Gem og slut dem i stedet";
+"Allow Accessibility access to save…" = "Tillad tilgængelighedsadgang for at gemme…";
+"Apps can only be quit, not saved" = "Programmer kan kun sluttes, ikke gemmes";
 "Running" = "Kører";
 "Stop protecting all apps" = "Stop med at beskytte alle programmer";
 "Still open: %@" = "Stadig åben: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Disken kunne ikke gøres aktiv igen.";
 "Keyboard Shortcuts" = "Tastaturgenveje";
 "Keyboard Shortcuts…" = "Tastaturgenveje…";
+"Key %@" = "Tast %@";
+"%@ is already used" = "%@ bruges allerede";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Denne genvej er tildelt “%@”. Vælg en anden kombination.";
 "Click a shortcut, then press the new key combination." = "Klik på en genvej, og tryk derefter på den nye tastekombination.";
 "Press keys…" = "Tryk på taster…";
 "Reset" = "Nulstil";

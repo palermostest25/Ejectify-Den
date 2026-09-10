@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Alle onthouden docks vergeten";
 "Keep mounted while running" = "Gekoppeld houden tijdens gebruik";
 "Volumes stay mounted while any ticked app is open" = "Volumes blijven gekoppeld zolang een aangevinkte app openstaat";
+"Ticked apps are asked to save and quit before unmounting" = "Aangevinkte apps wordt gevraagd op te slaan en te stoppen voor het ontkoppelen";
+"Save and quit them instead" = "Ze in plaats daarvan opslaan en stoppen";
+"Allow Accessibility access to save…" = "Toegankelijkheidstoegang toestaan om op te slaan…";
+"Apps can only be quit, not saved" = "Apps kunnen alleen worden gestopt, niet opgeslagen";
 "Running" = "Actief";
 "Stop protecting all apps" = "Geen apps meer beschermen";
 "Still open: %@" = "Nog open: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "De schijf kon niet worden geheractiveerd.";
 "Keyboard Shortcuts" = "Toetscombinaties";
 "Keyboard Shortcuts…" = "Toetscombinaties…";
+"Key %@" = "Toets %@";
+"%@ is already used" = "%@ is al in gebruik";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Deze sneltoets is toegewezen aan ‘%@’. Kies een andere combinatie.";
 "Click a shortcut, then press the new key combination." = "Klik op een toetscombinatie en druk daarna op de nieuwe toetsen.";
 "Press keys…" = "Druk op toetsen…";
 "Reset" = "Herstel";

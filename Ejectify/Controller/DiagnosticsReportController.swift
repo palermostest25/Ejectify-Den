@@ -202,6 +202,12 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
     /// Guarded applications that were running when the report was made.
     let blockingApplications: String
 
+    /// Whether guarded applications are asked to save and quit rather than holding volumes back.
+    let saveAndQuitGuardedApplications: Bool
+
+    /// Whether Accessibility access is granted, without which guarded applications cannot be saved.
+    let isAccessibilityPermitted: Bool
+
     /// Current force-unmount preference.
     let forceUnmount: Bool
 
@@ -250,6 +256,8 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
             guardedApplications: Preference.guardedApplications.map { $0.bundleIdentifier ?? "unknown" },
             blockingApplications: AppDelegate.shared.activityController
                 .map { GuardedApplicationPolicy.logDescription(of: $0.blockingGuardedApplications()) } ?? "unknown",
+            saveAndQuitGuardedApplications: Preference.saveAndQuitGuardedApplications,
+            isAccessibilityPermitted: ApplicationSaveMenuController.isPermitted,
             forceUnmount: Preference.forceUnmount,
             ejectInsteadOfUnmount: Preference.ejectInsteadOfUnmount,
             unlockVolumesWhenNeeded: Preference.unlockVolumesWhenNeeded,
@@ -563,6 +571,8 @@ private struct EjectifyStateReporter: DiagnosticsReporting {
             ("External displays", String(snapshot.externalDisplayCount)),
             ("Keep mounted while running", snapshot.guardedApplications.isEmpty ? "-" : snapshot.guardedApplications.joined(separator: " | ")),
             ("Guarded apps running now", snapshot.blockingApplications),
+            ("Save and quit guarded apps", snapshot.saveAndQuitGuardedApplications.diagnosticsDescription),
+            ("Accessibility access granted", snapshot.isAccessibilityPermitted.diagnosticsDescription),
             ("Force unmount", snapshot.forceUnmount.diagnosticsDescription),
             ("Eject instead of unmount", snapshot.ejectInsteadOfUnmount.diagnosticsDescription),
             ("Unlock volumes when needed", snapshot.unlockVolumesWhenNeeded.diagnosticsDescription),

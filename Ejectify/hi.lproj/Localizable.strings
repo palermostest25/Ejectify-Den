@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "सभी याद रखे गए डॉक भूल जाएँ";
 "Keep mounted while running" = "चलते समय माउंट रखें";
 "Volumes stay mounted while any ticked app is open" = "किसी भी चुने हुए ऐप के खुले रहने तक वॉल्यूम माउंट रहते हैं";
+"Ticked apps are asked to save and quit before unmounting" = "अनमाउंट से पहले चुने हुए ऐप्स को सहेजने और बंद होने के लिए कहा जाता है";
+"Save and quit them instead" = "इसके बजाय सहेजें और बंद करें";
+"Allow Accessibility access to save…" = "सहेजने के लिए ऐक्सेसिबिलिटी ऐक्सेस दें…";
+"Apps can only be quit, not saved" = "ऐप्स केवल बंद किए जा सकते हैं, सहेजे नहीं";
 "Running" = "चल रहा है";
 "Stop protecting all apps" = "सभी ऐप्स की सुरक्षा बंद करें";
 "Still open: %@" = "अब भी खुला है: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "डिस्क फिर से माउंट नहीं हो सकी।";
 "Keyboard Shortcuts" = "कीबोर्ड शॉर्टकट";
 "Keyboard Shortcuts…" = "कीबोर्ड शॉर्टकट…";
+"Key %@" = "कुंजी %@";
+"%@ is already used" = "%@ पहले से उपयोग में है";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "यह शॉर्टकट “%@” को असाइन किया गया है। कोई दूसरा संयोजन चुनें।";
 "Click a shortcut, then press the new key combination." = "किसी शॉर्टकट पर क्लिक करें, फिर नया कुंजी संयोजन दबाएँ।";
 "Press keys…" = "कुंजियाँ दबाएँ…";
 "Reset" = "रीसेट करें";

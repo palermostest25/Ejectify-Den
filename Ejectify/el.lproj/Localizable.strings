@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Διαγραφή όλων των απομνημονευμένων σταθμών";
 "Keep mounted while running" = "Διατήρηση προσαρτημένων κατά την εκτέλεση";
 "Volumes stay mounted while any ticked app is open" = "Οι τόμοι παραμένουν προσαρτημένοι όσο είναι ανοιχτή μια επιλεγμένη εφαρμογή";
+"Ticked apps are asked to save and quit before unmounting" = "Οι επιλεγμένες εφαρμογές καλούνται να αποθηκεύσουν και να τερματίσουν πριν την αποπροσάρτηση";
+"Save and quit them instead" = "Αποθήκευση και τερματισμός αντ' αυτού";
+"Allow Accessibility access to save…" = "Να επιτρέπεται η πρόσβαση προσβασιμότητας για αποθήκευση…";
+"Apps can only be quit, not saved" = "Οι εφαρμογές μπορούν μόνο να τερματιστούν, όχι να αποθηκευτούν";
 "Running" = "Εκτελείται";
 "Stop protecting all apps" = "Διακοπή προστασίας όλων των εφαρμογών";
 "Still open: %@" = "Ακόμη ανοιχτό: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Δεν ήταν δυνατή η επαναπροσάρτηση του δίσκου.";
 "Keyboard Shortcuts" = "Συντομεύσεις πληκτρολογίου";
 "Keyboard Shortcuts…" = "Συντομεύσεις πληκτρολογίου…";
+"Key %@" = "Πλήκτρο %@";
+"%@ is already used" = "Το %@ χρησιμοποιείται ήδη";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Αυτή η συντόμευση έχει αντιστοιχιστεί στο «%@». Επιλέξτε άλλον συνδυασμό.";
 "Click a shortcut, then press the new key combination." = "Κάντε κλικ σε μια συντόμευση και πατήστε τον νέο συνδυασμό πλήκτρων.";
 "Press keys…" = "Πατήστε πλήκτρα…";
 "Reset" = "Επαναφορά";

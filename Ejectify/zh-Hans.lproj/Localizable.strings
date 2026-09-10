@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "忘记所有已记住的扩展坞";
 "Keep mounted while running" = "运行时保持装载";
 "Volumes stay mounted while any ticked app is open" = "只要勾选的 App 处于打开状态，宗卷就保持装载";
+"Ticked apps are asked to save and quit before unmounting" = "卸载前会请求勾选的 App 保存并退出";
+"Save and quit them instead" = "改为保存并退出";
+"Allow Accessibility access to save…" = "允许辅助功能访问以保存…";
+"Apps can only be quit, not saved" = "只能退出 App，无法保存";
 "Running" = "正在运行";
 "Stop protecting all apps" = "不再保护任何 App";
 "Still open: %@" = "仍然打开：%@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "无法重新装载该磁盘。";
 "Keyboard Shortcuts" = "键盘快捷键";
 "Keyboard Shortcuts…" = "键盘快捷键…";
+"Key %@" = "按键 %@";
+"%@ is already used" = "%@ 已被使用";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "此快捷键已指定给“%@”。请选择其他组合。";
 "Click a shortcut, then press the new key combination." = "点按某个快捷键，然后按下新的组合键。";
 "Press keys…" = "请按下按键…";
 "Reset" = "重置";

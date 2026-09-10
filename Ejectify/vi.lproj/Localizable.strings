@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Quên tất cả dock đã ghi nhớ";
 "Keep mounted while running" = "Giữ gắn kết khi đang chạy";
 "Volumes stay mounted while any ticked app is open" = "Các ổ đĩa vẫn được gắn kết khi còn ứng dụng đã đánh dấu đang mở";
+"Ticked apps are asked to save and quit before unmounting" = "Các ứng dụng đã đánh dấu sẽ được yêu cầu lưu và thoát trước khi tháo gắn kết";
+"Save and quit them instead" = "Lưu và thoát chúng thay vì vậy";
+"Allow Accessibility access to save…" = "Cho phép truy cập trợ năng để lưu…";
+"Apps can only be quit, not saved" = "Chỉ có thể thoát ứng dụng, không thể lưu";
 "Running" = "Đang chạy";
 "Stop protecting all apps" = "Ngừng bảo vệ mọi ứng dụng";
 "Still open: %@" = "Vẫn đang mở: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Không thể kết nối lại đĩa.";
 "Keyboard Shortcuts" = "Phím tắt";
 "Keyboard Shortcuts…" = "Phím tắt…";
+"Key %@" = "Phím %@";
+"%@ is already used" = "%@ đã được sử dụng";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Lối tắt này được gán cho “%@”. Hãy chọn tổ hợp khác.";
 "Click a shortcut, then press the new key combination." = "Bấm vào một phím tắt, rồi nhấn tổ hợp phím mới.";
 "Press keys…" = "Nhấn phím…";
 "Reset" = "Đặt lại";

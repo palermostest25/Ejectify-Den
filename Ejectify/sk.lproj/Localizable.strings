@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Zabudnúť všetky zapamätané doky";
 "Keep mounted while running" = "Ponechať pripojené počas behu";
 "Volumes stay mounted while any ticked app is open" = "Zväzky zostanú pripojené, kým je otvorená niektorá zaškrtnutá aplikácia";
+"Ticked apps are asked to save and quit before unmounting" = "Zaškrtnuté aplikácie sú pred odpojením vyzvané, aby uložili a ukončili";
+"Save and quit them instead" = "Namiesto toho uložiť a ukončiť";
+"Allow Accessibility access to save…" = "Povoliť prístup sprístupnenia na ukladanie…";
+"Apps can only be quit, not saved" = "Aplikácie sa dajú len ukončiť, nie uložiť";
 "Running" = "Spustené";
 "Stop protecting all apps" = "Prestať chrániť všetky aplikácie";
 "Still open: %@" = "Stále otvorené: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Disk sa nepodarilo znovu pripojiť.";
 "Keyboard Shortcuts" = "Klávesové skratky";
 "Keyboard Shortcuts…" = "Klávesové skratky…";
+"Key %@" = "Klávesa %@";
+"%@ is already used" = "%@ sa už používa";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Táto skratka je priradená k „%@“. Vyberte inú kombináciu.";
 "Click a shortcut, then press the new key combination." = "Kliknite na skratku a potom stlačte novú kombináciu klávesov.";
 "Press keys…" = "Stlačte klávesy…";
 "Reset" = "Obnoviť";

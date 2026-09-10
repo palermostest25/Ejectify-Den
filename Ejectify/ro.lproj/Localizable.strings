@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Uită toate docurile reținute";
 "Keep mounted while running" = "Păstrează montate în timpul rulării";
 "Volumes stay mounted while any ticked app is open" = "Volumele rămân montate cât timp o aplicație bifată este deschisă";
+"Ticked apps are asked to save and quit before unmounting" = "Aplicațiilor bifate li se cere să salveze și să iasă înainte de demontare";
+"Save and quit them instead" = "Salvează și ieși în schimb";
+"Allow Accessibility access to save…" = "Permite accesul de accesibilitate pentru salvare…";
+"Apps can only be quit, not saved" = "Aplicațiile pot fi doar închise, nu salvate";
 "Running" = "În execuție";
 "Stop protecting all apps" = "Nu mai proteja nicio aplicație";
 "Still open: %@" = "Încă deschis: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Discul nu a putut fi remontat.";
 "Keyboard Shortcuts" = "Scurtături din tastatură";
 "Keyboard Shortcuts…" = "Scurtături din tastatură…";
+"Key %@" = "Tasta %@";
+"%@ is already used" = "%@ este deja utilizat";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Această scurtătură este atribuită lui „%@”. Alegeți altă combinație.";
 "Click a shortcut, then press the new key combination." = "Fă clic pe o scurtătură, apoi apasă noua combinație de taste.";
 "Press keys…" = "Apasă tastele…";
 "Reset" = "Resetează";

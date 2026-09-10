@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Forget All Remembered Docks";
 "Keep mounted while running" = "Keep Mounted While Running";
 "Volumes stay mounted while any ticked app is open" = "Volumes stay mounted while any ticked app is open";
+"Ticked apps are asked to save and quit before unmounting" = "Ticked apps are asked to save and quit before unmounting";
+"Save and quit them instead" = "Save and Quit Them Instead";
+"Allow Accessibility access to save…" = "Allow Accessibility Access to Save…";
+"Apps can only be quit, not saved" = "Apps can only be quit, not saved";
 "Running" = "Running";
 "Stop protecting all apps" = "Stop Protecting All Apps";
 "Still open: %@" = "Still open: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "The disk could not be remounted.";
 "Keyboard Shortcuts" = "Keyboard Shortcuts";
 "Keyboard Shortcuts…" = "Keyboard Shortcuts…";
+"Key %@" = "Key %@";
+"%@ is already used" = "%@ is already used";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "This shortcut is assigned to “%@”. Choose a different combination.";
 "Click a shortcut, then press the new key combination." = "Click a shortcut, then press the new key combination.";
 "Press keys…" = "Press Keys…";
 "Reset" = "Reset";

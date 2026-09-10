@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Unohda kaikki muistetut telakat";
 "Keep mounted while running" = "Pidä liitettyinä suorituksen aikana";
 "Volumes stay mounted while any ticked app is open" = "Taltiot pysyvät liitettyinä, kun jokin valittu ohjelma on auki";
+"Ticked apps are asked to save and quit before unmounting" = "Valittuja ohjelmia pyydetään tallentamaan ja lopettamaan ennen irrottamista";
+"Save and quit them instead" = "Tallenna ja lopeta sen sijaan";
+"Allow Accessibility access to save…" = "Salli käyttöapuoikeus tallentamiseen…";
+"Apps can only be quit, not saved" = "Ohjelmat voidaan vain lopettaa, ei tallentaa";
 "Running" = "Käynnissä";
 "Stop protecting all apps" = "Lopeta kaikkien ohjelmien suojaus";
 "Still open: %@" = "Yhä auki: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Levyä ei voitu ottaa uudelleen käyttöön.";
 "Keyboard Shortcuts" = "Näppäinoikotiet";
 "Keyboard Shortcuts…" = "Näppäinoikotiet…";
+"Key %@" = "Näppäin %@";
+"%@ is already used" = "%@ on jo käytössä";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Tämä oikotie on määritetty kohteelle ”%@”. Valitse toinen yhdistelmä.";
 "Click a shortcut, then press the new key combination." = "Osoita oikotietä ja paina sitten uutta näppäinyhdistelmää.";
 "Press keys…" = "Paina näppäimiä…";
 "Reset" = "Palauta";

@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Glem alle huskede dokker";
 "Keep mounted while running" = "Behold montert under kjøring";
 "Volumes stay mounted while any ticked app is open" = "Volumer forblir montert så lenge et avmerket program er åpent";
+"Ticked apps are asked to save and quit before unmounting" = "Avmerkede programmer blir bedt om å lagre og avslutte før avmontering";
+"Save and quit them instead" = "Lagre og avslutt dem i stedet";
+"Allow Accessibility access to save…" = "Tillat tilgjengelighetstilgang for å lagre…";
+"Apps can only be quit, not saved" = "Programmer kan bare avsluttes, ikke lagres";
 "Running" = "Kjører";
 "Stop protecting all apps" = "Slutt å beskytte alle programmer";
 "Still open: %@" = "Fortsatt åpent: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Disken kunne ikke aktiveres på nytt.";
 "Keyboard Shortcuts" = "Tastatursnarveier";
 "Keyboard Shortcuts…" = "Tastatursnarveier…";
+"Key %@" = "Tast %@";
+"%@ is already used" = "%@ er allerede i bruk";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Denne snarveien er tilordnet «%@». Velg en annen kombinasjon.";
 "Click a shortcut, then press the new key combination." = "Klikk på en snarvei, og trykk deretter på den nye tastekombinasjonen.";
 "Press keys…" = "Trykk på taster…";
 "Reset" = "Nullstill";

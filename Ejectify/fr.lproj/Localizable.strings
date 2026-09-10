@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Oublier tous les docks mémorisés";
 "Keep mounted while running" = "Garder montés pendant l’exécution";
 "Volumes stay mounted while any ticked app is open" = "Les volumes restent montés tant qu’une app cochée est ouverte";
+"Ticked apps are asked to save and quit before unmounting" = "Les apps cochées sont invitées à enregistrer et quitter avant le démontage";
+"Save and quit them instead" = "Les enregistrer et les quitter à la place";
+"Allow Accessibility access to save…" = "Autoriser l’accès d’accessibilité pour enregistrer…";
+"Apps can only be quit, not saved" = "Les apps peuvent seulement être quittées, pas enregistrées";
 "Running" = "En cours d’exécution";
 "Stop protecting all apps" = "Ne plus protéger aucune app";
 "Still open: %@" = "Encore ouvert : %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Le disque n’a pas pu être remonté.";
 "Keyboard Shortcuts" = "Raccourcis clavier";
 "Keyboard Shortcuts…" = "Raccourcis clavier…";
+"Key %@" = "Touche %@";
+"%@ is already used" = "%@ est déjà utilisé";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Ce raccourci est attribué à « %@ ». Choisissez une autre combinaison.";
 "Click a shortcut, then press the new key combination." = "Cliquez sur un raccourci, puis appuyez sur la nouvelle combinaison.";
 "Press keys…" = "Appuyez sur des touches…";
 "Reset" = "Réinitialiser";

@@ -117,6 +117,15 @@ final class ActivityController {
     /// Hard cap for delaying system sleep while waiting for disk-operation completion.
     private static let maximumSystemSleepDelay: Duration = .seconds(maximumSystemSleepDelaySeconds)
 
+    /// Seconds an automatic trigger waits for a guarded application to settle its Save item.
+    ///
+    /// Deliberately shorter than the user-initiated wait: an automatic trigger is spending the same
+    /// ten-second sleep delay the unmounts themselves need, and nobody is there to answer a dialog.
+    private static let automaticSaveTimeout: Duration = .milliseconds(1500)
+
+    /// Seconds an automatic trigger waits for a guarded application to exit after being asked to quit.
+    private static let automaticQuitTimeout: Duration = .seconds(3)
+
     /// Distributed notification posted when the screen lock is engaged.
     private static let screenLockedNotificationName = Notification.Name("com.apple.screenIsLocked")
 
@@ -163,21 +172,28 @@ final class ActivityController {
         )
     }
 
-    /// Runs the configured disk operation for all enabled volumes.
+    /// Runs the configured disk operation for all enabled volumes once guarded applications allow it.
     ///
-    /// A user-initiated request has already been confirmed by the caller, so it is never held back
-    /// by a guarded application; every automatic trigger is.
+    /// Clearing the guard can involve asking applications to save and quit, which takes seconds, so
+    /// this hands off to a task rather than blocking the notification that triggered it.
     private func performDiskOperation(triggerDescription: String, isUserInitiated: Bool = false) {
         Log.powerEvents.log("Disk operation trigger received; trigger=\(triggerDescription)")
 
-        if !isUserInitiated {
-            let blockingApplications = blockingGuardedApplications()
-            guard blockingApplications.isEmpty else {
-                Log.volumeOperations.log("Disk operation held back by a running application; trigger=\(triggerDescription); apps=\(GuardedApplicationPolicy.logDescription(of: blockingApplications))")
+        Task { @MainActor [weak self] in
+            guard let self else {
                 return
             }
-        }
 
+            guard await self.isClearedByGuardedApplications(reason: triggerDescription, isUserInitiated: isUserInitiated) else {
+                return
+            }
+
+            self.performDiskOperationNow()
+        }
+    }
+
+    /// Runs the configured disk operation for all enabled volumes, with every guard already settled.
+    private func performDiskOperationNow() {
         let enabledVolumes = Volume.mountedVolumes().filter(\.enabled)
 
         guard !Preference.ejectInsteadOfUnmount else {
@@ -537,22 +553,48 @@ final class ActivityController {
 
     /// Runs the configured all-volumes action for a user-initiated request such as the menu or a hotkey.
     func performManualAllVolumesAction() {
-        guard confirmProceedingDespiteGuardedApplications() else {
-            return
-        }
-
         performDiskOperation(triggerDescription: "manual", isUserInitiated: true)
     }
 
-    /// Asks whether to go ahead while a guarded application is running, and returns whether to proceed.
+    /// Clears a disk operation past the guarded applications, closing them first when asked to.
     ///
-    /// Nothing running means nothing to ask, so this doubles as a plain gate for user-initiated work.
-    private func confirmProceedingDespiteGuardedApplications() -> Bool {
-        let blockingApplications = blockingGuardedApplications()
+    /// An automatic trigger simply stands down. A user-initiated request is the user asking directly,
+    /// so it is offered the choice rather than silently refused.
+    private func isClearedByGuardedApplications(reason: String, isUserInitiated: Bool) async -> Bool {
+        var blockingApplications = blockingGuardedApplications()
         guard !blockingApplications.isEmpty else {
             return true
         }
 
+        if Preference.saveAndQuitGuardedApplications {
+            Log.volumeOperations.log("Guarded applications asked to save and quit; reason=\(reason); apps=\(GuardedApplicationPolicy.logDescription(of: blockingApplications))")
+
+            // An automatic trigger runs inside the sleep delay budget, so it waits less than a user
+            // who is sitting there and can answer a save dialog.
+            _ = isUserInitiated
+                ? await GuardedApplicationCloser.closeApplications(blockingApplications)
+                : await GuardedApplicationCloser.closeApplications(
+                    blockingApplications,
+                    saveTimeout: Self.automaticSaveTimeout,
+                    quitTimeout: Self.automaticQuitTimeout
+                )
+
+            blockingApplications = blockingGuardedApplications()
+            guard !blockingApplications.isEmpty else {
+                return true
+            }
+        }
+
+        guard isUserInitiated else {
+            Log.volumeOperations.log("Disk operation held back by a running application; reason=\(reason); apps=\(GuardedApplicationPolicy.logDescription(of: blockingApplications))")
+            return false
+        }
+
+        return confirmProceedingDespiteGuardedApplications(blockingApplications)
+    }
+
+    /// Asks whether to go ahead while a guarded application is still running.
+    private func confirmProceedingDespiteGuardedApplications(_ blockingApplications: [GuardedApplication]) -> Bool {
         let isEjecting = Preference.ejectInsteadOfUnmount
         let alert = NSAlert()
         alert.alertStyle = .warning
@@ -572,10 +614,6 @@ final class ActivityController {
     /// Unmounts every enabled volume on user request and puts the Mac to sleep once they are gone.
     func performManualUnmountAndSleep() {
         Log.powerEvents.log("Manual unmount and sleep requested")
-        guard confirmProceedingDespiteGuardedApplications() else {
-            return
-        }
-
         Task { @MainActor [weak self] in
             guard let self else {
                 return
@@ -1262,12 +1300,8 @@ final class ActivityController {
     /// A user-initiated request has already been confirmed by the caller, so it is never held back
     /// by a guarded application; every automatic trigger is.
     private func handleEnabledVolumesAndWait(reason: String = "system sleep", isUserInitiated: Bool = false) async -> DiskOperationBatchResult {
-        if !isUserInitiated {
-            let blockingApplications = blockingGuardedApplications()
-            guard blockingApplications.isEmpty else {
-                Log.volumeOperations.log("Disk operation held back by a running application; reason=\(reason); apps=\(GuardedApplicationPolicy.logDescription(of: blockingApplications))")
-                return DiskOperationBatchResult(requestedCount: 0, succeededCount: 0, wasBlocked: true)
-            }
+        guard await isClearedByGuardedApplications(reason: reason, isUserInitiated: isUserInitiated) else {
+            return DiskOperationBatchResult(requestedCount: 0, succeededCount: 0, wasBlocked: true)
         }
 
         let enabledVolumes = Volume.mountedVolumes().filter { $0.enabled }
