@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Забыть все запомненные док-станции";
 "Keep mounted while running" = "Не отключать во время работы";
 "Volumes stay mounted while any ticked app is open" = "Тома остаются подключенными, пока открыто любое отмеченное приложение";
+"Ticked apps are asked to save and quit before unmounting" = "Отмеченным приложениям предлагается сохранить и завершить работу перед отключением";
+"Save and quit them instead" = "Вместо этого сохранять и завершать";
+"Allow Accessibility access to save…" = "Разрешить доступ универсального доступа для сохранения…";
+"Apps can only be quit, not saved" = "Приложения можно только завершить, но не сохранить";
 "Running" = "Работает";
 "Stop protecting all apps" = "Не защищать ни одно приложение";
 "Still open: %@" = "Еще открыто: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Не удалось снова подключить диск.";
 "Keyboard Shortcuts" = "Сочетания клавиш";
 "Keyboard Shortcuts…" = "Сочетания клавиш…";
+"Key %@" = "Клавиша %@";
+"%@ is already used" = "%@ уже используется";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Это сочетание назначено «%@». Выберите другую комбинацию.";
 "Click a shortcut, then press the new key combination." = "Нажмите на сочетание, затем нажмите новую комбинацию клавиш.";
 "Press keys…" = "Нажмите клавиши…";
 "Reset" = "Сбросить";

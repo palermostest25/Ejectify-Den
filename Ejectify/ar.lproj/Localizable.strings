@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "نسيان كل قواعد التوصيل المتذكرة";
 "Keep mounted while running" = "الإبقاء عليها موصولة أثناء التشغيل";
 "Volumes stay mounted while any ticked app is open" = "تبقى وحدات التخزين موصولة أثناء فتح أي تطبيق محدد";
+"Ticked apps are asked to save and quit before unmounting" = "يُطلب من التطبيقات المحددة الحفظ والإنهاء قبل إلغاء التوصيل";
+"Save and quit them instead" = "الحفظ والإنهاء بدلاً من ذلك";
+"Allow Accessibility access to save…" = "السماح بوصول تسهيلات الاستخدام للحفظ…";
+"Apps can only be quit, not saved" = "يمكن إنهاء التطبيقات فقط، دون حفظها";
 "Running" = "قيد التشغيل";
 "Stop protecting all apps" = "إيقاف حماية كل التطبيقات";
 "Still open: %@" = "ما زال مفتوحًا: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "تعذرت إعادة تحميل القرص.";
 "Keyboard Shortcuts" = "اختصارات لوحة المفاتيح";
 "Keyboard Shortcuts…" = "اختصارات لوحة المفاتيح…";
+"Key %@" = "المفتاح %@";
+"%@ is already used" = "%@ مُستخدم بالفعل";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "هذا الاختصار مُعيَّن إلى ”%@“. اختر تركيبة مختلفة.";
 "Click a shortcut, then press the new key combination." = "انقر على اختصار ثم اضغط على تركيبة المفاتيح الجديدة.";
 "Press keys…" = "اضغط على المفاتيح…";
 "Reset" = "إعادة تعيين";

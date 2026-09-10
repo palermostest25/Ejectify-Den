@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Lupakan Semua Dok yang Diingat";
 "Keep mounted while running" = "Tetap terpasang saat berjalan";
 "Volumes stay mounted while any ticked app is open" = "Volume tetap terpasang selama ada app tercentang yang terbuka";
+"Ticked apps are asked to save and quit before unmounting" = "App tercentang diminta menyimpan dan keluar sebelum pelepasan";
+"Save and quit them instead" = "Simpan dan keluarkan saja";
+"Allow Accessibility access to save…" = "Izinkan akses aksesibilitas untuk menyimpan…";
+"Apps can only be quit, not saved" = "App hanya bisa dikeluarkan, tidak disimpan";
 "Running" = "Berjalan";
 "Stop protecting all apps" = "Berhenti melindungi semua app";
 "Still open: %@" = "Masih terbuka: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Disk tidak dapat dipasang kembali.";
 "Keyboard Shortcuts" = "Pintasan Papan Ketik";
 "Keyboard Shortcuts…" = "Pintasan Papan Ketik…";
+"Key %@" = "Tombol %@";
+"%@ is already used" = "%@ sudah digunakan";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Pintasan ini ditetapkan ke “%@”. Pilih kombinasi lain.";
 "Click a shortcut, then press the new key combination." = "Klik pintasan, lalu tekan kombinasi tombol baru.";
 "Press keys…" = "Tekan Tombol…";
 "Reset" = "Atur Ulang";

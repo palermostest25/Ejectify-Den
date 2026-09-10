@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Hatırlanan Tüm İstasyonları Unut";
 "Keep mounted while running" = "Çalışırken bağlı tut";
 "Volumes stay mounted while any ticked app is open" = "İşaretli bir uygulama açıkken birimler bağlı kalır";
+"Ticked apps are asked to save and quit before unmounting" = "İşaretli uygulamalardan, çıkarma öncesinde kaydetmesi ve çıkması istenir";
+"Save and quit them instead" = "Bunun yerine kaydet ve çık";
+"Allow Accessibility access to save…" = "Kaydetmek için erişilebilirlik erişimine izin ver…";
+"Apps can only be quit, not saved" = "Uygulamalar yalnızca kapatılabilir, kaydedilemez";
 "Running" = "Çalışıyor";
 "Stop protecting all apps" = "Hiçbir uygulamayı koruma";
 "Still open: %@" = "Hâlâ açık: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Disk yeniden bağlanamadı.";
 "Keyboard Shortcuts" = "Klavye Kısayolları";
 "Keyboard Shortcuts…" = "Klavye Kısayolları…";
+"Key %@" = "%@ tuşu";
+"%@ is already used" = "%@ zaten kullanılıyor";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Bu kısayol “%@” öğesine atanmış. Farklı bir kombinasyon seçin.";
 "Click a shortcut, then press the new key combination." = "Bir kısayola tıklayın, ardından yeni tuş bileşimine basın.";
 "Press keys…" = "Tuşlara Basın…";
 "Reset" = "Sıfırla";

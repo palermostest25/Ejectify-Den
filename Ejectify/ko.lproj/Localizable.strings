@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "기억된 독 모두 지우기";
 "Keep mounted while running" = "실행 중에는 마운트 유지";
 "Volumes stay mounted while any ticked app is open" = "선택한 앱이 열려 있는 동안 볼륨이 마운트된 상태로 유지됩니다";
+"Ticked apps are asked to save and quit before unmounting" = "선택한 앱은 마운트 해제 전에 저장하고 종료하도록 요청받습니다";
+"Save and quit them instead" = "대신 저장하고 종료";
+"Allow Accessibility access to save…" = "저장을 위해 손쉬운 사용 접근 허용…";
+"Apps can only be quit, not saved" = "앱을 종료만 할 수 있고 저장할 수는 없음";
 "Running" = "실행 중";
 "Stop protecting all apps" = "모든 앱 보호 중지";
 "Still open: %@" = "아직 열려 있음: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "디스크를 다시 마운트할 수 없습니다.";
 "Keyboard Shortcuts" = "키보드 단축키";
 "Keyboard Shortcuts…" = "키보드 단축키…";
+"Key %@" = "키 %@";
+"%@ is already used" = "%@은(는) 이미 사용 중입니다";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "이 단축키는 \"%@\"에 지정되어 있습니다. 다른 조합을 선택하십시오.";
 "Click a shortcut, then press the new key combination." = "단축키를 클릭한 다음 새로운 키 조합을 누르십시오.";
 "Press keys…" = "키를 누르십시오…";
 "Reset" = "재설정";

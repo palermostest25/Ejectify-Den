@@ -104,6 +104,9 @@
 		F1D00000000000000000020D /* GlobalShortcutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000000F /* GlobalShortcutPreference.swift */; };
 		F1D00000000000000000020E /* GlobalShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000014 /* GlobalShortcutTests.swift */; };
 		F1D000000000000000000215 /* GuardedApplicationsPreferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001D /* GuardedApplicationsPreferenceTests.swift */; };
+		F1D000000000000000000216 /* ApplicationSaveMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001E /* ApplicationSaveMenuController.swift */; };
+		F1D000000000000000000217 /* GuardedApplicationCloser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001F /* GuardedApplicationCloser.swift */; };
+		F1D000000000000000000218 /* GuardedApplicationCloserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */; };
 		F1D00000000000000000020F /* GuardedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000017 /* GuardedApplication.swift */; };
 		F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000018 /* GuardedApplicationsPreference.swift */; };
 		F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000019 /* RunningApplicationProbe.swift */; };
@@ -116,6 +119,8 @@
 		F1D000000000000000000113 /* RunningApplicationProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000019 /* RunningApplicationProbe.swift */; };
 		F1D000000000000000000114 /* GuardedApplicationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001A /* GuardedApplicationPolicy.swift */; };
 		F1D000000000000000000110 /* ClamshellStateProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000016 /* ClamshellStateProbe.swift */; };
+		F1D000000000000000000115 /* ApplicationSaveMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001E /* ApplicationSaveMenuController.swift */; };
+		F1D000000000000000000116 /* GuardedApplicationCloser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001F /* GuardedApplicationCloser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -263,6 +268,9 @@
 		F1D00000000000000000001B /* GuardedApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationTests.swift; sourceTree = "<group>"; };
 		F1D00000000000000000001C /* GuardedApplicationPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationPolicyTests.swift; sourceTree = "<group>"; };
 		F1D00000000000000000001D /* GuardedApplicationsPreferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationsPreferenceTests.swift; sourceTree = "<group>"; };
+		F1D00000000000000000001E /* ApplicationSaveMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSaveMenuController.swift; sourceTree = "<group>"; };
+		F1D00000000000000000001F /* GuardedApplicationCloser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationCloser.swift; sourceTree = "<group>"; };
+		F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationCloserTests.swift; sourceTree = "<group>"; };
 		F1D000000000000000000016 /* ClamshellStateProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClamshellStateProbe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -415,6 +423,8 @@
 				F1D000000000000000000016 /* ClamshellStateProbe.swift */,
 				F1D000000000000000000019 /* RunningApplicationProbe.swift */,
 				F1D00000000000000000001A /* GuardedApplicationPolicy.swift */,
+				F1D00000000000000000001E /* ApplicationSaveMenuController.swift */,
+				F1D00000000000000000001F /* GuardedApplicationCloser.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -449,6 +459,7 @@
 				E7C700070000000000000007 /* VolumeLogLabelFormatterTests.swift */,
 				F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */,
 				F1D00000000000000000001C /* GuardedApplicationPolicyTests.swift */,
+				F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -705,6 +716,8 @@
 				F1D00000000000000000010E /* ShortcutSettingsWindowController.swift in Sources */,
 				F1D00000000000000000010F /* SystemPowerActionRequester.swift in Sources */,
 				F1D000000000000000000110 /* ClamshellStateProbe.swift in Sources */,
+				F1D000000000000000000115 /* ApplicationSaveMenuController.swift in Sources */,
+				F1D000000000000000000116 /* GuardedApplicationCloser.swift in Sources */,
 				F1D000000000000000000111 /* GuardedApplication.swift in Sources */,
 				F1D000000000000000000112 /* GuardedApplicationsPreference.swift in Sources */,
 				F1D000000000000000000113 /* RunningApplicationProbe.swift in Sources */,
@@ -766,6 +779,9 @@
 				F1D00000000000000000020D /* GlobalShortcutPreference.swift in Sources */,
 				F1D00000000000000000020E /* GlobalShortcutTests.swift in Sources */,
 				F1D000000000000000000215 /* GuardedApplicationsPreferenceTests.swift in Sources */,
+				F1D000000000000000000216 /* ApplicationSaveMenuController.swift in Sources */,
+				F1D000000000000000000217 /* GuardedApplicationCloser.swift in Sources */,
+				F1D000000000000000000218 /* GuardedApplicationCloserTests.swift in Sources */,
 				F1D00000000000000000020F /* GuardedApplication.swift in Sources */,
 				F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */,
 				F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */,

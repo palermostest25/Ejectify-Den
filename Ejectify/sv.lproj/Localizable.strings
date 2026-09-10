@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Glöm alla ihågkomna dockor";
 "Keep mounted while running" = "Behåll monterade under körning";
 "Volumes stay mounted while any ticked app is open" = "Volymer förblir monterade så länge en markerad app är öppen";
+"Ticked apps are asked to save and quit before unmounting" = "Markerade appar ombeds spara och avsluta innan avmontering";
+"Save and quit them instead" = "Spara och avsluta dem i stället";
+"Allow Accessibility access to save…" = "Tillåt hjälpmedelsåtkomst för att spara…";
+"Apps can only be quit, not saved" = "Appar kan bara avslutas, inte sparas";
 "Running" = "Körs";
 "Stop protecting all apps" = "Sluta skydda alla appar";
 "Still open: %@" = "Fortfarande öppen: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Det gick inte att lägga till disken igen.";
 "Keyboard Shortcuts" = "Tangentbordsgenvägar";
 "Keyboard Shortcuts…" = "Tangentbordsgenvägar…";
+"Key %@" = "Tangent %@";
+"%@ is already used" = "%@ används redan";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Det här kortkommandot är tilldelat ”%@”. Välj en annan kombination.";
 "Click a shortcut, then press the new key combination." = "Klicka på en genväg och tryck sedan på den nya tangentkombinationen.";
 "Press keys…" = "Tryck på tangenter…";
 "Reset" = "Återställ";

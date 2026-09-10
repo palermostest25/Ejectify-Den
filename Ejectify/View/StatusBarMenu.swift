@@ -587,9 +587,40 @@ final class StatusBarMenu: NSMenu {
         let guardedApplicationsMenu = NSMenu(title: String(localized: "Keep mounted while running"))
         guardedApplicationsMenu.autoenablesItems = false
 
-        let explanationItem = NSMenuItem(title: String(localized: "Volumes stay mounted while any ticked app is open"), action: nil, keyEquivalent: "")
+        let isSaveAndQuitEnabled = Preference.saveAndQuitGuardedApplications
+        let explanationTitle = isSaveAndQuitEnabled
+            ? String(localized: "Ticked apps are asked to save and quit before unmounting")
+            : String(localized: "Volumes stay mounted while any ticked app is open")
+        let explanationItem = NSMenuItem(title: explanationTitle, action: nil, keyEquivalent: "")
         explanationItem.isEnabled = false
         guardedApplicationsMenu.addItem(explanationItem)
+
+        let saveAndQuitItem = NSMenuItem(
+            title: String(localized: "Save and quit them instead"),
+            action: #selector(saveAndQuitGuardedApplicationsClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        saveAndQuitItem.target = self
+        saveAndQuitItem.state = isSaveAndQuitEnabled ? .on : .off
+        guardedApplicationsMenu.addItem(saveAndQuitItem)
+
+        // Reading another app's Save menu needs Accessibility access, and without it the feature can
+        // only quit, never save. Saying so here is the only place the user would think to look.
+        if isSaveAndQuitEnabled, !ApplicationSaveMenuController.isPermitted {
+            let permissionItem = NSMenuItem(
+                title: String(localized: "Allow Accessibility access to save…"),
+                action: #selector(accessibilitySettingsClicked),
+                keyEquivalent: ""
+            )
+            permissionItem.target = self
+            permissionItem.attributedTitle = makeHintTitle(
+                title: String(localized: "Allow Accessibility access to save…"),
+                hint: String(localized: "Apps can only be quit, not saved"),
+                isWarning: true
+            )
+            guardedApplicationsMenu.addItem(permissionItem)
+        }
+
         guardedApplicationsMenu.addItem(NSMenuItem.separator())
 
         let guardedApplications = Preference.guardedApplications
@@ -840,6 +871,36 @@ final class StatusBarMenu: NSMenu {
         updateMenu()
     }
 
+    /// Toggles whether guarded applications are asked to save and quit rather than holding volumes.
+    @objc private func saveAndQuitGuardedApplicationsClicked(menuItem: NSMenuItem) {
+        let isEnabled = toggledValue(for: menuItem.state)
+        Preference.saveAndQuitGuardedApplications = isEnabled
+
+        // Asking for access here rather than at unmount time, because the first unmount that needs
+        // it happens as the Mac is going to sleep, where no permission prompt can be answered.
+        if isEnabled, !ApplicationSaveMenuController.isPermitted {
+            openAccessibilitySettings()
+        }
+
+        updateMenu()
+    }
+
+    /// Opens the Accessibility pane so the user can grant the access saving needs.
+    @objc private func accessibilitySettingsClicked() {
+        openAccessibilitySettings()
+    }
+
+    /// Reveals Ejectify in the Accessibility list in System Settings.
+    private func openAccessibilitySettings() {
+        guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") else {
+            return
+        }
+
+        NSWorkspace.shared.open(url)
+        Log.preferences.log("Accessibility settings opened for guarded application saving")
+    }
+
+    /// Stops protecting every application.
     /// Stops protecting every application.
     @objc private func forgetAllGuardedApplicationsClicked(menuItem _: NSMenuItem) {
         guard !Preference.guardedApplications.isEmpty else {

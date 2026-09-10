@@ -23,28 +23,52 @@ struct RunningApplication: Hashable, Sendable {
 /// Reads the applications macOS currently reports as running in the user's session.
 enum RunningApplicationProbe {
 
+    /// One running application paired with the process it belongs to.
+    struct Entry: Sendable {
+
+        /// Snapshot used for guard matching.
+        let application: RunningApplication
+
+        /// Process identifier, needed to address the application through the Accessibility API.
+        let processIdentifier: pid_t
+    }
+
+    /// Every running application together with its process identifier.
+    static func runningApplicationsWithProcessIdentifiers() -> [Entry] {
+        NSWorkspace.shared.runningApplications.compactMap { application in
+            guard let snapshot = snapshot(of: application) else {
+                return nil
+            }
+
+            return Entry(application: snapshot, processIdentifier: application.processIdentifier)
+        }
+    }
+
     /// Every running application, background agents included, so a guarded app is found wherever it hides.
     static func runningApplications() -> [RunningApplication] {
-        NSWorkspace.shared.runningApplications.compactMap { application in
-            guard !application.isTerminated else {
-                return nil
-            }
+        NSWorkspace.shared.runningApplications.compactMap(snapshot(of:))
+    }
 
-            // localizedName is absent for some background processes, so fall back to the file name
-            // macOS launched, which is the only other thing a user could recognize.
-            let name = application.localizedName
-                ?? application.bundleURL?.deletingPathExtension().lastPathComponent
-                ?? application.executableURL?.lastPathComponent
-
-            guard let name, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-                return nil
-            }
-
-            return RunningApplication(
-                bundleIdentifier: application.bundleIdentifier,
-                name: name,
-                isUserFacing: application.activationPolicy == .regular
-            )
+    /// Converts one AppKit application into a snapshot, skipping anything with nothing to show.
+    private static func snapshot(of application: NSRunningApplication) -> RunningApplication? {
+        guard !application.isTerminated else {
+            return nil
         }
+
+        // localizedName is absent for some background processes, so fall back to the file name
+        // macOS launched, which is the only other thing a user could recognize.
+        let name = application.localizedName
+            ?? application.bundleURL?.deletingPathExtension().lastPathComponent
+            ?? application.executableURL?.lastPathComponent
+
+        guard let name, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return nil
+        }
+
+        return RunningApplication(
+            bundleIdentifier: application.bundleIdentifier,
+            name: name,
+            isUserFacing: application.activationPolicy == .regular
+        )
     }
 }

@@ -64,6 +64,17 @@ enum Preference {
         }
     }
 
+    /// Whether guarded applications are asked to save and quit instead of simply holding volumes back.
+    static var saveAndQuitGuardedApplications: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "preference.saveAndQuitGuardedApplications")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "preference.saveAndQuitGuardedApplications")
+            Log.preferences.log("Preference changed: saveAndQuitGuardedApplications=\(newValue)")
+        }
+    }
+
     /// Power adapters Ejectify has seen, most recently connected first, so the menu can list unplugged ones.
     static var knownPowerAdapters: [PowerAdapterIdentity] {
         get {

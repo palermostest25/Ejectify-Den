@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "ลืมแท่นเชื่อมต่อที่จำไว้ทั้งหมด";
 "Keep mounted while running" = "เชื่อมต่อไว้ขณะทำงาน";
 "Volumes stay mounted while any ticked app is open" = "ดิสก์จะยังเชื่อมต่ออยู่ตราบใดที่แอปที่ติ๊กไว้เปิดอยู่";
+"Ticked apps are asked to save and quit before unmounting" = "แอปที่ติ๊กไว้จะถูกขอให้บันทึกและออกก่อนการถอนเชื่อมต่อ";
+"Save and quit them instead" = "บันทึกและออกแทน";
+"Allow Accessibility access to save…" = "อนุญาตการเข้าถึงของการช่วยการเข้าถึงเพื่อบันทึก…";
+"Apps can only be quit, not saved" = "แอปถูกปิดได้เท่านั้น ไม่สามารถบันทึกได้";
 "Running" = "กำลังทำงาน";
 "Stop protecting all apps" = "หยุดปกป้องทุกแอป";
 "Still open: %@" = "ยังเปิดอยู่: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "ไม่สามารถเมานต์ดิสก์อีกครั้งได้";
 "Keyboard Shortcuts" = "แป้นพิมพ์ลัด";
 "Keyboard Shortcuts…" = "แป้นพิมพ์ลัด…";
+"Key %@" = "ปุ่ม %@";
+"%@ is already used" = "%@ ถูกใช้งานอยู่แล้ว";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "ปุ่มลัดนี้ถูกกำหนดให้กับ “%@” เลือกชุดปุ่มอื่น";
 "Click a shortcut, then press the new key combination." = "คลิกแป้นพิมพ์ลัด แล้วกดชุดปุ่มใหม่";
 "Press keys…" = "กดปุ่ม…";
 "Reset" = "ตั้งค่าใหม่";

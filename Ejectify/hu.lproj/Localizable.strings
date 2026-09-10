@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Összes megjegyzett dokkoló elfelejtése";
 "Keep mounted while running" = "Csatlakoztatva tartás futás közben";
 "Volumes stay mounted while any ticked app is open" = "A kötetek csatlakoztatva maradnak, amíg egy kipipált app nyitva van";
+"Ticked apps are asked to save and quit before unmounting" = "A kipipált appokat a leválasztás előtt mentésre és kilépésre kéri";
+"Save and quit them instead" = "Inkább mentés és kilépés";
+"Allow Accessibility access to save…" = "Kisegítő lehetőségek hozzáférés engedélyezése mentéshez…";
+"Apps can only be quit, not saved" = "Az appokból csak kilépni lehet, menteni nem";
 "Running" = "Fut";
 "Stop protecting all apps" = "Egyik app védelme se";
 "Still open: %@" = "Még nyitva: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "A lemezt nem sikerült újracsatolni.";
 "Keyboard Shortcuts" = "Billentyűparancsok";
 "Keyboard Shortcuts…" = "Billentyűparancsok…";
+"Key %@" = "%@ gomb";
+"%@ is already used" = "A %@ már használatban van";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Ez a gyorsparancs a következőhöz van társítva: „%@”. Válasszon másik kombinációt.";
 "Click a shortcut, then press the new key combination." = "Kattintson egy billentyűparancsra, majd nyomja le az új kombinációt.";
 "Press keys…" = "Nyomjon le billentyűket…";
 "Reset" = "Alaphelyzet";

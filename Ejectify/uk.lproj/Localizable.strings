@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "Забути всі запам’ятані док-станції";
 "Keep mounted while running" = "Не від’єднувати під час роботи";
 "Volumes stay mounted while any ticked app is open" = "Томи лишаються під’єднаними, доки відкрито будь-яку позначену програму";
+"Ticked apps are asked to save and quit before unmounting" = "Позначені програми отримають запит зберегти й завершити роботу перед від’єднанням";
+"Save and quit them instead" = "Замість цього зберігати й завершувати";
+"Allow Accessibility access to save…" = "Дозволити доступ доступності для збереження…";
+"Apps can only be quit, not saved" = "Програми можна лише завершити, але не зберегти";
 "Running" = "Працює";
 "Stop protecting all apps" = "Не захищати жодної програми";
 "Still open: %@" = "Ще відкрито: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "Не вдалося змонтувати диск знову.";
 "Keyboard Shortcuts" = "Комбінації клавіш";
 "Keyboard Shortcuts…" = "Комбінації клавіш…";
+"Key %@" = "Клавіша %@";
+"%@ is already used" = "%@ вже використовується";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "Це сполучення призначено для «%@». Виберіть іншу комбінацію.";
 "Click a shortcut, then press the new key combination." = "Клацніть комбінацію, а потім натисніть нові клавіші.";
 "Press keys…" = "Натисніть клавіші…";
 "Reset" = "Скинути";

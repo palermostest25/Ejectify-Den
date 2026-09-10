@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "記憶したDockをすべて削除";
 "Keep mounted while running" = "実行中はマウントしたままにする";
 "Volumes stay mounted while any ticked app is open" = "チェックしたAppが開いている間、ボリュームはマウントされたままになります";
+"Ticked apps are asked to save and quit before unmounting" = "チェックしたAppは、アンマウント前に保存して終了するよう求められます";
+"Save and quit them instead" = "代わりに保存して終了する";
+"Allow Accessibility access to save…" = "保存のためにアクセシビリティアクセスを許可…";
+"Apps can only be quit, not saved" = "Appは終了できるだけで、保存はできません";
 "Running" = "実行中";
 "Stop protecting all apps" = "すべてのAppの保護をやめる";
 "Still open: %@" = "まだ開いています: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "ディスクを再マウントできませんでした。";
 "Keyboard Shortcuts" = "キーボードショートカット";
 "Keyboard Shortcuts…" = "キーボードショートカット…";
+"Key %@" = "キー %@";
+"%@ is already used" = "%@ はすでに使用されています";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "このショートカットは「%@」に割り当てられています。別の組み合わせを選択してください。";
 "Click a shortcut, then press the new key combination." = "ショートカットをクリックしてから、新しいキーの組み合わせを押します。";
 "Press keys…" = "キーを押してください…";
 "Reset" = "リセット";

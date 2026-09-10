@@ -77,6 +77,10 @@
 "Forget all remembered docks" = "שכח את כל העגינות שנזכרו";
 "Keep mounted while running" = "להשאיר מחוברים בזמן פעולה";
 "Volumes stay mounted while any ticked app is open" = "הכרכים יישארו מחוברים כל עוד יישום מסומן פתוח";
+"Ticked apps are asked to save and quit before unmounting" = "היישומים המסומנים מתבקשים לשמור ולצאת לפני הניתוק";
+"Save and quit them instead" = "לשמור ולצאת מהם במקום זאת";
+"Allow Accessibility access to save…" = "לאפשר גישת נגישות לשמירה…";
+"Apps can only be quit, not saved" = "ניתן רק לצאת מהיישומים, לא לשמור אותם";
 "Running" = "פועל";
 "Stop protecting all apps" = "להפסיק להגן על כל היישומים";
 "Still open: %@" = "עדיין פתוח: %@";
@@ -111,6 +115,9 @@
 "The disk could not be remounted." = "לא ניתן היה לחבר מחדש את הדיסק.";
 "Keyboard Shortcuts" = "קיצורי מקלדת";
 "Keyboard Shortcuts…" = "קיצורי מקלדת…";
+"Key %@" = "מקש %@";
+"%@ is already used" = "‏%@ נמצא כבר בשימוש";
+"This shortcut is assigned to \"%@\". Choose a different combination." = "קיצור הדרך הזה מוקצה ל„%@”. בחר שילוב אחר.";
 "Click a shortcut, then press the new key combination." = "לחץ על קיצור ואז הקש על צירוף המקשים החדש.";
 "Press keys…" = "הקש על מקשים…";
 "Reset" = "אפס";
