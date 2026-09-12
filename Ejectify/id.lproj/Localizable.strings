@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Disk masih terpasang.";
 "The disk could not be unmounted." = "Disk tidak dapat dilepas.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Disk sedang digunakan. Keluar dari app yang menggunakannya, atau aktifkan Paksa Lepas.";
+"In use by %@." = "Sedang digunakan oleh %@.";
+"Quit and Retry" = "Keluar dan coba lagi";
 "The disk could not be ejected." = "Disk tidak dapat dikeluarkan.";
 "The disk could not be remounted." = "Disk tidak dapat dipasang kembali.";
 "Keyboard Shortcuts" = "Pintasan Papan Ketik";

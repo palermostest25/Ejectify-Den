@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Disken er stadig aktiv.";
 "The disk could not be unmounted." = "Disken kunne ikke gøres passiv.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Disken er i brug. Slut de apps, der bruger den, eller slå Tving passivering til.";
+"In use by %@." = "Bruges af %@.";
+"Quit and Retry" = "Slut og prøv igen";
 "The disk could not be ejected." = "Disken kunne ikke skubbes ud.";
 "The disk could not be remounted." = "Disken kunne ikke gøres aktiv igen.";
 "Keyboard Shortcuts" = "Tastaturgenveje";

@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Disk je i dalje pridružen.";
 "The disk could not be unmounted." = "Disk nije moguće otpustiti.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Disk je u upotrebi. Zatvorite aplikacije koje ga koriste ili uključite Prisilno otpuštanje.";
+"In use by %@." = "Koristi %@.";
+"Quit and Retry" = "Zatvori i pokušaj ponovno";
 "The disk could not be ejected." = "Disk nije moguće izbaciti.";
 "The disk could not be remounted." = "Disk nije moguće ponovno pridružiti.";
 "Keyboard Shortcuts" = "Tipkovni prečaci";

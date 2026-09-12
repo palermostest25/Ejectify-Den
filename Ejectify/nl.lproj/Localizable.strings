@@ -113,6 +113,8 @@
 "The disk is still mounted." = "De schijf is nog steeds geactiveerd.";
 "The disk could not be unmounted." = "De schijf kon niet worden gedeactiveerd.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "De schijf is in gebruik. Sluit apps die de schijf gebruiken of schakel Forceer deactivatie in.";
+"In use by %@." = "In gebruik door %@.";
+"Quit and Retry" = "Stoppen en opnieuw proberen";
 "The disk could not be ejected." = "De schijf kon niet worden uitgeworpen.";
 "The disk could not be remounted." = "De schijf kon niet worden geheractiveerd.";
 "Keyboard Shortcuts" = "Toetscombinaties";

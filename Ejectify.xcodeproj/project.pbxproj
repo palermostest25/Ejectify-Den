@@ -109,6 +109,8 @@
 		F1D000000000000000000218 /* GuardedApplicationCloserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */; };
 		F1D000000000000000000219 /* DiskOperationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000010 /* DiskOperationProgress.swift */; };
 		F1D00000000000000000021A /* DiskOperationProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000021 /* DiskOperationProgressTests.swift */; };
+		F1D00000000000000000021B /* VolumeUsageProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000022 /* VolumeUsageProbe.swift */; };
+		F1D00000000000000000021C /* VolumeUsageProbeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000023 /* VolumeUsageProbeTests.swift */; };
 		F1D00000000000000000020F /* GuardedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000017 /* GuardedApplication.swift */; };
 		F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000018 /* GuardedApplicationsPreference.swift */; };
 		F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000019 /* RunningApplicationProbe.swift */; };
@@ -121,6 +123,7 @@
 		F1D000000000000000000113 /* RunningApplicationProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000019 /* RunningApplicationProbe.swift */; };
 		F1D000000000000000000114 /* GuardedApplicationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001A /* GuardedApplicationPolicy.swift */; };
 		F1D000000000000000000110 /* ClamshellStateProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000016 /* ClamshellStateProbe.swift */; };
+		F1D000000000000000000117 /* VolumeUsageProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000022 /* VolumeUsageProbe.swift */; };
 		F1D000000000000000000115 /* ApplicationSaveMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001E /* ApplicationSaveMenuController.swift */; };
 		F1D000000000000000000116 /* GuardedApplicationCloser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001F /* GuardedApplicationCloser.swift */; };
 /* End PBXBuildFile section */
@@ -274,6 +277,8 @@
 		F1D00000000000000000001F /* GuardedApplicationCloser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationCloser.swift; sourceTree = "<group>"; };
 		F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationCloserTests.swift; sourceTree = "<group>"; };
 		F1D000000000000000000021 /* DiskOperationProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskOperationProgressTests.swift; sourceTree = "<group>"; };
+		F1D000000000000000000022 /* VolumeUsageProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeUsageProbe.swift; sourceTree = "<group>"; };
+		F1D000000000000000000023 /* VolumeUsageProbeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeUsageProbeTests.swift; sourceTree = "<group>"; };
 		F1D000000000000000000016 /* ClamshellStateProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClamshellStateProbe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -428,6 +433,7 @@
 				F1D00000000000000000001A /* GuardedApplicationPolicy.swift */,
 				F1D00000000000000000001E /* ApplicationSaveMenuController.swift */,
 				F1D00000000000000000001F /* GuardedApplicationCloser.swift */,
+				F1D000000000000000000022 /* VolumeUsageProbe.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -463,6 +469,7 @@
 				F1D000000000000000000009 /* DockDisconnectPolicyTests.swift */,
 				F1D00000000000000000001C /* GuardedApplicationPolicyTests.swift */,
 				F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */,
+				F1D000000000000000000023 /* VolumeUsageProbeTests.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -720,6 +727,7 @@
 				F1D00000000000000000010E /* ShortcutSettingsWindowController.swift in Sources */,
 				F1D00000000000000000010F /* SystemPowerActionRequester.swift in Sources */,
 				F1D000000000000000000110 /* ClamshellStateProbe.swift in Sources */,
+				F1D000000000000000000117 /* VolumeUsageProbe.swift in Sources */,
 				F1D000000000000000000115 /* ApplicationSaveMenuController.swift in Sources */,
 				F1D000000000000000000116 /* GuardedApplicationCloser.swift in Sources */,
 				F1D000000000000000000111 /* GuardedApplication.swift in Sources */,
@@ -788,6 +796,8 @@
 				F1D000000000000000000218 /* GuardedApplicationCloserTests.swift in Sources */,
 				F1D000000000000000000219 /* DiskOperationProgress.swift in Sources */,
 				F1D00000000000000000021A /* DiskOperationProgressTests.swift in Sources */,
+				F1D00000000000000000021B /* VolumeUsageProbe.swift in Sources */,
+				F1D00000000000000000021C /* VolumeUsageProbeTests.swift in Sources */,
 				F1D00000000000000000020F /* GuardedApplication.swift in Sources */,
 				F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */,
 				F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */,

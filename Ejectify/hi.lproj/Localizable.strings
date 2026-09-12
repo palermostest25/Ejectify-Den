@@ -113,6 +113,8 @@
 "The disk is still mounted." = "डिस्क अब भी माउंट है।";
 "The disk could not be unmounted." = "डिस्क अनमाउंट नहीं हो सकी।";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "डिस्क उपयोग में है। इसका उपयोग करने वाले ऐप बंद करें या जबरन अनमाउंट चालू करें।";
+"In use by %@." = "%@ द्वारा उपयोग में है।";
+"Quit and Retry" = "बंद करें और पुनः प्रयास करें";
 "The disk could not be ejected." = "डिस्क नहीं निकाली जा सकी।";
 "The disk could not be remounted." = "डिस्क फिर से माउंट नहीं हो सकी।";
 "Keyboard Shortcuts" = "कीबोर्ड शॉर्टकट";

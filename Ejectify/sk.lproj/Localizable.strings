@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Disk je stále pripojený.";
 "The disk could not be unmounted." = "Disk sa nepodarilo odpojiť.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Disk sa používa. Ukončite aplikácie, ktoré ho používajú, alebo zapnite Vynútiť odpojenie.";
+"In use by %@." = "Používa sa aplikáciou %@.";
+"Quit and Retry" = "Ukončiť a skúsiť znova";
 "The disk could not be ejected." = "Disk sa nepodarilo vysunúť.";
 "The disk could not be remounted." = "Disk sa nepodarilo znovu pripojiť.";
 "Keyboard Shortcuts" = "Klávesové skratky";

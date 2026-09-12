@@ -113,6 +113,8 @@
 "The disk is still mounted." = "لا يزال القرص محملاً.";
 "The disk could not be unmounted." = "تعذر إلغاء تحميل القرص.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "القرص قيد الاستخدام. أنهِ التطبيقات التي تستخدمه أو فعّل فرض إلغاء التحميل.";
+"In use by %@." = "قيد الاستخدام بواسطة %@.";
+"Quit and Retry" = "الإنهاء وإعادة المحاولة";
 "The disk could not be ejected." = "تعذر إخراج القرص.";
 "The disk could not be remounted." = "تعذرت إعادة تحميل القرص.";
 "Keyboard Shortcuts" = "اختصارات لوحة المفاتيح";

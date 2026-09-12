@@ -113,6 +113,8 @@
 "The disk is still mounted." = "디스크가 여전히 마운트되어 있습니다.";
 "The disk could not be unmounted." = "디스크를 마운트 해제할 수 없습니다.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "디스크가 사용 중입니다. 사용 중인 앱을 종료하거나 강제 마운트 해제를 켜십시오.";
+"In use by %@." = "%@에서 사용 중입니다.";
+"Quit and Retry" = "종료 후 재시도";
 "The disk could not be ejected." = "디스크를 추출할 수 없습니다.";
 "The disk could not be remounted." = "디스크를 다시 마운트할 수 없습니다.";
 "Keyboard Shortcuts" = "키보드 단축키";

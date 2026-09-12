@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Ο δίσκος είναι ακόμη προσαρτημένος.";
 "The disk could not be unmounted." = "Δεν ήταν δυνατή η κατάργηση προσάρτησης του δίσκου.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Ο δίσκος χρησιμοποιείται. Κλείστε τις εφαρμογές που τον χρησιμοποιούν ή ενεργοποιήστε την Εξαναγκασμένη κατάργηση προσάρτησης.";
+"In use by %@." = "Χρησιμοποιείται από %@.";
+"Quit and Retry" = "Τερματισμός και επανάληψη";
 "The disk could not be ejected." = "Δεν ήταν δυνατή η εξαγωγή του δίσκου.";
 "The disk could not be remounted." = "Δεν ήταν δυνατή η επαναπροσάρτηση του δίσκου.";
 "Keyboard Shortcuts" = "Συντομεύσεις πληκτρολογίου";

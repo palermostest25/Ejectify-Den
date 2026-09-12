@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Disken er fortsatt aktivert.";
 "The disk could not be unmounted." = "Disken kunne ikke deaktiveres.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Disken er i bruk. Avslutt appene som bruker den, eller slå på Tving deaktivering.";
+"In use by %@." = "Brukes av %@.";
+"Quit and Retry" = "Avslutt og prøv igjen";
 "The disk could not be ejected." = "Disken kunne ikke løses ut.";
 "The disk could not be remounted." = "Disken kunne ikke aktiveres på nytt.";
 "Keyboard Shortcuts" = "Tastatursnarveier";

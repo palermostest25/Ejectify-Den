@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Das Volume ist weiterhin aktiviert.";
 "The disk could not be unmounted." = "Das Volume konnte nicht deaktiviert werden.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Das Volume wird verwendet. Beende Apps, die es benutzen, oder aktiviere „Deaktivieren erzwingen“.";
+"In use by %@." = "Wird von %@ verwendet.";
+"Quit and Retry" = "Beenden und erneut versuchen";
 "The disk could not be ejected." = "Das Volume konnte nicht ausgeworfen werden.";
 "The disk could not be remounted." = "Das Volume konnte nicht reaktiviert werden.";
 "Keyboard Shortcuts" = "Kurzbefehle";

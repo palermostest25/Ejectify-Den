@@ -113,6 +113,8 @@
 "The disk is still mounted." = "磁盘仍处于装载状态。";
 "The disk could not be unmounted." = "无法卸载该磁盘。";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "磁盘正在使用中。请退出正在使用它的 App，或开启“强制卸载”。";
+"In use by %@." = "正在被 %@ 使用。";
+"Quit and Retry" = "退出并重试";
 "The disk could not be ejected." = "无法推出该磁盘。";
 "The disk could not be remounted." = "无法重新装载该磁盘。";
 "Keyboard Shortcuts" = "键盘快捷键";

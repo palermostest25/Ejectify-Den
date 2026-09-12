@@ -17,6 +17,9 @@ struct DiskOperationHUDView: View {
     /// Invoked when the user dismisses a panel that is reporting a failure.
     let onDismiss: () -> Void
 
+    /// Invoked when the user asks for the applications holding a disk open to be quit and retried.
+    let onQuitAndRetry: () -> Void
+
     var body: some View {
         VStack(spacing: 10) {
             Image(nsImage: NSApplication.shared.applicationIconImage)
@@ -45,9 +48,19 @@ struct DiskOperationHUDView: View {
             if progress.isFinished, progress.hasFailure {
                 failureDetails
 
-                Button(String(localized: "OK"), action: onDismiss)
-                    .keyboardShortcut(.defaultAction)
-                    .controlSize(.small)
+                HStack(spacing: 8) {
+                    Button(String(localized: "OK"), action: onDismiss)
+                        .keyboardShortcut(.cancelAction)
+                        .controlSize(.small)
+
+                    // Only offered when something was found that can actually be quit, so the button
+                    // never promises an action Ejectify cannot take.
+                    if !progress.quittableApplications.isEmpty {
+                        Button(String(localized: "Quit and Retry"), action: onQuitAndRetry)
+                            .keyboardShortcut(.defaultAction)
+                            .controlSize(.small)
+                    }
+                }
             }
         }
         .padding(18)

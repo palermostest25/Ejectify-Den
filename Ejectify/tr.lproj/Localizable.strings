@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Disk hâlâ bağlı.";
 "The disk could not be unmounted." = "Diskin bağlantısı kesilemedi.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Disk kullanımda. Onu kullanan uygulamalardan çıkın veya Bağlantıyı Kesmeye Zorla seçeneğini açın.";
+"In use by %@." = "%@ tarafından kullanılıyor.";
+"Quit and Retry" = "Kapat ve yeniden dene";
 "The disk could not be ejected." = "Disk çıkarılamadı.";
 "The disk could not be remounted." = "Disk yeniden bağlanamadı.";
 "Keyboard Shortcuts" = "Klavye Kısayolları";

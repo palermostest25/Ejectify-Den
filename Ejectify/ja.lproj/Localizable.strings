@@ -113,6 +113,8 @@
 "The disk is still mounted." = "ディスクはまだマウントされています。";
 "The disk could not be unmounted." = "ディスクをマウント解除できませんでした。";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "ディスクは使用中です。使用中のAppを終了するか、強制的にマウント解除をオンにしてください。";
+"In use by %@." = "%@ が使用中です。";
+"Quit and Retry" = "終了して再試行";
 "The disk could not be ejected." = "ディスクを取り出せませんでした。";
 "The disk could not be remounted." = "ディスクを再マウントできませんでした。";
 "Keyboard Shortcuts" = "キーボードショートカット";

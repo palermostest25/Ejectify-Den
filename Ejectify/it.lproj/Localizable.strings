@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Il disco è ancora attivo.";
 "The disk could not be unmounted." = "Impossibile disattivare il disco.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Il disco è in uso. Chiudi le app che lo utilizzano o attiva Forza disattivazione.";
+"In use by %@." = "In uso da %@.";
+"Quit and Retry" = "Esci e riprova";
 "The disk could not be ejected." = "Impossibile espellere il disco.";
 "The disk could not be remounted." = "Impossibile riattivare il disco.";
 "Keyboard Shortcuts" = "Abbreviazioni da tastiera";

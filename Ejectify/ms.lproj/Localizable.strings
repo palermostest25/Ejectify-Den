@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Cakera masih dilekapkan.";
 "The disk could not be unmounted." = "Cakera tidak dapat dinyahlekap.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Cakera sedang digunakan. Keluar dari app yang menggunakannya atau hidupkan Paksa nyahlekap.";
+"In use by %@." = "Sedang digunakan oleh %@.";
+"Quit and Retry" = "Keluar dan cuba lagi";
 "The disk could not be ejected." = "Cakera tidak dapat dikeluarkan.";
 "The disk could not be remounted." = "Cakera tidak dapat dilekapkan semula.";
 "Keyboard Shortcuts" = "Pintasan Papan Kekunci";

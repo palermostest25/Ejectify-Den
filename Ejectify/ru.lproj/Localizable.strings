@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Диск все еще подключен.";
 "The disk could not be unmounted." = "Не удалось отключить диск.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Диск используется. Завершите работу приложений, которые его используют, или включите принудительное отключение.";
+"In use by %@." = "Используется приложением %@.";
+"Quit and Retry" = "Завершить и повторить";
 "The disk could not be ejected." = "Не удалось извлечь диск.";
 "The disk could not be remounted." = "Не удалось снова подключить диск.";
 "Keyboard Shortcuts" = "Сочетания клавиш";

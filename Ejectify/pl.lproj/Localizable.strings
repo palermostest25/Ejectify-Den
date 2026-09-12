@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Dysk jest nadal zamontowany.";
 "The disk could not be unmounted." = "Nie udało się odmontować dysku.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Dysk jest używany. Zamknij aplikacje, które go używają, lub włącz Wymuś odmontowanie.";
+"In use by %@." = "W użyciu przez %@.";
+"Quit and Retry" = "Zakończ i spróbuj ponownie";
 "The disk could not be ejected." = "Nie udało się wysunąć dysku.";
 "The disk could not be remounted." = "Nie udało się ponownie zamontować dysku.";
 "Keyboard Shortcuts" = "Skróty klawiszowe";

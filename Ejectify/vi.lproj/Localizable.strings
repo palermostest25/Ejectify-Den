@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Đĩa vẫn đang được kết nối.";
 "The disk could not be unmounted." = "Không thể ngắt kết nối đĩa.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Đĩa đang được sử dụng. Hãy thoát các ứng dụng đang dùng đĩa hoặc bật Buộc ngắt kết nối.";
+"In use by %@." = "Đang được %@ sử dụng.";
+"Quit and Retry" = "Thoát và thử lại";
 "The disk could not be ejected." = "Không thể đẩy đĩa ra.";
 "The disk could not be remounted." = "Không thể kết nối lại đĩa.";
 "Keyboard Shortcuts" = "Phím tắt";

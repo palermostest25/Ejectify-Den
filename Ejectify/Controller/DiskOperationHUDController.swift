@@ -18,6 +18,10 @@ final class DiskOperationHUDController {
     /// Panel hosting the progress view, created on first use.
     private var panel: NSPanel?
 
+    /// Invoked when the user asks for the applications holding a disk open to be quit and the
+    /// operation tried again. Set once at start-up by whatever owns disk operations.
+    var onQuitAndRetry: (([GuardedApplication]) -> Void)?
+
     /// Pending automatic dismissal for a successful batch.
     private var dismissTask: Task<Void, Never>?
 
@@ -59,6 +63,29 @@ final class DiskOperationHUDController {
         }
 
         scheduleDismiss()
+    }
+
+    /// Names what is holding a failed volume open, once the answer arrives.
+    func describeFailure(volumeID: String, reason: String, quittableApplications: [GuardedApplication]) {
+        let progress = DiskOperationProgress.shared
+        guard progress.isActive else {
+            return
+        }
+
+        progress.describeFailure(volumeID: volumeID, reason: reason)
+        progress.addQuittableApplications(quittableApplications)
+        positionPanel()
+    }
+
+    /// Quits the applications holding the batch's disks open and tries again.
+    func quitBlockingApplicationsAndRetry() {
+        let applications = DiskOperationProgress.shared.quittableApplications
+        guard !applications.isEmpty, let onQuitAndRetry else {
+            return
+        }
+
+        dismiss()
+        onQuitAndRetry(applications)
     }
 
     /// Drops a volume from the batch when its operation ended without an outcome to report.
@@ -111,9 +138,15 @@ final class DiskOperationHUDController {
     /// Builds the borderless, non-activating panel that hosts the SwiftUI view.
     private func makePanel() -> NSPanel {
         let hostingController = NSHostingController(
-            rootView: DiskOperationHUDView(progress: DiskOperationProgress.shared) { [weak self] in
-                self?.dismiss()
-            }
+            rootView: DiskOperationHUDView(
+                progress: DiskOperationProgress.shared,
+                onDismiss: { [weak self] in
+                    self?.dismiss()
+                },
+                onQuitAndRetry: { [weak self] in
+                    self?.quitBlockingApplicationsAndRetry()
+                }
+            )
         )
 
         let panel = NonActivatingPanel(

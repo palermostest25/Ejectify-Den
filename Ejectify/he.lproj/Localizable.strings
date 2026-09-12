@@ -113,6 +113,8 @@
 "The disk is still mounted." = "הדיסק עדיין מחובר.";
 "The disk could not be unmounted." = "לא ניתן היה לנתק את הדיסק.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "הדיסק בשימוש. סגור יישומים שמשתמשים בו או הפעל כפיית ניתוק.";
+"In use by %@." = "בשימוש על ידי %@.";
+"Quit and Retry" = "לצאת ולנסות שוב";
 "The disk could not be ejected." = "לא ניתן היה להוציא את הדיסק.";
 "The disk could not be remounted." = "לא ניתן היה לחבר מחדש את הדיסק.";
 "Keyboard Shortcuts" = "קיצורי מקלדת";

@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Disken är fortfarande tillagd.";
 "The disk could not be unmounted." = "Det gick inte att ta bort disken.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Disken används. Avsluta apparna som använder den eller slå på Tvinga borttagning.";
+"In use by %@." = "Används av %@.";
+"Quit and Retry" = "Avsluta och försök igen";
 "The disk could not be ejected." = "Det gick inte att mata ut disken.";
 "The disk could not be remounted." = "Det gick inte att lägga till disken igen.";
 "Keyboard Shortcuts" = "Tangentbordsgenvägar";

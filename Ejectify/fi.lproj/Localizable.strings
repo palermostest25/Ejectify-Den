@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Levy on edelleen käytössä.";
 "The disk could not be unmounted." = "Levyä ei voitu poistaa näkyvistä.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Levy on käytössä. Lopeta sitä käyttävät apit tai ota käyttöön Pakota poistaminen näkyvistä.";
+"In use by %@." = "Käytössä: %@.";
+"Quit and Retry" = "Lopeta ja yritä uudelleen";
 "The disk could not be ejected." = "Levyä ei voitu poistaa.";
 "The disk could not be remounted." = "Levyä ei voitu ottaa uudelleen käyttöön.";
 "Keyboard Shortcuts" = "Näppäinoikotiet";

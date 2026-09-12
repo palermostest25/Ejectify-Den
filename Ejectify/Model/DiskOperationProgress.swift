@@ -78,6 +78,9 @@ final class DiskOperationProgress {
     /// Whether a batch is currently being reported at all.
     private(set) var isActive = false
 
+    /// Applications found holding a failed volume open, which the user can be offered a way to quit.
+    private(set) var quittableApplications: [GuardedApplication] = []
+
     /// Whether every row has reached a final state.
     var isFinished: Bool {
         !rows.isEmpty && rows.allSatisfy { $0.state != .running }
@@ -135,6 +138,7 @@ final class DiskOperationProgress {
     func begin(kind: Kind, volumes: [(id: String, name: String)]) {
         self.kind = kind
         rows = volumes.map { Row(id: $0.id, name: $0.name, state: .running) }
+        quittableApplications = []
         isActive = !rows.isEmpty
     }
 
@@ -158,9 +162,28 @@ final class DiskOperationProgress {
         return rows.count != countBeforeRemoval
     }
 
+    /// Replaces the reason on a row that already failed, once more is known about why.
+    ///
+    /// Only a failed row is rewritten, so a late answer about a busy disk cannot overwrite a volume
+    /// that has since succeeded.
+    func describeFailure(volumeID: String, reason: String) {
+        guard let index = rows.firstIndex(where: { $0.id == volumeID }),
+              case .failed = rows[index].state else {
+            return
+        }
+
+        rows[index].state = .failed(reason: reason)
+    }
+
+    /// Records applications holding a volume open, keeping the batch's list free of duplicates.
+    func addQuittableApplications(_ applications: [GuardedApplication]) {
+        quittableApplications = GuardedApplicationPolicy.merged(quittableApplications, with: applications)
+    }
+
     /// Clears the batch once the HUD has been dismissed.
     func clear() {
         rows = []
+        quittableApplications = []
         isActive = false
     }
 }

@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Диск усе ще змонтовано.";
 "The disk could not be unmounted." = "Не вдалося відмонтувати диск.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Диск використовується. Закрийте програми, які його використовують, або увімкніть примусове відмонтування.";
+"In use by %@." = "Використовується програмою %@.";
+"Quit and Retry" = "Завершити й повторити";
 "The disk could not be ejected." = "Не вдалося вийняти диск.";
 "The disk could not be remounted." = "Не вдалося змонтувати диск знову.";
 "Keyboard Shortcuts" = "Комбінації клавіш";

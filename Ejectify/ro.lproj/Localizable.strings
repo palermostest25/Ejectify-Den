@@ -113,6 +113,8 @@
 "The disk is still mounted." = "Discul este încă montat.";
 "The disk could not be unmounted." = "Discul nu a putut fi demontat.";
 "The disk is in use. Quit apps using it, or turn on Force Unmount." = "Discul este în uz. Închide aplicațiile care îl folosesc sau activează Forțează demontarea.";
+"In use by %@." = "Utilizat de %@.";
+"Quit and Retry" = "Închide și reîncearcă";
 "The disk could not be ejected." = "Discul nu a putut fi scos.";
 "The disk could not be remounted." = "Discul nu a putut fi remontat.";
 "Keyboard Shortcuts" = "Scurtături din tastatură";

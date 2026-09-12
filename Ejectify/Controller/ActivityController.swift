@@ -141,6 +141,12 @@ final class ActivityController {
     /// Initializes disk and power event observers.
     init() {
         startMonitoring()
+
+        // The failure panel offers to quit whatever is holding a disk open; this is what carries
+        // that request back to the code that can actually run the unmount again.
+        DiskOperationHUDController.shared.onQuitAndRetry = { [weak self] applications in
+            self?.quitBlockingApplicationsAndRetry(applications)
+        }
     }
 
     /// Re-registers event observers to match the current `Preference.unmountWhen` setting.
@@ -237,7 +243,7 @@ final class ActivityController {
     }
 
     /// Returns a short, user-facing reason for a failed unmount.
-    static func unmountFailureReason(success: Bool, status: DAReturn?) -> String {
+    static func unmountFailureReason(success: Bool, status: DAReturn?, usage: VolumeUsage? = nil) -> String {
         guard !success else {
             return String(localized: "The disk is still mounted.")
         }
@@ -246,7 +252,59 @@ final class ActivityController {
             return String(localized: "The disk could not be unmounted.")
         }
 
-        return String(localized: "The disk is in use. Quit apps using it, or turn on Force Unmount.")
+        // Disk Arbitration only ever says "busy", so naming the culprit is the difference between a
+        // message the user can act on and one they cannot.
+        guard let usage, !usage.isEmpty else {
+            return String(localized: "The disk is in use. Quit apps using it, or turn on Force Unmount.")
+        }
+
+        return String(localized: "In use by \(usage.displayNames.joined(separator: ", ")).")
+    }
+
+    /// Finds what is holding a busy volume and rewrites its failure row to name it.
+    ///
+    /// Off the main actor because it runs a tool: the answer is worth a moment, but not a frozen menu.
+    private func reportWhatIsUsingVolume(_ volume: Volume) {
+        let volumeID = volume.id
+        let volumeURL = volume.url
+        let logLabel = volume.logLabel
+
+        Task { @MainActor [weak self] in
+            let usage = await Task.detached(priority: .userInitiated) {
+                VolumeUsageProbe.usage(ofVolumeAt: volumeURL)
+            }.value
+
+            guard let self, !usage.isEmpty else {
+                return
+            }
+
+            Log.volumeOperations.log("Volume held open; apps=\(usage.applications.count); others=\(usage.otherProcessNames.count); \(logLabel)")
+            DiskOperationHUDController.shared.describeFailure(
+                volumeID: volumeID,
+                reason: Self.unmountFailureReason(success: false, status: DAReturn(kDAReturnBusy), usage: usage),
+                quittableApplications: usage.applications
+            )
+        }
+    }
+
+    /// Quits the applications holding a disk open, then runs the disk operation again.
+    ///
+    /// Reached from the failure panel, so the user has already seen which applications these are.
+    func quitBlockingApplicationsAndRetry(_ applications: [GuardedApplication]) {
+        Log.volumeOperations.log("Retrying after quitting applications that held a disk open; count=\(applications.count); apps=\(GuardedApplicationPolicy.logDescription(of: applications))")
+
+        Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            guard await GuardedApplicationCloser.closeApplications(applications) else {
+                Log.volumeOperations.warning("Retry abandoned; an application holding the disk open would not quit")
+                return
+            }
+
+            self.performDiskOperation(triggerDescription: "retry after quitting apps", isUserInitiated: true)
+        }
     }
 
     /// Cancels pending mounts and clears remount candidates because ejected disks cannot be remounted automatically.
@@ -1507,10 +1565,15 @@ final class ActivityController {
                         Log.volumeOperations.warning("Unmount failed; preserving candidate for wake reconciliation; status=\(statusDescription); \(volume.logLabel)")
                     }
 
+                    let isBusy = status == DAReturn(kDAReturnBusy)
                     DiskOperationHUDController.shared.finish(
                         volumeID: volumeID,
                         state: .failed(reason: Self.unmountFailureReason(success: success, status: status))
                     )
+
+                    if isBusy {
+                        self.reportWhatIsUsingVolume(volume)
+                    }
                 }
                 let completions = self.pendingUnmountCompletions.removeValue(forKey: volumeID) ?? []
                 completions.forEach { $0(success) }
