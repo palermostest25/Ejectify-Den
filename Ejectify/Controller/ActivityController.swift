@@ -823,6 +823,12 @@ final class ActivityController {
             }
             defer {
                 self.pendingMountTasks.removeValue(forKey: volumeID)
+
+                // This sequence gives up without an outcome in several places: eject mode, a session
+                // that is not ready to mount, a candidate that has gone, a cancelled retry. None of
+                // those is a failure worth showing, but a row left running keeps the panel on screen
+                // forever, so the row leaves with the task. Rows that already reported are untouched.
+                DiskOperationHUDController.shared.cancel(volumeID: volumeID)
             }
 
             var attemptIndex = 0

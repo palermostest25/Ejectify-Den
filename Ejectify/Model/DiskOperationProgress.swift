@@ -147,6 +147,17 @@ final class DiskOperationProgress {
         rows[index].state = state
     }
 
+    /// Drops a row whose operation ended without an outcome, returning whether one was dropped.
+    ///
+    /// A row that never reaches a final state holds the whole batch open, so work that gives up
+    /// without succeeding or failing has to leave rather than sit at "running" forever.
+    @discardableResult
+    func remove(volumeID: String) -> Bool {
+        let countBeforeRemoval = rows.count
+        rows.removeAll { $0.id == volumeID && $0.state == .running }
+        return rows.count != countBeforeRemoval
+    }
+
     /// Clears the batch once the HUD has been dismissed.
     func clear() {
         rows = []

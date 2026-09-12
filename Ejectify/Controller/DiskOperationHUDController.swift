@@ -61,6 +61,37 @@ final class DiskOperationHUDController {
         scheduleDismiss()
     }
 
+    /// Drops a volume from the batch when its operation ended without an outcome to report.
+    ///
+    /// A deferred remount is not a failure, so the row leaves rather than turning red, and a batch
+    /// left with no rows dismisses instead of sitting on screen at "running" forever.
+    func cancel(volumeID: String) {
+        let progress = DiskOperationProgress.shared
+        guard progress.isActive, progress.remove(volumeID: volumeID) else {
+            return
+        }
+
+        // At default level on purpose: a panel that would not go away is exactly the symptom
+        // this explains, and an info-level line is hidden unless `log show` is asked for it.
+        Log.volumeOperations.log("Progress row dropped without an outcome; remaining=\(progress.totalCount)")
+
+        guard !progress.rows.isEmpty else {
+            dismiss()
+            return
+        }
+
+        guard progress.isFinished else {
+            return
+        }
+
+        guard !progress.hasFailure else {
+            positionPanel()
+            return
+        }
+
+        scheduleDismiss()
+    }
+
     /// Hides the panel and clears the batch.
     func dismiss() {
         dismissTask?.cancel()

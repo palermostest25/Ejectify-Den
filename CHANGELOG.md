@@ -19,6 +19,7 @@
 - Added a "Keep mounted while running" list: while any chosen app is open, automatic triggers leave volumes mounted instead of unmounting them, and a manual unmount or eject asks for confirmation first.
 - Guarded apps can optionally be asked to save and quit before unmounting, rather than only holding volumes back. Ejectify presses the app's own Save menu item, which needs Accessibility access, then asks it to quit and only unmounts once it has actually exited; an app that will not save or quit is never forced, and the volumes stay mounted.
 - Apps running from a disk Ejectify manages are now protected automatically, without being ticked, because unmounting the disk an app runs from pulls its own program out from under it. This can be turned off.
+- Fixed the progress panel staying on screen after a remount, showing "Remounting Disks…" forever, when a volume's remount ended without succeeding or failing.
 - Fixed three keyboard shortcut messages showing in English regardless of the chosen language.
 - Diagnostics reports now include power adapter, remembered dock, guarded application, and trigger information.
 

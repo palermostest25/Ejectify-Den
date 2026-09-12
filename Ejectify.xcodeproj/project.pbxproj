@@ -107,6 +107,8 @@
 		F1D000000000000000000216 /* ApplicationSaveMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001E /* ApplicationSaveMenuController.swift */; };
 		F1D000000000000000000217 /* GuardedApplicationCloser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D00000000000000000001F /* GuardedApplicationCloser.swift */; };
 		F1D000000000000000000218 /* GuardedApplicationCloserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */; };
+		F1D000000000000000000219 /* DiskOperationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000010 /* DiskOperationProgress.swift */; };
+		F1D00000000000000000021A /* DiskOperationProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000021 /* DiskOperationProgressTests.swift */; };
 		F1D00000000000000000020F /* GuardedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000017 /* GuardedApplication.swift */; };
 		F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000018 /* GuardedApplicationsPreference.swift */; };
 		F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D000000000000000000019 /* RunningApplicationProbe.swift */; };
@@ -271,6 +273,7 @@
 		F1D00000000000000000001E /* ApplicationSaveMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSaveMenuController.swift; sourceTree = "<group>"; };
 		F1D00000000000000000001F /* GuardedApplicationCloser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationCloser.swift; sourceTree = "<group>"; };
 		F1D000000000000000000020 /* GuardedApplicationCloserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedApplicationCloserTests.swift; sourceTree = "<group>"; };
+		F1D000000000000000000021 /* DiskOperationProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskOperationProgressTests.swift; sourceTree = "<group>"; };
 		F1D000000000000000000016 /* ClamshellStateProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClamshellStateProbe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -476,6 +479,7 @@
 				F1D000000000000000000014 /* GlobalShortcutTests.swift */,
 				F1D00000000000000000001B /* GuardedApplicationTests.swift */,
 				F1D00000000000000000001D /* GuardedApplicationsPreferenceTests.swift */,
+				F1D000000000000000000021 /* DiskOperationProgressTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -782,6 +786,8 @@
 				F1D000000000000000000216 /* ApplicationSaveMenuController.swift in Sources */,
 				F1D000000000000000000217 /* GuardedApplicationCloser.swift in Sources */,
 				F1D000000000000000000218 /* GuardedApplicationCloserTests.swift in Sources */,
+				F1D000000000000000000219 /* DiskOperationProgress.swift in Sources */,
+				F1D00000000000000000021A /* DiskOperationProgressTests.swift in Sources */,
 				F1D00000000000000000020F /* GuardedApplication.swift in Sources */,
 				F1D000000000000000000210 /* GuardedApplicationsPreference.swift in Sources */,
 				F1D000000000000000000211 /* RunningApplicationProbe.swift in Sources */,
