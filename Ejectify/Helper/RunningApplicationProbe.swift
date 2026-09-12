@@ -18,6 +18,9 @@ struct RunningApplication: Hashable, Sendable {
 
     /// Whether the app appears in the Dock and app switcher, as opposed to running as a background agent.
     let isUserFacing: Bool
+
+    /// Where the application bundle itself lives, used to spot apps running from a managed volume.
+    let bundleURL: URL?
 }
 
 /// Reads the applications macOS currently reports as running in the user's session.
@@ -68,7 +71,8 @@ enum RunningApplicationProbe {
         return RunningApplication(
             bundleIdentifier: application.bundleIdentifier,
             name: name,
-            isUserFacing: application.activationPolicy == .regular
+            isUserFacing: application.activationPolicy == .regular,
+            bundleURL: application.bundleURL
         )
     }
 }

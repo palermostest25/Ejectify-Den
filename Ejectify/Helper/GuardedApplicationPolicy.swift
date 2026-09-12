@@ -24,6 +24,50 @@ enum GuardedApplicationPolicy {
         return guardedApplications.filter { $0.isRunning(among: runningApplications) }
     }
 
+    /// Joins two lists of guarded applications, keeping the first occurrence of each.
+    static func merged(_ applications: [GuardedApplication], with others: [GuardedApplication]) -> [GuardedApplication] {
+        var seenIdentifiers = Set(applications.map(\.id))
+
+        return applications + others.filter { seenIdentifiers.insert($0.id).inserted }
+    }
+
+    /// Applications whose own bundle lives on one of these volumes.
+    ///
+    /// Unmounting the disk an application is running from pulls its executable and resources out
+    /// from under it, which is how a set gets lost without any file of the user's being written.
+    /// These are guarded whether or not the user thought to tick them.
+    static func applicationsRunning(
+        fromVolumesAt volumeURLs: [URL],
+        among runningApplications: [RunningApplication]
+    ) -> [GuardedApplication] {
+        guard !volumeURLs.isEmpty else {
+            return []
+        }
+
+        let volumePaths = volumeURLs.map(\.standardizedFileURL.pathComponents)
+
+        return runningApplications.compactMap { runningApplication in
+            guard let bundleURL = runningApplication.bundleURL,
+                  volumePaths.contains(where: { isPath(bundleURL.standardizedFileURL.pathComponents, under: $0) }) else {
+                return nil
+            }
+
+            return GuardedApplication(bundleIdentifier: runningApplication.bundleIdentifier, name: runningApplication.name)
+        }
+    }
+
+    /// Whether one path sits inside another, compared component by component.
+    ///
+    /// Plain string prefixes would put "/Volumes/Music" inside "/Volumes/Music Backup", which would
+    /// guard applications on a disk that is not being touched.
+    private static func isPath(_ path: [String], under directory: [String]) -> Bool {
+        guard path.count > directory.count else {
+            return false
+        }
+
+        return Array(path.prefix(directory.count)) == directory
+    }
+
     /// The rows a picker should offer: everything already guarded, plus the apps running now.
     ///
     /// A guarded app that has since quit has to stay listed, or there would be no way to untick it.

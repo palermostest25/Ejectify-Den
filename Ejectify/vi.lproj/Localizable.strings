@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Các ổ đĩa vẫn được gắn kết khi còn ứng dụng đã đánh dấu đang mở";
 "Ticked apps are asked to save and quit before unmounting" = "Các ứng dụng đã đánh dấu sẽ được yêu cầu lưu và thoát trước khi tháo gắn kết";
 "Save and quit them instead" = "Lưu và thoát chúng thay vì vậy";
+"Protect apps running from these disks" = "Bảo vệ ứng dụng chạy từ các ổ đĩa này";
+"Runs from this disk" = "Chạy từ ổ đĩa này";
 "Allow Accessibility access to save…" = "Cho phép truy cập trợ năng để lưu…";
 "Apps can only be quit, not saved" = "Chỉ có thể thoát ứng dụng, không thể lưu";
 "Running" = "Đang chạy";

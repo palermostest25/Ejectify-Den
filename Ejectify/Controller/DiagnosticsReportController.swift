@@ -208,6 +208,9 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
     /// Whether Accessibility access is granted, without which guarded applications cannot be saved.
     let isAccessibilityPermitted: Bool
 
+    /// Whether applications running from a managed volume are guarded without being ticked.
+    let guardApplicationsOnManagedVolumes: Bool
+
     /// Current force-unmount preference.
     let forceUnmount: Bool
 
@@ -258,6 +261,7 @@ private struct EjectifyDiagnosticsSnapshot: Sendable {
                 .map { GuardedApplicationPolicy.logDescription(of: $0.blockingGuardedApplications()) } ?? "unknown",
             saveAndQuitGuardedApplications: Preference.saveAndQuitGuardedApplications,
             isAccessibilityPermitted: ApplicationSaveMenuController.isPermitted,
+            guardApplicationsOnManagedVolumes: Preference.guardApplicationsOnManagedVolumes,
             forceUnmount: Preference.forceUnmount,
             ejectInsteadOfUnmount: Preference.ejectInsteadOfUnmount,
             unlockVolumesWhenNeeded: Preference.unlockVolumesWhenNeeded,
@@ -573,6 +577,7 @@ private struct EjectifyStateReporter: DiagnosticsReporting {
             ("Guarded apps running now", snapshot.blockingApplications),
             ("Save and quit guarded apps", snapshot.saveAndQuitGuardedApplications.diagnosticsDescription),
             ("Accessibility access granted", snapshot.isAccessibilityPermitted.diagnosticsDescription),
+            ("Protect apps on managed disks", snapshot.guardApplicationsOnManagedVolumes.diagnosticsDescription),
             ("Force unmount", snapshot.forceUnmount.diagnosticsDescription),
             ("Eject instead of unmount", snapshot.ejectInsteadOfUnmount.diagnosticsDescription),
             ("Unlock volumes when needed", snapshot.unlockVolumesWhenNeeded.diagnosticsDescription),

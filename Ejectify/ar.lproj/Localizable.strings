@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "تبقى وحدات التخزين موصولة أثناء فتح أي تطبيق محدد";
 "Ticked apps are asked to save and quit before unmounting" = "يُطلب من التطبيقات المحددة الحفظ والإنهاء قبل إلغاء التوصيل";
 "Save and quit them instead" = "الحفظ والإنهاء بدلاً من ذلك";
+"Protect apps running from these disks" = "حماية التطبيقات التي تعمل من هذه الأقراص";
+"Runs from this disk" = "يعمل من هذا القرص";
 "Allow Accessibility access to save…" = "السماح بوصول تسهيلات الاستخدام للحفظ…";
 "Apps can only be quit, not saved" = "يمكن إنهاء التطبيقات فقط، دون حفظها";
 "Running" = "قيد التشغيل";

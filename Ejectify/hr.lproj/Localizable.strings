@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Volumeni ostaju montirani dok je otvorena bilo koja označena aplikacija";
 "Ticked apps are asked to save and quit before unmounting" = "Označene aplikacije zamolit će se da spreme i izađu prije odmontiranja";
 "Save and quit them instead" = "Umjesto toga spremi i izađi";
+"Protect apps running from these disks" = "Zaštiti aplikacije pokrenute s ovih diskova";
+"Runs from this disk" = "Pokreće se s ovog diska";
 "Allow Accessibility access to save…" = "Dopusti pristup pristupačnosti za spremanje…";
 "Apps can only be quit, not saved" = "Aplikacije se mogu samo zatvoriti, ne i spremiti";
 "Running" = "Pokrenuto";

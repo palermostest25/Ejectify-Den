@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Os volumes permanecem montados enquanto uma app assinalada estiver aberta";
 "Ticked apps are asked to save and quit before unmounting" = "É pedido às apps assinaladas que guardem e saiam antes de desmontar";
 "Save and quit them instead" = "Guardar e sair em vez disso";
+"Protect apps running from these disks" = "Proteger apps executadas a partir destes discos";
+"Runs from this disk" = "É executada a partir deste disco";
 "Allow Accessibility access to save…" = "Permitir acesso de acessibilidade para guardar…";
 "Apps can only be quit, not saved" = "As apps só podem ser encerradas, não guardadas";
 "Running" = "Em execução";

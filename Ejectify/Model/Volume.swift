@@ -107,6 +107,11 @@ final class Volume {
         self.isAPFS = isAPFS
     }
 
+    /// Mount points of the volumes Ejectify manages, which are the disks an app can vanish with.
+    static func managedVolumeURLs() -> [URL] {
+        mountedVolumes().filter(\.enabled).map(\.url)
+    }
+
     /// Returns currently mounted volumes that Ejectify can manage.
     static func mountedVolumes() -> [Volume] {
         guard let mountedVolumeURLs = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys:nil, options: []) else {

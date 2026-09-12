@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Οι τόμοι παραμένουν προσαρτημένοι όσο είναι ανοιχτή μια επιλεγμένη εφαρμογή";
 "Ticked apps are asked to save and quit before unmounting" = "Οι επιλεγμένες εφαρμογές καλούνται να αποθηκεύσουν και να τερματίσουν πριν την αποπροσάρτηση";
 "Save and quit them instead" = "Αποθήκευση και τερματισμός αντ' αυτού";
+"Protect apps running from these disks" = "Προστασία εφαρμογών που εκτελούνται από αυτούς τους δίσκους";
+"Runs from this disk" = "Εκτελείται από αυτόν τον δίσκο";
 "Allow Accessibility access to save…" = "Να επιτρέπεται η πρόσβαση προσβασιμότητας για αποθήκευση…";
 "Apps can only be quit, not saved" = "Οι εφαρμογές μπορούν μόνο να τερματιστούν, όχι να αποθηκευτούν";
 "Running" = "Εκτελείται";

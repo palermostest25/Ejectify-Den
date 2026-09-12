@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Zväzky zostanú pripojené, kým je otvorená niektorá zaškrtnutá aplikácia";
 "Ticked apps are asked to save and quit before unmounting" = "Zaškrtnuté aplikácie sú pred odpojením vyzvané, aby uložili a ukončili";
 "Save and quit them instead" = "Namiesto toho uložiť a ukončiť";
+"Protect apps running from these disks" = "Chrániť aplikácie spustené z týchto diskov";
+"Runs from this disk" = "Beží z tohto disku";
 "Allow Accessibility access to save…" = "Povoliť prístup sprístupnenia na ukladanie…";
 "Apps can only be quit, not saved" = "Aplikácie sa dajú len ukončiť, nie uložiť";
 "Running" = "Spustené";

@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "הכרכים יישארו מחוברים כל עוד יישום מסומן פתוח";
 "Ticked apps are asked to save and quit before unmounting" = "היישומים המסומנים מתבקשים לשמור ולצאת לפני הניתוק";
 "Save and quit them instead" = "לשמור ולצאת מהם במקום זאת";
+"Protect apps running from these disks" = "להגן על יישומים הפועלים מדיסקים אלה";
+"Runs from this disk" = "פועל מדיסק זה";
 "Allow Accessibility access to save…" = "לאפשר גישת נגישות לשמירה…";
 "Apps can only be quit, not saved" = "ניתן רק לצאת מהיישומים, לא לשמור אותם";
 "Running" = "פועל";

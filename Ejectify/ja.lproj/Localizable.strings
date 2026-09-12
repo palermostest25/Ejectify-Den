@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "チェックしたAppが開いている間、ボリュームはマウントされたままになります";
 "Ticked apps are asked to save and quit before unmounting" = "チェックしたAppは、アンマウント前に保存して終了するよう求められます";
 "Save and quit them instead" = "代わりに保存して終了する";
+"Protect apps running from these disks" = "これらのディスクから実行中のAppを保護";
+"Runs from this disk" = "このディスクから実行中";
 "Allow Accessibility access to save…" = "保存のためにアクセシビリティアクセスを許可…";
 "Apps can only be quit, not saved" = "Appは終了できるだけで、保存はできません";
 "Running" = "実行中";

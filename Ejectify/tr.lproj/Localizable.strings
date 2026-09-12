@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "İşaretli bir uygulama açıkken birimler bağlı kalır";
 "Ticked apps are asked to save and quit before unmounting" = "İşaretli uygulamalardan, çıkarma öncesinde kaydetmesi ve çıkması istenir";
 "Save and quit them instead" = "Bunun yerine kaydet ve çık";
+"Protect apps running from these disks" = "Bu disklerden çalışan uygulamaları koru";
+"Runs from this disk" = "Bu diskten çalışıyor";
 "Allow Accessibility access to save…" = "Kaydetmek için erişilebilirlik erişimine izin ver…";
 "Apps can only be quit, not saved" = "Uygulamalar yalnızca kapatılabilir, kaydedilemez";
 "Running" = "Çalışıyor";

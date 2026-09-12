@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Volume tetap terpasang selama ada app tercentang yang terbuka";
 "Ticked apps are asked to save and quit before unmounting" = "App tercentang diminta menyimpan dan keluar sebelum pelepasan";
 "Save and quit them instead" = "Simpan dan keluarkan saja";
+"Protect apps running from these disks" = "Lindungi app yang berjalan dari disk ini";
+"Runs from this disk" = "Berjalan dari disk ini";
 "Allow Accessibility access to save…" = "Izinkan akses aksesibilitas untuk menyimpan…";
 "Apps can only be quit, not saved" = "App hanya bisa dikeluarkan, tidak disimpan";
 "Running" = "Berjalan";

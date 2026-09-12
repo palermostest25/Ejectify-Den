@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Volumes blijven gekoppeld zolang een aangevinkte app openstaat";
 "Ticked apps are asked to save and quit before unmounting" = "Aangevinkte apps wordt gevraagd op te slaan en te stoppen voor het ontkoppelen";
 "Save and quit them instead" = "Ze in plaats daarvan opslaan en stoppen";
+"Protect apps running from these disks" = "Apps beschermen die vanaf deze schijven draaien";
+"Runs from this disk" = "Draait vanaf deze schijf";
 "Allow Accessibility access to save…" = "Toegankelijkheidstoegang toestaan om op te slaan…";
 "Apps can only be quit, not saved" = "Apps kunnen alleen worden gestopt, niet opgeslagen";
 "Running" = "Actief";

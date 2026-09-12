@@ -14,8 +14,8 @@ struct GuardedApplicationPolicyTests {
     private let logic = GuardedApplication(bundleIdentifier: "com.apple.logic10", name: "Logic Pro")
 
     /// Builds a running application snapshot without repeating the defaults in every test.
-    private func makeRunningApplication(_ bundleIdentifier: String?, _ name: String, isUserFacing: Bool = true) -> RunningApplication {
-        RunningApplication(bundleIdentifier: bundleIdentifier, name: name, isUserFacing: isUserFacing)
+    private func makeRunningApplication(_ bundleIdentifier: String?, _ name: String, isUserFacing: Bool = true, bundleURL: URL? = nil) -> RunningApplication {
+        RunningApplication(bundleIdentifier: bundleIdentifier, name: name, isUserFacing: isUserFacing, bundleURL: bundleURL)
     }
 
     @Test func nothingIsBlockedWhenNoApplicationIsGuarded() {
@@ -124,5 +124,84 @@ struct GuardedApplicationPolicyTests {
 
         #expect(GuardedApplicationPolicy.selectableApplications(guardedApplications: [], runningApplications: running).map(\.name)
             == ["alpha", "Mike", "Zulu"])
+    }
+
+    @Test func anApplicationRunningFromAManagedVolumeIsGuarded() {
+        let running = [
+            makeRunningApplication("com.ableton.live", "Ableton Live", bundleURL: URL(fileURLWithPath: "/Volumes/Music/Apps/Ableton Live.app")),
+            makeRunningApplication("com.apple.finder", "Finder", bundleURL: URL(fileURLWithPath: "/System/Library/CoreServices/Finder.app"))
+        ]
+
+        let guarded = GuardedApplicationPolicy.applicationsRunning(
+            fromVolumesAt: [URL(fileURLWithPath: "/Volumes/Music")],
+            among: running
+        )
+
+        #expect(guarded.map(\.name) == ["Ableton Live"])
+    }
+
+    @Test func aSimilarlyNamedVolumeIsNotTreatedAsTheSameDisk() {
+        // A plain string prefix would put "/Volumes/Music" inside "/Volumes/Music Backup".
+        let running = [
+            makeRunningApplication("com.example.app", "App", bundleURL: URL(fileURLWithPath: "/Volumes/Music Backup/App.app"))
+        ]
+
+        #expect(GuardedApplicationPolicy.applicationsRunning(
+            fromVolumesAt: [URL(fileURLWithPath: "/Volumes/Music")],
+            among: running
+        ).isEmpty)
+    }
+
+    @Test func aVolumeThatIsNotManagedGuardsNothing() {
+        let running = [
+            makeRunningApplication("com.ableton.live", "Ableton Live", bundleURL: URL(fileURLWithPath: "/Volumes/Music/Ableton Live.app"))
+        ]
+
+        #expect(GuardedApplicationPolicy.applicationsRunning(fromVolumesAt: [], among: running).isEmpty)
+        #expect(GuardedApplicationPolicy.applicationsRunning(
+            fromVolumesAt: [URL(fileURLWithPath: "/Volumes/Other")],
+            among: running
+        ).isEmpty)
+    }
+
+    @Test func anApplicationWithoutABundleLocationIsNotGuardedByDisk() {
+        let running = [makeRunningApplication("com.example.headless", "Headless")]
+
+        #expect(GuardedApplicationPolicy.applicationsRunning(
+            fromVolumesAt: [URL(fileURLWithPath: "/Volumes/Music")],
+            among: running
+        ).isEmpty)
+    }
+
+    @Test func aBackgroundApplicationOnAManagedVolumeIsStillGuarded() {
+        // The picker only offers apps with a Dock icon, but anything running from the disk vanishes
+        // with it, so user-facing is not a condition here.
+        let running = [
+            makeRunningApplication("com.example.agent", "Agent", isUserFacing: false, bundleURL: URL(fileURLWithPath: "/Volumes/Music/Agent.app"))
+        ]
+
+        #expect(GuardedApplicationPolicy.applicationsRunning(
+            fromVolumesAt: [URL(fileURLWithPath: "/Volumes/Music")],
+            among: running
+        ).map(\.name) == ["Agent"])
+    }
+
+    @Test func aVolumeRootIsNeverItsOwnApplication() {
+        // The mount point itself is not inside the volume, so an equal path must not match.
+        let running = [makeRunningApplication("com.example.app", "App", bundleURL: URL(fileURLWithPath: "/Volumes/Music"))]
+
+        #expect(GuardedApplicationPolicy.applicationsRunning(
+            fromVolumesAt: [URL(fileURLWithPath: "/Volumes/Music")],
+            among: running
+        ).isEmpty)
+    }
+
+    @Test func mergingKeepsTheFirstEntryForEachApplication() {
+        let onDisk = GuardedApplication(bundleIdentifier: "com.pioneerdj.rekordbox", name: "rekordbox on disk")
+
+        let merged = GuardedApplicationPolicy.merged([rekordbox], with: [onDisk, logic])
+
+        #expect(merged == [rekordbox, logic])
+        #expect(GuardedApplicationPolicy.merged([], with: [logic]) == [logic])
     }
 }

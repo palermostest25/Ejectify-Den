@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "A kötetek csatlakoztatva maradnak, amíg egy kipipált app nyitva van";
 "Ticked apps are asked to save and quit before unmounting" = "A kipipált appokat a leválasztás előtt mentésre és kilépésre kéri";
 "Save and quit them instead" = "Inkább mentés és kilépés";
+"Protect apps running from these disks" = "A lemezekről futó appok védelme";
+"Runs from this disk" = "Erről a lemezről fut";
 "Allow Accessibility access to save…" = "Kisegítő lehetőségek hozzáférés engedélyezése mentéshez…";
 "Apps can only be quit, not saved" = "Az appokból csak kilépni lehet, menteni nem";
 "Running" = "Fut";

@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "선택한 앱이 열려 있는 동안 볼륨이 마운트된 상태로 유지됩니다";
 "Ticked apps are asked to save and quit before unmounting" = "선택한 앱은 마운트 해제 전에 저장하고 종료하도록 요청받습니다";
 "Save and quit them instead" = "대신 저장하고 종료";
+"Protect apps running from these disks" = "이 디스크에서 실행 중인 앱 보호";
+"Runs from this disk" = "이 디스크에서 실행됨";
 "Allow Accessibility access to save…" = "저장을 위해 손쉬운 사용 접근 허용…";
 "Apps can only be quit, not saved" = "앱을 종료만 할 수 있고 저장할 수는 없음";
 "Running" = "실행 중";

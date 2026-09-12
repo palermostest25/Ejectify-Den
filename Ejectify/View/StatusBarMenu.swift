@@ -621,13 +621,28 @@ final class StatusBarMenu: NSMenu {
             guardedApplicationsMenu.addItem(permissionItem)
         }
 
+        let onManagedVolumesItem = NSMenuItem(
+            title: String(localized: "Protect apps running from these disks"),
+            action: #selector(guardApplicationsOnManagedVolumesClicked(menuItem:)),
+            keyEquivalent: ""
+        )
+        onManagedVolumesItem.target = self
+        onManagedVolumesItem.state = Preference.guardApplicationsOnManagedVolumes ? .on : .off
+        guardedApplicationsMenu.addItem(onManagedVolumesItem)
+
         guardedApplicationsMenu.addItem(NSMenuItem.separator())
 
         let guardedApplications = Preference.guardedApplications
         let runningApplications = RunningApplicationProbe.runningApplications()
+        let applicationsOnManagedVolumes = Preference.guardApplicationsOnManagedVolumes
+            ? GuardedApplicationPolicy.applicationsRunning(
+                fromVolumesAt: Volume.managedVolumeURLs(),
+                among: runningApplications
+            )
+            : []
 
         let selectableApplications = GuardedApplicationPolicy.selectableApplications(
-            guardedApplications: guardedApplications,
+            guardedApplications: GuardedApplicationPolicy.merged(guardedApplications, with: applicationsOnManagedVolumes),
             runningApplications: runningApplications,
             excludingBundleIdentifier: Bundle.main.bundleIdentifier
         )
@@ -637,7 +652,8 @@ final class StatusBarMenu: NSMenu {
                 makeGuardedApplicationMenuItem(
                     for: application,
                     guardedApplications: guardedApplications,
-                    runningApplications: runningApplications
+                    runningApplications: runningApplications,
+                    applicationsOnManagedVolumes: applicationsOnManagedVolumes
                 )
             )
         }
@@ -662,13 +678,27 @@ final class StatusBarMenu: NSMenu {
     private func makeGuardedApplicationMenuItem(
         for application: GuardedApplication,
         guardedApplications: [GuardedApplication],
-        runningApplications: [RunningApplication]
+        runningApplications: [RunningApplication],
+        applicationsOnManagedVolumes: [GuardedApplication]
     ) -> NSMenuItem {
         let isGuarded = guardedApplications.contains { $0.id == application.id }
+        let isOnManagedVolume = applicationsOnManagedVolumes.contains { $0.id == application.id }
         let item = NSMenuItem(title: application.name, action: #selector(guardedApplicationToggled(menuItem:)), keyEquivalent: "")
         item.target = self
-        item.state = isGuarded ? .on : .off
+        item.state = isGuarded || isOnManagedVolume ? .on : .off
         item.representedObject = application
+
+        // An app living on the disk being unmounted is protected whether or not it was ticked, so
+        // the row says why it is on rather than leaving a checkmark the user cannot account for.
+        if isOnManagedVolume {
+            item.isEnabled = false
+            item.attributedTitle = makeHintTitle(
+                title: application.name,
+                hint: String(localized: "Runs from this disk"),
+                isWarning: false
+            )
+            return item
+        }
 
         // Every unticked row came from the running list, so the hint would say nothing there. On a
         // ticked row it answers "why did nothing unmount?" at a glance.
@@ -882,6 +912,12 @@ final class StatusBarMenu: NSMenu {
             openAccessibilitySettings()
         }
 
+        updateMenu()
+    }
+
+    /// Toggles whether applications running from a managed volume are guarded automatically.
+    @objc private func guardApplicationsOnManagedVolumesClicked(menuItem: NSMenuItem) {
+        Preference.guardApplicationsOnManagedVolumes = toggledValue(for: menuItem.state)
         updateMenu()
     }
 

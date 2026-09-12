@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Enheder forbliver arkiveret, så længe et markeret program er åbent";
 "Ticked apps are asked to save and quit before unmounting" = "Markerede programmer bliver bedt om at gemme og slutte før afmontering";
 "Save and quit them instead" = "Gem og slut dem i stedet";
+"Protect apps running from these disks" = "Beskyt programmer, der kører fra disse diske";
+"Runs from this disk" = "Kører fra denne disk";
 "Allow Accessibility access to save…" = "Tillad tilgængelighedsadgang for at gemme…";
 "Apps can only be quit, not saved" = "Programmer kan kun sluttes, ikke gemmes";
 "Running" = "Kører";

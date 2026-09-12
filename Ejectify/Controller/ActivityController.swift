@@ -165,11 +165,26 @@ final class ActivityController {
     }
 
     /// Guarded applications running right now, which hold automatic disk operations back.
+    ///
+    /// Covers both the applications the user ticked and, unless switched off, any application
+    /// running from a volume Ejectify is about to unmount.
     func blockingGuardedApplications() -> [GuardedApplication] {
-        GuardedApplicationPolicy.blockingApplications(
+        let runningApplications = RunningApplicationProbe.runningApplications()
+        let blocking = GuardedApplicationPolicy.blockingApplications(
             guardedApplications: Preference.guardedApplications,
-            runningApplications: RunningApplicationProbe.runningApplications()
+            runningApplications: runningApplications
         )
+
+        guard Preference.guardApplicationsOnManagedVolumes else {
+            return blocking
+        }
+
+        let onManagedVolumes = GuardedApplicationPolicy.applicationsRunning(
+            fromVolumesAt: Volume.managedVolumeURLs(),
+            among: runningApplications
+        )
+
+        return GuardedApplicationPolicy.merged(blocking, with: onManagedVolumes)
     }
 
     /// Runs the configured disk operation for all enabled volumes once guarded applications allow it.

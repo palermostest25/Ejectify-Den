@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Volymer förblir monterade så länge en markerad app är öppen";
 "Ticked apps are asked to save and quit before unmounting" = "Markerade appar ombeds spara och avsluta innan avmontering";
 "Save and quit them instead" = "Spara och avsluta dem i stället";
+"Protect apps running from these disks" = "Skydda appar som körs från dessa diskar";
+"Runs from this disk" = "Körs från den här disken";
 "Allow Accessibility access to save…" = "Tillåt hjälpmedelsåtkomst för att spara…";
 "Apps can only be quit, not saved" = "Appar kan bara avslutas, inte sparas";
 "Running" = "Körs";

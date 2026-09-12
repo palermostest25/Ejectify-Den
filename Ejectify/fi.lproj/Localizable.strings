@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Taltiot pysyvät liitettyinä, kun jokin valittu ohjelma on auki";
 "Ticked apps are asked to save and quit before unmounting" = "Valittuja ohjelmia pyydetään tallentamaan ja lopettamaan ennen irrottamista";
 "Save and quit them instead" = "Tallenna ja lopeta sen sijaan";
+"Protect apps running from these disks" = "Suojaa näiltä levyiltä käynnistetyt ohjelmat";
+"Runs from this disk" = "Käynnissä tältä levyltä";
 "Allow Accessibility access to save…" = "Salli käyttöapuoikeus tallentamiseen…";
 "Apps can only be quit, not saved" = "Ohjelmat voidaan vain lopettaa, ei tallentaa";
 "Running" = "Käynnissä";

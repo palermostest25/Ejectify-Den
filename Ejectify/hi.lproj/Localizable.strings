@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "किसी भी चुने हुए ऐप के खुले रहने तक वॉल्यूम माउंट रहते हैं";
 "Ticked apps are asked to save and quit before unmounting" = "अनमाउंट से पहले चुने हुए ऐप्स को सहेजने और बंद होने के लिए कहा जाता है";
 "Save and quit them instead" = "इसके बजाय सहेजें और बंद करें";
+"Protect apps running from these disks" = "इन डिस्क से चल रहे ऐप्स को सुरक्षित रखें";
+"Runs from this disk" = "इसी डिस्क से चलता है";
 "Allow Accessibility access to save…" = "सहेजने के लिए ऐक्सेसिबिलिटी ऐक्सेस दें…";
 "Apps can only be quit, not saved" = "ऐप्स केवल बंद किए जा सकते हैं, सहेजे नहीं";
 "Running" = "चल रहा है";

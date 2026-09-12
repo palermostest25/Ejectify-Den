@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "只要勾选的 App 处于打开状态，宗卷就保持装载";
 "Ticked apps are asked to save and quit before unmounting" = "卸载前会请求勾选的 App 保存并退出";
 "Save and quit them instead" = "改为保存并退出";
+"Protect apps running from these disks" = "保护从这些磁盘运行的 App";
+"Runs from this disk" = "从此磁盘运行";
 "Allow Accessibility access to save…" = "允许辅助功能访问以保存…";
 "Apps can only be quit, not saved" = "只能退出 App，无法保存";
 "Running" = "正在运行";

@@ -64,6 +64,17 @@ enum Preference {
         }
     }
 
+    /// Whether applications running from a managed volume are guarded without being ticked.
+    static var guardApplicationsOnManagedVolumes: Bool {
+        get {
+            UserDefaults.standard.object(forKey: "preference.guardApplicationsOnManagedVolumes") as? Bool ?? true
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "preference.guardApplicationsOnManagedVolumes")
+            Log.preferences.log("Preference changed: guardApplicationsOnManagedVolumes=\(newValue)")
+        }
+    }
+
     /// Whether guarded applications are asked to save and quit instead of simply holding volumes back.
     static var saveAndQuitGuardedApplications: Bool {
         get {

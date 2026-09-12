@@ -11,8 +11,8 @@ import Testing
 struct GuardedApplicationTests {
 
     /// Builds a running application snapshot without repeating the defaults in every test.
-    private func makeRunningApplication(bundleIdentifier: String? = nil, name: String = "App", isUserFacing: Bool = true) -> RunningApplication {
-        RunningApplication(bundleIdentifier: bundleIdentifier, name: name, isUserFacing: isUserFacing)
+    private func makeRunningApplication(bundleIdentifier: String? = nil, name: String = "App", isUserFacing: Bool = true, bundleURL: URL? = nil) -> RunningApplication {
+        RunningApplication(bundleIdentifier: bundleIdentifier, name: name, isUserFacing: isUserFacing, bundleURL: bundleURL)
     }
 
     @Test func bundleIdentifierDecidesTheMatch() {

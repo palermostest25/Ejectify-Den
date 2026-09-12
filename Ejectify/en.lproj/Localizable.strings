@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Volumes stay mounted while any ticked app is open";
 "Ticked apps are asked to save and quit before unmounting" = "Ticked apps are asked to save and quit before unmounting";
 "Save and quit them instead" = "Save and Quit Them Instead";
+"Protect apps running from these disks" = "Protect Apps Running from These Disks";
+"Runs from this disk" = "Runs from this disk";
 "Allow Accessibility access to save…" = "Allow Accessibility Access to Save…";
 "Apps can only be quit, not saved" = "Apps can only be quit, not saved";
 "Running" = "Running";

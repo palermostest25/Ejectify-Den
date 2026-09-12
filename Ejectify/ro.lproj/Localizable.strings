@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Volumele rămân montate cât timp o aplicație bifată este deschisă";
 "Ticked apps are asked to save and quit before unmounting" = "Aplicațiilor bifate li se cere să salveze și să iasă înainte de demontare";
 "Save and quit them instead" = "Salvează și ieși în schimb";
+"Protect apps running from these disks" = "Protejează aplicațiile rulate de pe aceste discuri";
+"Runs from this disk" = "Rulează de pe acest disc";
 "Allow Accessibility access to save…" = "Permite accesul de accesibilitate pentru salvare…";
 "Apps can only be quit, not saved" = "Aplicațiile pot fi doar închise, nu salvate";
 "Running" = "În execuție";

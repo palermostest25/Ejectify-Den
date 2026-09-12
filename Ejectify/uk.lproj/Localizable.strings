@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "Томи лишаються під’єднаними, доки відкрито будь-яку позначену програму";
 "Ticked apps are asked to save and quit before unmounting" = "Позначені програми отримають запит зберегти й завершити роботу перед від’єднанням";
 "Save and quit them instead" = "Замість цього зберігати й завершувати";
+"Protect apps running from these disks" = "Захищати програми, запущені з цих дисків";
+"Runs from this disk" = "Запущено з цього диска";
 "Allow Accessibility access to save…" = "Дозволити доступ доступності для збереження…";
 "Apps can only be quit, not saved" = "Програми можна лише завершити, але не зберегти";
 "Running" = "Працює";

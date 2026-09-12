@@ -18,6 +18,7 @@
 - A power adapter that macOS refuses to describe can now be marked as a dock anyway, matched on its wattage alone after a confirmation that says what that means; adapters of a different wattage still never match it.
 - Added a "Keep mounted while running" list: while any chosen app is open, automatic triggers leave volumes mounted instead of unmounting them, and a manual unmount or eject asks for confirmation first.
 - Guarded apps can optionally be asked to save and quit before unmounting, rather than only holding volumes back. Ejectify presses the app's own Save menu item, which needs Accessibility access, then asks it to quit and only unmounts once it has actually exited; an app that will not save or quit is never forced, and the volumes stay mounted.
+- Apps running from a disk Ejectify manages are now protected automatically, without being ticked, because unmounting the disk an app runs from pulls its own program out from under it. This can be turned off.
 - Fixed three keyboard shortcut messages showing in English regardless of the chosen language.
 - Diagnostics reports now include power adapter, remembered dock, guarded application, and trigger information.
 

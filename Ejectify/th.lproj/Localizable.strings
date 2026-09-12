@@ -79,6 +79,8 @@
 "Volumes stay mounted while any ticked app is open" = "ดิสก์จะยังเชื่อมต่ออยู่ตราบใดที่แอปที่ติ๊กไว้เปิดอยู่";
 "Ticked apps are asked to save and quit before unmounting" = "แอปที่ติ๊กไว้จะถูกขอให้บันทึกและออกก่อนการถอนเชื่อมต่อ";
 "Save and quit them instead" = "บันทึกและออกแทน";
+"Protect apps running from these disks" = "ปกป้องแอปที่ทำงานจากดิสก์เหล่านี้";
+"Runs from this disk" = "ทำงานจากดิสก์นี้";
 "Allow Accessibility access to save…" = "อนุญาตการเข้าถึงของการช่วยการเข้าถึงเพื่อบันทึก…";
 "Apps can only be quit, not saved" = "แอปถูกปิดได้เท่านั้น ไม่สามารถบันทึกได้";
 "Running" = "กำลังทำงาน";
